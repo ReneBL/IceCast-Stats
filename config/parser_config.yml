@@ -1,0 +1,2 @@
+log_format: '%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-agent}i\" (%{ratio}n)'
+log_path: '/Users/Rene/Desktop/TFG/access.log.5'
