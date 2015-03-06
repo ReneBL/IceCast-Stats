@@ -30,6 +30,6 @@ module IceCastStats
     #config.autoload_paths += %W(#{config.root}/lib)
     #config.autoload_paths += Dir["#{config.root}/lib/**/"]
     config.autoload_paths << Rails.root.join("lib")
-    config.autoload_paths << Rails.root.join("config/*.yml")
+    config.autoload_paths << Rails.root.join("config")
   end
 end

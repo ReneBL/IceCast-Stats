@@ -45,3 +45,7 @@ app/models/.keep
 app/mailers/.keep
 
 app/assets/images/.keep
+
+*.prefs
+
+logTest

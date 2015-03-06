@@ -1,0 +1,25 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  ip: MyString
+  identd: MyString
+  userid: MyString
+  datetime: 2015-03-06
+  request: MyString
+  status: 1
+  bytes: 1
+  referrer: MyString
+  user_agent: MyString
+  seconds_connected: 1
+
+two:
+  ip: MyString
+  identd: MyString
+  userid: MyString
+  datetime: 2015-03-06
+  request: MyString
+  status: 1
+  bytes: 1
+  referrer: MyString
+  user_agent: MyString
+  seconds_connected: 1

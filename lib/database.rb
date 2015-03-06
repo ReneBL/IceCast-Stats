@@ -1,7 +1,3 @@
-require 'rubygems'
-require 'bson'
-require 'moped'
-
 module Database
 
 	# Inicializa los parámetros de conexión a la BD
@@ -10,9 +6,9 @@ module Database
 		@db.use :ice_cast_stats_test
 	end
 
-	# Devuelve la colección connCollection
+	# Devuelve la colección connections
 	def Database.getConnectionCollection
-    collection = @db["connCollection"]
+    collection = @db["connections"]
     collection
 	end
 	

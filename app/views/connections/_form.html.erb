@@ -1,0 +1,57 @@
+<%= form_for(@connection) do |f| %>
+  <% if @connection.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@connection.errors.count, "error") %> prohibited this connection from being saved:</h2>
+
+      <ul>
+      <% @connection.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :ip %><br>
+    <%= f.text_field :ip %>
+  </div>
+  <div class="field">
+    <%= f.label :identd %><br>
+    <%= f.text_field :identd %>
+  </div>
+  <div class="field">
+    <%= f.label :userid %><br>
+    <%= f.text_field :userid %>
+  </div>
+  <div class="field">
+    <%= f.label :datetime %><br>
+    <%= f.date_select :datetime %>
+  </div>
+  <div class="field">
+    <%= f.label :request %><br>
+    <%= f.text_field :request %>
+  </div>
+  <div class="field">
+    <%= f.label :status %><br>
+    <%= f.number_field :status %>
+  </div>
+  <div class="field">
+    <%= f.label :bytes %><br>
+    <%= f.number_field :bytes %>
+  </div>
+  <div class="field">
+    <%= f.label :referrer %><br>
+    <%= f.text_field :referrer %>
+  </div>
+  <div class="field">
+    <%= f.label :user_agent %><br>
+    <%= f.text_field :user_agent %>
+  </div>
+  <div class="field">
+    <%= f.label :seconds_connected %><br>
+    <%= f.number_field :seconds_connected %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

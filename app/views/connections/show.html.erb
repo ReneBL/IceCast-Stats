@@ -1,0 +1,54 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Ip:</strong>
+  <%= @connection.ip %>
+</p>
+
+<p>
+  <strong>Identd:</strong>
+  <%= @connection.identd %>
+</p>
+
+<p>
+  <strong>Userid:</strong>
+  <%= @connection.userid %>
+</p>
+
+<p>
+  <strong>Datetime:</strong>
+  <%= @connection.datetime %>
+</p>
+
+<p>
+  <strong>Request:</strong>
+  <%= @connection.request %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @connection.status %>
+</p>
+
+<p>
+  <strong>Bytes:</strong>
+  <%= @connection.bytes %>
+</p>
+
+<p>
+  <strong>Referrer:</strong>
+  <%= @connection.referrer %>
+</p>
+
+<p>
+  <strong>User agent:</strong>
+  <%= @connection.user_agent %>
+</p>
+
+<p>
+  <strong>Seconds connected:</strong>
+  <%= @connection.seconds_connected %>
+</p>
+
+<%= link_to 'Edit', edit_connection_path(@connection) %> |
+<%= link_to 'Back', connections_path %>
