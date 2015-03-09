@@ -24,6 +24,7 @@ gem 'mongoid', '~> 4', github: 'mongoid/mongoid'
 gem 'bson'
 gem 'bson_ext'
 gem 'apachelogregex', '~> 0.1.0'
+gem "factory_girl_rails"
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

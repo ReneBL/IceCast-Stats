@@ -1,25 +1,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  ip: MyString
-  identd: MyString
-  userid: MyString
-  datetime: 2015-03-06
-  request: MyString
-  status: 1
-  bytes: 1
-  referrer: MyString
-  user_agent: MyString
-  seconds_connected: 1
-
-two:
-  ip: MyString
-  identd: MyString
-  userid: MyString
-  datetime: 2015-03-06
-  request: MyString
-  status: 1
-  bytes: 1
-  referrer: MyString
-  user_agent: MyString
-  seconds_connected: 1
+  ip: 78.46.19.144
+  identd: id
+  userid: user
+  datetime: 2015-01-18 05:27:04 UTC
+  request: GET /cuacfm-128k.mp3 HTTP/1.1
+  status: 200
+  bytes: 115396
+  referrer: http://cuacfm.es
+  user_agent: iTunes/9.1.1
+  seconds_connected: 3

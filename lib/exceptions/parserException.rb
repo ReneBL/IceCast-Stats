@@ -1,0 +1,3 @@
+class ParserException < StandardError
+  
+end

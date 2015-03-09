@@ -10,4 +10,10 @@ class Connection
   field :referrer, type: String
   field :user_agent, type: String
   field :seconds_connected, type: Integer
+
+  validates :ip, :identd, :userid, :datetime, :request, :status, :bytes, :referrer, :user_agent, 
+            :seconds_connected, presence: true
+         
+  validates :status, format: { with: /\A[1-5][0-9][0-9]\z/ }
+  validates_numericality_of :bytes, :seconds_connected, greater_than_or_equal_to: 0
 end
