@@ -51,14 +51,14 @@ class ParserTest < ActiveSupport::TestCase
 
   test "parse line with invalid datetime" do
     line = {"%h" =>  "78.46.19.144", "%l" => "-" , "%u" => "-", "%t" => "18/Jajfg00", "%>s" => 200,
-      "%b" => 100, "%{Referer}i" => "-", "%{User-agent}i" => "", "(%{ratio}n)" => 1 }
+      "%b" => 100, "%r" => "GET /cuacfm-128k.mp3 HTTP/1.1", "%{Referer}i" => "-", "%{User-agent}i" => "", "(%{ratio}n)" => 1 }
     err = assert_raises(ParserException) {Parser.persist_line line}
     assert_equal "Formato de fecha incorrecto", err.message
   end
   
   test "parse line with invalid data" do
     line = {"%h" =>  "78.46.19.144", "%l" => "-" , "%u" => "-", "%t" => "[18/Jan/2015:06:27:04 +0100]", "%>s" => 800,
-      "%b" => -1, "%{Referer}i" => "", "%{User-agent}i" => "", "(%{ratio}n)" => -1 }
+      "%b" => -1, "%r" => "", "%{Referer}i" => "", "%{User-agent}i" => "", "(%{ratio}n)" => -1 }
     err = assert_raises(ParserException) {Parser.persist_line line}
     assert_equal "Datos inválidos", err.message
   end

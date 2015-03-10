@@ -26,6 +26,7 @@ gem 'bson_ext'
 gem 'apachelogregex', '~> 0.1.0'
 gem "factory_girl_rails"
 gem 'rb-readline'
+gem 'ipaddress'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
