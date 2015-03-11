@@ -26,11 +26,11 @@ module Parser
   # Persiste una línea del fichero de log en la base de datos
   def Parser.persist_line(line)
     begin
-      time = line["%t"]
-      date = DateTime.evolve(DateTime.strptime(time, "[%d/%b/%Y:%H:%M:%S %Z]"))
+      date = Parser.string_to_datetime line["%t"]
+      cnt, reg, ct = Parser.get_geo_info line["%h"]
       Connection.create!(ip: line["%h"], identd: line["%l"], userid: line["%u"], datetime: date, request: line["%r"],
         status: line["%>s"], bytes: line["%b"], referrer: line["%{Referer}i"], user_agent: line["%{User-agent}i"],
-        seconds_connected: line["(%{ratio}n)"])
+        seconds_connected: line["(%{ratio}n)"], city: ct, region: reg, country: cnt)
     rescue Mongoid::Errors::Validations => e
        Parser.write_log "Invalid data parsing line #{e.message}"
        raise ParserException, "Datos inválidos"
@@ -44,7 +44,18 @@ module Parser
   end
   
   private
+  def Parser.string_to_datetime str
+    time = str
+    date = DateTime.evolve(DateTime.strptime(time, "[%d/%b/%Y:%H:%M:%S %Z]"))
+    date
+  end
+  
   def Parser.write_log message
     Rails.logger.warn message
+  end
+  
+  def Parser.get_geo_info ip
+    info = Geocoder.search ip
+    [info[0].data["country_name"], info[0].data["region_name"], info[0].data["city"]]
   end
 end

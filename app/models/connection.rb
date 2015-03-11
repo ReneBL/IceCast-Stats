@@ -10,6 +10,9 @@ class Connection
   field :referrer, type: String
   field :user_agent, type: String
   field :seconds_connected, type: Integer
+  field :city, type: String
+  field :region,  type: String
+  field :country, type: String
 
   validates :identd, :userid, :datetime, :request, :status, :bytes, :referrer, :user_agent, 
             :seconds_connected, presence: true
