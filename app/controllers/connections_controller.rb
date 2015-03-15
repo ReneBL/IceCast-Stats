@@ -1,74 +1,88 @@
+require 'parser'
+
 class ConnectionsController < ApplicationController
-  before_action :set_connection, only: [:show, :edit, :update, :destroy]
-
-  # GET /connections
-  # GET /connections.json
+ 
+# db.connections.aggregate({$project : {year : {$year : "$datetime"}}}, {$group : { _id : {year : "$year"}, count : {$sum : 1}}})
+  
   def index
-    @connections = Connection.all
-  end
-
-  # GET /connections/1
-  # GET /connections/1.json
-  def show
-  end
-
-  # GET /connections/new
-  def new
-    @connection = Connection.new
-  end
-
-  # GET /connections/1/edit
-  def edit
-  end
-
-  # POST /connections
-  # POST /connections.json
-  def create
-    @connection = Connection.new(connection_params)
-
+    #@result = Connection.where(:datetime.gt => "2013-01-01", :datetime.lt => "2014-01-01")
+    result = Connection.collection.aggregate(
+        {
+          "$project" => {
+            'year' => {
+              "$year" => "$datetime"
+            }
+          }
+        }, 
+        {
+          "$group" => {
+             '_id' => {
+               'year' => "$year"
+             }, 
+             'count' => {
+               "$sum" => 1
+             }
+          }
+        }
+    )
     respond_to do |format|
-      if @connection.save
-        format.html { redirect_to @connection, notice: 'Connection was successfully created.' }
-        format.json { render :show, status: :created, location: @connection }
-      else
-        format.html { render :new }
-        format.json { render json: @connection.errors, status: :unprocessable_entity }
-      end
+      format.html
+      format.json {render :json => result}
     end
   end
-
-  # PATCH/PUT /connections/1
-  # PATCH/PUT /connections/1.json
-  def update
-    respond_to do |format|
-      if @connection.update(connection_params)
-        format.html { redirect_to @connection, notice: 'Connection was successfully updated.' }
-        format.json { render :show, status: :ok, location: @connection }
-      else
-        format.html { render :edit }
-        format.json { render json: @connection.errors, status: :unprocessable_entity }
-      end
-    end
+  
+  def months
+    # db.connections.aggregate({$project : {month : {$month : "$datetime"}, year : {$year : "$datetime"}}}, {$match : {year : 2013}}, {$group : { _id : {month : "$month"}, count : {$sum : 1}}}, {$sort : {_id : 1}})
+    year = params[:year].to_i
+    result = Connection.collection.aggregate(
+      {
+        "$project" => {
+          'month' => {'$month' => '$datetime'},
+          'year' => {'$year' => '$datetime'}
+        }
+      },
+      {
+        '$match' => {
+          'year' => year,
+        }
+      },
+      {
+        "$group" => {
+          '_id' => {
+            'month' => '$month'
+          },
+          'count' => {
+            '$sum' => 1
+          }
+        }
+      },
+      {
+        "$sort" => {
+          '_id' => 1
+        }
+      }
+    )   
+    render :json => result
   end
-
-  # DELETE /connections/1
-  # DELETE /connections/1.json
-  def destroy
-    @connection.destroy
-    respond_to do |format|
-      format.html { redirect_to connections_url, notice: 'Connection was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+  
+  def years
+    result = Connection.collection.aggregate(
+      {
+        "$project" => {
+          'year' => {"$year" => "$datetime"}
+        }
+      }, 
+      {
+        "$group" => { 
+          '_id' => {'year' => "$year"}
+         }
+      }, 
+      {
+        "$sort" => {
+          '_id' => -1
+        }
+      })
+      render :json => result
   end
-
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_connection
-      @connection = Connection.find(params[:id])
-    end
-
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def connection_params
-      params.require(:connection).permit(:ip, :identd, :userid, :datetime, :request, :status, :bytes, :referrer, :user_agent, :seconds_connected)
-    end
+  
 end
