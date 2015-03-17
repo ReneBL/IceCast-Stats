@@ -77,4 +77,69 @@ FactoryGirl.define do
     seconds_connected 3
   end
   
+  factory :connection_with_5_seconds, class: Connection do
+    ip '78.46.19.144'
+    identd '-'
+    userid '-'
+    datetime '2014-03-25 05:27:04 UTC'
+    request 'GET /cuacfm-128k.mp3 HTTP/1.1'
+    status 200
+    bytes 115396
+    referrer '-'
+    user_agent 'iTunes/9.1.1'
+    seconds_connected 5
+  end
+  
+  factory :connection_with_20_seconds, class: Connection do
+    ip '78.46.19.144'
+    identd '-'
+    userid '-'
+    datetime '2014-03-25 05:27:04 UTC'
+    request 'GET /cuacfm-128k.mp3 HTTP/1.1'
+    status 200
+    bytes 115396
+    referrer '-'
+    user_agent 'iTunes/9.1.1'
+    seconds_connected 20
+  end
+  
+  factory :connection_with_30_seconds, class: Connection do
+    ip '78.46.19.144'
+    identd '-'
+    userid '-'
+    datetime '2014-03-25 05:27:04 UTC'
+    request 'GET /cuacfm-128k.mp3 HTTP/1.1'
+    status 200
+    bytes 115396
+    referrer '-'
+    user_agent 'iTunes/9.1.1'
+    seconds_connected 30
+  end
+  
+  factory :connection_with_60_seconds, class: Connection do
+    ip '78.46.19.144'
+    identd '-'
+    userid '-'
+    datetime '2014-03-25 05:27:04 UTC'
+    request 'GET /cuacfm-128k.mp3 HTTP/1.1'
+    status 200
+    bytes 115396
+    referrer '-'
+    user_agent 'iTunes/9.1.1'
+    seconds_connected 60
+  end
+  
+  factory :connection_with_120_seconds, class: Connection do
+    ip '78.46.19.144'
+    identd '-'
+    userid '-'
+    datetime '2014-03-25 05:27:04 UTC'
+    request 'GET /cuacfm-128k.mp3 HTTP/1.1'
+    status 200
+    bytes 115396
+    referrer '-'
+    user_agent 'iTunes/9.1.1'
+    seconds_connected 120
+  end
+  
 end

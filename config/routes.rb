@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   get 'connections/index'
   get 'connections/months/:year' => 'connections#months'
   get 'connections/years' => 'connections#years'
+  get 'connections/ranges' => 'connections#ranges'
   resources :connections
 
   # The priority is based upon order of creation: first created -> highest priority.

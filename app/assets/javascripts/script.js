@@ -1,3 +1,19 @@
+function print_pie_chart( datos ) {
+	   var array = [['Range', 'Connections per range']];
+	   for(elem in datos) {
+	   	   array.push([datos[elem]._id, datos[elem].count]);
+	   }
+	   var data = google.visualization.arrayToDataTable(array);
+
+   var options = {
+      title: 'Mean duration of connections',
+      is3D: true,
+   };
+
+   var chart = new google.visualization.PieChart(document.getElementById('time_connections'));
+   chart.draw(data, options);
+}
+
 function print_column_chart( datos ) {
    var data = new google.visualization.DataTable();
 	   data.addColumn('number', 'Months');
@@ -63,6 +79,18 @@ function months_year_chart() {
    );
 }
 
+function range_seconds_chart() {
+	   $.ajax({
+       type: "GET",
+       			url: "/connections/ranges",
+       			dataType: "json",
+       			success: function ( data ) {
+            			print_pie_chart(data);
+         }
+       }
+   );
+}
+
 function year_chart() {
 	   $.ajax({
        type: "GET",
@@ -78,6 +106,7 @@ function year_chart() {
 function get_data() {
 	   year_chart();
 	   //months_year_chart();
+	   range_seconds_chart();
 }
 
 function populateSelect() {

@@ -24,7 +24,6 @@ gem 'mongoid', '~> 4', github: 'mongoid/mongoid'
 gem 'bson'
 gem 'bson_ext'
 gem 'apachelogregex', '~> 0.1.0'
-gem "factory_girl_rails"
 gem 'rb-readline'
 gem 'ipaddress'
 gem 'geocoder'
@@ -49,5 +48,7 @@ group :development, :test do
   
   gem 'rspec-rails', '~> 3.0'
   gem 'database_cleaner'
+  gem "factory_girl_rails"
+
 end
 
