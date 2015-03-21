@@ -1,0 +1,21 @@
+// Place all the styles related to the Index controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+body.home {
+  background-image: url(backg.jpg);
+}
+
+#jumboWelcomePage {
+  background-color: transparent;
+  color: white;
+}
+
+#buttonLogin {
+  text-align: center;
+}
+
+#adminQuestion {
+  margin-top: 15%;
+  font-size: 14px;
+}

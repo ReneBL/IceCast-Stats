@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  root :to => 'home#index'
+  
   get 'connections/index'
   get 'connections/months/:year' => 'connections#months'
   get 'connections/years' => 'connections#years'

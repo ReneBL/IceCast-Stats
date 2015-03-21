@@ -31,5 +31,7 @@ module IceCastStats
     #config.autoload_paths += Dir["#{config.root}/lib/**/"]
     config.eager_load_paths << Rails.root.join("lib")
     config.autoload_paths << Rails.root.join("config")
+    config.assets.paths << Rails.root.join("vendor","assets","bower_components")
+    config.assets.precompile << %r(.*.(?:eot|svg|ttf|woff)$)
   end
 end
