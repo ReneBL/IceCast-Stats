@@ -1,0 +1,44 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+@import "bootstrap-sprockets";
+@import "bootstrap";
+@import url(http://fonts.googleapis.com/css?family=Chelsea+Market);
+
+#cabecera {
+background-image: -webkit-gradient(
+  linear,
+  left bottom,
+  right top,
+  color-stop(0, #000000),
+  color-stop(1, #171FFF)
+);
+background-image: -o-linear-gradient(right top, #000000 0%, #171FFF 100%);
+background-image: -moz-linear-gradient(right top, #000000 0%, #171FFF 100%);
+background-image: -webkit-linear-gradient(right top, #000000 0%, #171FFF 100%);
+background-image: -ms-linear-gradient(right top, #000000 0%, #171FFF 100%);
+background-image: linear-gradient(to right top, #000000 0%, #171FFF 100%);
+}
+
+#cabecera h1 {
+  font-family: 'Chelsea Market', cursive;
+  color: azure;
+  margin: 0px;
+  font-size: 60px;
+}
+
+#icecastImage img {
+  width: 7%;
+}

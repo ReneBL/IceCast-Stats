@@ -110,7 +110,6 @@ function get_data() {
 }
 
 function populateSelect() {
-	   alert("populate");
 	   $.ajax(
 	   	  {type : "GET", url: "connections/years", async : false, dataType: "json",
 	   	   success: function ( data ) {

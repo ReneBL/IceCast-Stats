@@ -8,6 +8,15 @@
 </head>
 <body class="<%= controller.controller_name %>">
 
+<header id="cabecera">
+	<h1 class="text-center">
+		<span id="icecastImage"><%= image_tag 'icecast.png' %></span>
+		IceCast-Stats
+	</h1>
+	<%= image_tag 'button-menu.png' %>
+</header>
+
+
 <%= yield %>
 
 </body>
