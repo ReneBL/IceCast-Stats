@@ -16,4 +16,7 @@
 //= require angular/angular
 //= require angular-route/angular-route
 //= require angular-rails-templates
+//= require icecastStats
+//= require angular-snap/angular-snap
+//= require snapjs/snap
 //= require bootstrap-sprockets

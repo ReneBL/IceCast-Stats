@@ -10,26 +10,41 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
  *
+ *= require angular-snap/angular-snap
+ *= require snapjs/snap
  *= require_tree .
- *= require_self
+ *= require_self 
  */
 @import "bootstrap-sprockets";
 @import "bootstrap";
 @import url(http://fonts.googleapis.com/css?family=Chelsea+Market);
 
+#snapCont {
+  background-color: #fff;
+  transform: initial;
+}
+
+.header {
+  position: fixed;
+  width: 100%;
+}
+
+#divButton {
+  width: 10%;
+  float: left;
+}
+
+#divHeader {
+  width: 80%;
+}
+
+.content {
+  width: 100%;
+  margin-top: 8%;
+}
+
 #cabecera {
-background-image: -webkit-gradient(
-  linear,
-  left bottom,
-  right top,
-  color-stop(0, #000000),
-  color-stop(1, #171FFF)
-);
-background-image: -o-linear-gradient(right top, #000000 0%, #171FFF 100%);
-background-image: -moz-linear-gradient(right top, #000000 0%, #171FFF 100%);
-background-image: -webkit-linear-gradient(right top, #000000 0%, #171FFF 100%);
-background-image: -ms-linear-gradient(right top, #000000 0%, #171FFF 100%);
-background-image: linear-gradient(to right top, #000000 0%, #171FFF 100%);
+background-color: black;
 }
 
 #cabecera h1 {
@@ -39,6 +54,68 @@ background-image: linear-gradient(to right top, #000000 0%, #171FFF 100%);
   font-size: 60px;
 }
 
+#drawers {
+  background-color: rgb(33, 32, 37);
+}
+
 #icecastImage img {
   width: 7%;
+}
+
+div#month_per_year  div {
+  position: inherit !important;
+}
+
+#menu {
+background-color: rgb(33, 32, 37);
+}
+
+#menuButton {
+  background: url(button-menu.png);
+  width: 66px;
+  height: 49px;
+  background-size: 66px 53px;
+  border-width: 0px;
+  padding: 0px;
+}
+
+#menu ul {
+  list-style: none;
+  margin: 0px;
+  padding: 0px;
+}
+
+#menu li {
+  color: white;
+  padding: 15px 15px 15px 15px;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  border-bottom-color: black;
+  border-left-width: 7px;
+  border-left-style: solid;
+  border-left-color: rgba(23, 0, 218, 0.9);
+}
+
+#menu li:hover {
+  background-color: rgb(20, 21, 47);
+}
+
+#menu li a:link {
+  text-decoration: none;
+  color: white;
+}
+
+#menu li a:visited {
+  color: white;
+}
+
+#menu li a {
+  font-family: 'Chelsea Market', cursive;
+  font-size: 20px;
+  margin-left: 15px;
+  vertical-align: super;
+}
+
+#menu li span {
+  font-size: 30px;
 }

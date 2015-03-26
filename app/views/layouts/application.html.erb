@@ -6,18 +6,36 @@
   <%= javascript_include_tag 'application', params[:controller] %>
   <%= csrf_meta_tags %>
 </head>
-<body class="<%= controller.controller_name %>">
+<body class="<%= controller.controller_name %>" ng-app="icecastStats">
 
-<header id="cabecera">
-	<h1 class="text-center">
-		<span id="icecastImage"><%= image_tag 'icecast.png' %></span>
-		IceCast-Stats
-	</h1>
-	<%= image_tag 'button-menu.png' %>
-</header>
+<snap-drawers id="drawers">
+	<snap-drawer id="menu">
+		<ul>
+			<li><span class="glyphicon glyphicon-home"></span> <a href="#">Inicio</a></li>
+			<li><span class="glyphicon glyphicon-stats"></span> <a href="#">Estadísticas</a></li>
+			<li><span class="glyphicon glyphicon-cog"></span> <a href="#">Configuración</a></li>
+		</ul>
+	</snap-drawer>
+</snap-drawers>
 
-
-<%= yield %>
-
+<div snap-content id="snapCont">
+	<div class="header">
+		<header id="cabecera">
+			<div id="divButton">
+				<button id="menuButton" snap-toggle="">
+				</button>
+			</div>
+			<div id="divHeader">
+				<h1 class="text-center">
+					<span id="icecastImage"><%= image_tag 'icecast.png' %></span>
+					IceCast-Stats
+				</h1>
+			</div>		
+		</header>
+	</div>
+	<div class="content">
+		<%= yield %>
+	</div>
+</div>
 </body>
 </html>
