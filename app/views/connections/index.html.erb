@@ -1,22 +1,16 @@
-<script type="text/javascript" src="https://www.google.com/jsapi"></script>
-<script type="text/javascript">
-      google.load("visualization", "1.1", {packages:["bar"]});
-      google.load("visualization", "1.1", {packages:["corechart"]});
-      google.load("visualization", "1", {packages:["corechart"]});
-      google.setOnLoadCallback(get_data);
-</script>
-
-<h1>Connections#index</h1>
-<p>Find me in app/views/connections/index.html.erb</p>
-
-<div id="chart" style="width: 50%"></div>
-<button id="target">Press me!</button>
-
-<div>
-	<select id="years"></select>
+<div ng-controller="YearsConnectionsController">
+	<span ng-if="yearsChartLoaded">
+		<div id="chart" style="width: 50%" chart chart-type="Bar"></div>
+	</span>
 </div>
-<div id="month_per_year" style="width: 50%"></div>
 
-<div id="time_connections" style="width: 50%"></div>
-
+<select id="years" ng-controller="YearsController" ng-model="year" ng-options="y._id.year for y in years">
+</select>
+	
+<div id="month_per_year" style="width: 50%" chart chart-type="Column"></div>
+<div ng-controller="RangesController">
+	<span ng-if="rangesDataLoaded">
+		<div id="time_connections" style="width: 50%" chart chart-type="Pie"></div>
+	</span>
+</div>
 

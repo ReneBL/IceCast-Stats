@@ -3,6 +3,7 @@
   "dependencies": {
     "angular": "latest",
     "angular-route": "latest",
-    "angular-snap": "latest"
+    "angular-snap": "latest",
+    "angular-resource": "latest"
   }
 }

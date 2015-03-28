@@ -2,11 +2,19 @@
 <html>
 <head>
   <title>IceCastStats</title>
+  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+  <script type="text/javascript">
+      google.load("visualization", "1.1", {packages:["bar"]});
+      google.load("visualization", "1.1", {packages:["corechart"]});
+      google.load("visualization", "1", {packages:["corechart"]});
+  </script>
   <%= stylesheet_link_tag    'application', media: 'all'%>
   <%= javascript_include_tag 'application', params[:controller] %>
+  <%= javascript_include_tag 'directives' %>
+  <%= javascript_include_tag 'services' %>
   <%= csrf_meta_tags %>
 </head>
-<body class="<%= controller.controller_name %>" ng-app="icecastStats">
+<body class="<%= controller.controller_name %>">
 
 <snap-drawers id="drawers">
 	<snap-drawer id="menu">
