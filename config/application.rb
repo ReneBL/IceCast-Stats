@@ -32,6 +32,9 @@ module IceCastStats
     config.eager_load_paths << Rails.root.join("lib")
     config.autoload_paths << Rails.root.join("config")
     config.assets.paths << Rails.root.join("vendor","assets","bower_components")
+    config.assets.paths << Rails.root.join("vendor","assets","bootstrap-3.3.4-dist","css")
+    config.assets.paths << Rails.root.join("vendor","assets","bootstrap-3.3.4-dist","fonts")
+    config.assets.paths << Rails.root.join("vendor","assets","bootstrap-3.3.4-dist","js")
     config.assets.precompile << %r(.*.(?:eot|svg|ttf|woff)$)
   end
 end

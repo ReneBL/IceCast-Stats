@@ -1,0 +1,12 @@
+<div ng-controller="StatsController">
+	<div>
+	<nav id="cssmenu">
+  		<ul>
+  			<li class='active'><a ng-click="page = 'stats/connections/_connections.html'">Conexiones</a></li>
+			<li><a ng-click="page = 'stats/geolocation/_locations.html'">Localización</a></li>
+			<li class='last'><a ng-click="page = 'stats/pages/_pages.html'">Páginas</a></li>
+  		</ul>
+	</nav>
+	</div>
+	<div ng-include='page' id="template"></div>
+</div>

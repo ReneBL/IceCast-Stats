@@ -4,24 +4,19 @@
   <title>IceCastStats</title>
   <script type="text/javascript" src="https://www.google.com/jsapi"></script>
   <script type="text/javascript">
-      google.load("visualization", "1.1", {packages:["bar"]});
-      google.load("visualization", "1.1", {packages:["corechart"]});
-      google.load("visualization", "1", {packages:["corechart"]});
+  	google.load('visualization', '1.0', {'packages':['corechart', 'bar']});
   </script>
-  <%= stylesheet_link_tag    'application', media: 'all'%>
-  <%= javascript_include_tag 'application', params[:controller] %>
-  <%= javascript_include_tag 'directives' %>
-  <%= javascript_include_tag 'services' %>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application' %>
   <%= csrf_meta_tags %>
 </head>
-<body class="<%= controller.controller_name %>">
-
+<body>
 <snap-drawers id="drawers">
 	<snap-drawer id="menu">
 		<ul>
-			<li><span class="glyphicon glyphicon-home"></span> <a href="#">Inicio</a></li>
-			<li><span class="glyphicon glyphicon-stats"></span> <a href="#">Estadísticas</a></li>
-			<li><span class="glyphicon glyphicon-cog"></span> <a href="#">Configuración</a></li>
+			<li><span class="glyphicon glyphicon-home"></span> <a href="#/" snap-toggle="">Inicio</a></li>
+			<li><span class="glyphicon glyphicon-stats"></span> <a href="#/stats" snap-toggle="">Estadísticas</a></li>
+			<li><span class="glyphicon glyphicon-cog"></span> <a href="#" snap-toggle="">Configuración</a></li>
 		</ul>
 	</snap-drawer>
 </snap-drawers>
@@ -41,9 +36,8 @@
 			</div>		
 		</header>
 	</div>
-	<div class="content">
-		<%= yield %>
-	</div>
+	<div ng-view class="content"></div>
 </div>
+
 </body>
 </html>

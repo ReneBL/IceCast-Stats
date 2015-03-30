@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  root :to => 'home#index'
+  root :to => 'layouts#index'
   
   get 'connections/index'
   get 'connections/months/:year' => 'connections#months'

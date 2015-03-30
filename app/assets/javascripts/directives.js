@@ -1,5 +1,3 @@
-'use strict';
-
 var app = angular.module('icecastStats');
 
 app.directive("chart", function() {
