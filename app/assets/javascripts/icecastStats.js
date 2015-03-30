@@ -1,9 +1,21 @@
-angular.module('icecastStats', ['snap'])
-.controller('HomeController', function() {
-	  this.hola = 'hola';
-	  this.nombre = '';
-	  
-	  this.saludo = function() {
-	  	   return this.hola + ' ' + this.nombre;
-	  };
+var app = angular.module('icecastStats', ['snap', 'ngRoute', 'templates', 'iceServices']);
+
+app.config(['$routeProvider',
+  function($routeProvider) {
+    $routeProvider.
+      when('/', {
+        templateUrl: 'home/_prueba.html',
+        controller: 'PruebaController'
+      }).
+      when('/stats', {
+      	  templateUrl: 'stats/_stats.html',
+      	  controller: 'StatsController'
+      }).
+      otherwise({
+        redirectTo: '/'
+      });
+  }]);
+
+google.setOnLoadCallback(function () {
+	  angular.bootstrap(document.body, ['icecastStats']);
 });

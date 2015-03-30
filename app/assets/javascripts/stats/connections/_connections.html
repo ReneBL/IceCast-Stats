@@ -1,0 +1,19 @@
+<div ng-controller="ConnectionsController">
+	<h1 class="text-center">STATS</h1>
+	<p>This page is not implemented yet</p>
+	
+	<div ng-controller="YearsConnectionsController">
+		<span ng-if="yearsChartLoaded">
+			<div id="chart" style="width: 50%" chart chart-type="Bar"></div>
+		</span>
+	</div>
+
+	<select id="years" ng-controller="YearsController" ng-model="year" ng-options="y._id.year for y in years">
+	</select>
+	
+	<div ng-controller="RangesController">
+		<span ng-if="rangesDataLoaded">
+			<div id="time_connections" style="width: 50%" chart chart-type="Pie"></div>
+		</span>
+	</div>
+</div>

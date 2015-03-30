@@ -1,4 +1,5 @@
 asset 'angular'
 asset 'angular-route'
 asset 'angular-snap'
+asset 'angular-resource'
 # vim: ft=ruby
