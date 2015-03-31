@@ -9,18 +9,29 @@ module Parser
   end
 
   # Recorre las línes del fichero de log que se pasa como parámetro, por defecto el fichero de log del servidor
+  # Además, obtiene el offset del fichero de configuración para obviar las líneas que ya han sido parseadas
+  # Por último actualiza dicho fichero de configuración guardando el offset donde se ha quedado 
   def Parser.parse(path=@config['log_path'])
     begin
-      format=@config['log_format']
-      parser = ApacheLogRegex.new(format)
-      File.foreach(path) do |line|
-        result = parser.parse!(line)
-        persist_line result
-      end
+      if File.exists? path
+        parser = ApacheLogRegex.new(@config['log_format'])
+        f = File.open(path, 'r+')
+        f.seek(@config['seek_pos'], :SET)
+        line = f.gets
+        while (line != nil) do
+          result = parser.parse!(line)
+          persist_line result
+          line = f.gets
+        end
+        @config['seek_pos'] = f.tell
+        File.open('config/parser_config.yml', 'w+') {|f| f.write @config.to_yaml }
+      else
+        raise ParserException, "File not found"
+      end 
     rescue ApacheLogRegex::ParseError => e
       Parser.write_log "Parser format exception #{e.message}"
       raise ParserException, "Formato incorrecto"
-    end
+    end 
   end
 
   # Persiste una línea del fichero de log en la base de datos
