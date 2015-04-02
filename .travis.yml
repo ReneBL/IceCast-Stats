@@ -7,3 +7,5 @@ rvm:
   - 2.2.1
 services:
   - mongodb
+env:
+  SECRET_KEY_BASE="$(bundle exec rake secret)"
