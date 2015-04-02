@@ -3,5 +3,6 @@ before_install:
   - gem --version
 language: ruby
 rvm:
-  - 2.1.1p76
+  - 2.1.1
+  - 2.2.1
 
