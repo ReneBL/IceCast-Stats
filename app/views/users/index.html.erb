@@ -2,8 +2,12 @@
 <html>
 <head>
   <title>IceCastStats</title>
+  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+  <script type="text/javascript">
+  	google.load('visualization', '1.0', {'packages':['corechart', 'bar']});
+  </script>
   <%= stylesheet_link_tag    'application', media: 'all'%>
-  <%= javascript_include_tag 'application', params[:controller] %>
+  <%= javascript_include_tag 'application'%>
   <%= csrf_meta_tags %>
 </head>
 <body class="<%= controller.controller_name %>">
@@ -30,22 +34,21 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="modalLoginLabel">Login</h4>
       </div>
-      <form>
+      <% flash.each do |name, msg| -%>
+      	<div class="alert alert-danger" role="alert"><%= msg %></div>
+      <% end -%>
+      <%= form_for(:session, url: login_path) do |f| %>
       	<div class="modal-body">
-        	<div>
-        		<label for="userEmail">Usuario</label>
-        		<input type="email" class="form-control" id="userEmail" placeholder="Introduzca e-mail">
-        	</div>
-        	<div>
-        		<label for="passwd">Contraseña</label>      	
-    			<input type="password" class="form-control" id="passwd" placeholder="Introduzca contraseña">
-        	</div>
+        	<%= f.label :login %>
+        	<%= f.text_field :login, class: 'form-control' %>
+        	<%= f.label :password %>
+        	<%= f.password_field :password, class: 'form-control' %>
       	</div>
       	<div class="modal-footer">
         	<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-        	<button type="button" class="btn btn-primary">Login</button>
+        	<%= f.submit "Login", class: "btn btn-primary" %>
       	</div>
-      </form>
+      <% end %>
     </div>
   </div>
 </div>

@@ -10,6 +10,7 @@
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
 //
+//= require jquery
 //= require angular/angular
 //= require angular-route/angular-route
 //= require angular-snap/angular-snap
@@ -17,4 +18,5 @@
 //= require angular-rails-templates
 //= require angular-resource/angular-resource
 //= require icecastStats
+//= require bootstrap-sprockets
 //= require_tree .
