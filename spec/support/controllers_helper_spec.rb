@@ -1,4 +1,4 @@
-module ApplicationHelper
+module ControllersHelperSpec 
   def log_in(user)
     session[:user_id] = user._id.to_s
   end
@@ -19,4 +19,8 @@ module ApplicationHelper
   def check_authentication
     redirect_to login_form_path if !authenticated?
   end
+end
+
+RSpec.configure do |config|
+  config.include ControllersHelperSpec, :type => :controller
 end

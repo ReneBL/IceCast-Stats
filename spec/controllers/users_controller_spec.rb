@@ -21,12 +21,6 @@ RSpec.describe UsersController, type: :controller do
       expect(response.body).to match(/Login/)
     end
     
-    # it "should redirect logged admin to home page" do
-      # post :create, session: { login: "admin", password: "admin" }
-      # expect(response).to redirect_to(home_path)
-      # get :index
-      # expect(response).to render_template("layouts#index")
-    # end
   end
   
   describe "when post admin credentials" do
@@ -50,20 +44,20 @@ RSpec.describe UsersController, type: :controller do
       post :create, session: { login: "adminnnnn", password: "admin" }
       expect(flash).not_to be_empty
       expect(flash[:wrong_login]).to eq("Login no válido")
-      expect(response).to redirect_to(root_path)
+      expect(response).to redirect_to(login_form_path)
     end
     
     it "should advertise not valid password" do
       post :create, session: { login: "admin", password: "adminfalse" }
       expect(flash).not_to be_empty
       expect(flash[:wrong_password]).to eq("Password no válida")
-      expect(response).to redirect_to(root_path)
+      expect(response).to redirect_to(login_form_path)
     end
     
     it "should ignore non permitted params" do
       # Inyectamos un parámetro que no está contemplado
       post :create, session: { login: "admin", injectedParam: true }
-      expect(response).to redirect_to(root_path)
+      expect(response).to redirect_to(login_form_path)
     end
   end
 

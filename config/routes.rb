@@ -10,6 +10,7 @@ Rails.application.routes.draw do
 
   post 'login' => 'users#create'
   get 'logout' => 'users#destroy'
+  get 'login_form' => 'users#login_form'
   resources :users
 
   # The priority is based upon order of creation: first created -> highest priority.

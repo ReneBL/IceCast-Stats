@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   protect_from_forgery with: :exception
-  skip_before_filter :check_authentication, :only => [:index, :create]
+  skip_before_filter :check_authentication, :only => [:index, :create, :login_form]
   before_action :session_params, only: [:create]
    
   def index
@@ -29,11 +29,15 @@ class UsersController < ApplicationController
     redirect_to root_path
   end
   
+  def login_form
+    render :layout => false
+  end
+  
   private
   # Método genérico de generación de mensaje flash con redirección a página de inicio
   def abort cause, message
     flash[cause] = message
-    redirect_to root_path
+    redirect_to login_form_path
   end
   
   def session_params
