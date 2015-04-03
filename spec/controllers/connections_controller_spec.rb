@@ -20,6 +20,8 @@ RSpec.describe ConnectionsController, type: :controller do
         { :_id => { :year => 2013 }, :count => 2 }
       ]
       @year_connections = year_connections_array.to_json
+      admin = FactoryGirl.create(:admin)
+      log_in(admin)
     end
     it "should response" do
       get :index
@@ -49,6 +51,9 @@ RSpec.describe ConnectionsController, type: :controller do
         { :_id => { :month => 3 }, :count => 1 }
       ]
       @month_connections_per_year = month_connections_per_year_array.to_json
+      
+      admin = FactoryGirl.create(:admin)
+      log_in(admin)
     end
     
     it "should response month connections per 2014 year in JSON" do
@@ -70,6 +75,9 @@ RSpec.describe ConnectionsController, type: :controller do
         { :_id => { :year => 2013 }}
       ]
       @years = years_array.to_json
+      
+      admin = FactoryGirl.create(:admin)
+      log_in(admin)
     end
     
     it "should response years in JSON" do
@@ -94,6 +102,9 @@ RSpec.describe ConnectionsController, type: :controller do
         { :_id => "range > 60", :count => 1}
       ]
       @ranges = ranges_array.to_json
+      
+      admin = FactoryGirl.create(:admin)
+      log_in(admin)
     end
     
     it "should return ranges of seconds" do
@@ -101,6 +112,22 @@ RSpec.describe ConnectionsController, type: :controller do
       expect(response.body).to eql(@ranges)
     end
     
+  end
+  
+  describe "when admin not authenticated" do
+    it "should redirect to login form page" do
+      xhr :get, :ranges, :format => :json
+      expect(response).to redirect_to(login_form_path)
+      
+      xhr :get, :years, :format => :json
+      expect(response).to redirect_to(login_form_path)
+      
+      xhr :get, :index, :format => :json
+      expect(response).to redirect_to(login_form_path)
+      
+      xhr :get, :months, :year => 2014, :format => :json
+      expect(response).to redirect_to(login_form_path)
+    end
   end
   
 end

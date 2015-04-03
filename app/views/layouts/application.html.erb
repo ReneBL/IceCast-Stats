@@ -33,7 +33,12 @@
 					<span id="icecastImage"><%= image_tag 'icecast.png' %></span>
 					IceCast-Stats
 				</h1>
-			</div>		
+			</div>	
+			<% if authenticated? %>
+				<div id="userInfo">
+					<span>Usuario: <%= current_user.login %>, <%= link_to "Logout", logout_path, method: :delete %></span>
+				</div>	
+			<% end %>
 		</header>
 	</div>
 	<div ng-view class="content"></div>

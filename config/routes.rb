@@ -1,11 +1,17 @@
 Rails.application.routes.draw do
-  root :to => 'layouts#index'
+  root :to => 'users#index'
+  get 'home' => 'layouts#index'
   
   get 'connections/index'
   get 'connections/months/:year' => 'connections#months'
   get 'connections/years' => 'connections#years'
   get 'connections/ranges' => 'connections#ranges'
   resources :connections
+
+  post 'login' => 'users#create'
+  get 'logout' => 'users#destroy'
+  get 'login_form' => 'users#login_form'
+  resources :users
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

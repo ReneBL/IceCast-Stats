@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>IceCastStats</title>
+  <%= stylesheet_link_tag    'application', media: 'all'%>
+  <%= javascript_include_tag 'root_page' %>
+  <%= csrf_meta_tags %>
+</head>
+<body class="<%= controller.controller_name %>">
+
+<div id="jumboWelcomePage" class="jumbotron">
+<h1 class="text-center">IceCast-Stats</h1>
+
+<p class="text-center">
+	Bienvenid@ a IceCast-Stats, una aplicación web para el análisis y generación de estadísticas para un servidor de
+	streaming IceCast.
+</p>
+
+<p id="adminQuestion" class="text-center">¿Eres administrador?. Por favor, identifícate.</p>
+
+<div id="buttonLogin">
+	<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalLogin">Login</button>
+</div>
+</div>
+
+<div class="modal fade" id="modalLogin" tabindex="-1" role="dialog" aria-labelledby="modalLoginLabel" aria-hidden="true">
+	<%= render(partial: "login_form") %>
+</div>
+</body>
+</html>

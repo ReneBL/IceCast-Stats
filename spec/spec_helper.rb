@@ -17,7 +17,7 @@
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
-  
+    
   #Limpiamos la BD antes de ejecutar los test con la suite
   config.before(:suite) do
     DatabaseCleaner.clean_with(:truncation)

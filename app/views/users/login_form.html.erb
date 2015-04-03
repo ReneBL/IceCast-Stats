@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>IceCastStats</title>
+  <%= stylesheet_link_tag    'application', media: 'all'%>
+  <%= javascript_include_tag 'root_page' %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+<div class="panel panel-default">
+  <div class="panel-body">
+  	<h1>Inicia sesión en IceCast-Stats</h1>
+  </div>
+</div>
+<%= render(partial: "login_form") %>
+
+</html>

@@ -26,6 +26,7 @@ module Parser
         @config['seek_pos'] = f.tell
         File.open('config/parser_config.yml', 'w+') {|f| f.write @config.to_yaml }
       else
+        Parser.write_log "Parser couldn't find file: #{path}"
         raise ParserException, "File not found"
       end 
     rescue ApacheLogRegex::ParseError => e

@@ -1,0 +1,11 @@
+before_install:
+  - gem update --system
+  - gem --version
+language: ruby
+rvm:
+  - 2.1.1
+  - 2.2.1
+services:
+  - mongodb
+env:
+  SECRET_KEY_BASE="$(bundle exec rake secret)"
