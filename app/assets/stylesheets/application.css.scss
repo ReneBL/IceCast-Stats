@@ -25,8 +25,7 @@
 }
 
 .header {
-  position: fixed;
-  width: 100%;
+
 }
 
 #contenido {
@@ -39,7 +38,8 @@
 }
 
 #divHeader {
-  width: 80%;
+  width: 77%;
+  float: left;
 }
 
 .content {
@@ -49,6 +49,8 @@
 
 #cabecera {
 background-color: black;
+position: fixed;
+width: 100%;
 }
 
 #cabecera h1 {
@@ -56,6 +58,12 @@ background-color: black;
   color: azure;
   margin: 0px;
   font-size: 60px;
+}
+
+#userInfo {
+  width: 10%;
+  display: inline;
+  color: white;
 }
 
 #drawers {

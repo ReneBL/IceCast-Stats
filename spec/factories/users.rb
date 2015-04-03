@@ -4,4 +4,9 @@ FactoryGirl.define do
     password "admin"
   end
 
+  factory :not_admin_user, class: User do
+    login "pepe"
+    password "pepe"
+  end
+
 end
