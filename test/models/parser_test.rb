@@ -36,10 +36,6 @@ class ParserTest < ActiveSupport::TestCase
     end
   end
 
-  # def openFile
-    # @f = File.open('logTest', 'w+')
-  # end
-
   def comparator result, connections
     valid = true
     for i in 0..(result.count - 1)

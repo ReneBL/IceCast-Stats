@@ -2,4 +2,21 @@ var app = angular.module('icecastStats');
 
 app.controller('StatsController', function($scope) {
 	  $scope.page = 'stats/connections/_connections.html';
+	  $scope.selectedOption = 'conexiones';
+	  
+	  $scope.clickConexiones = function () {
+	  	  $scope.page = 'stats/connections/_connections.html';
+	  	  $scope.selectedOption = 'conexiones';
+	  };
+	  
+	  $scope.clickLocalizaciones = function () {
+	  	  $scope.page = 'stats/geolocation/_locations.html';
+	  	  $scope.selectedOption = 'localizaciones';
+	  };
+	  
+	  $scope.clickPaginas = function () {
+	  	  $scope.page = 'stats/pages/_pages.html';
+	  	  $scope.selectedOption = 'paginas';
+	  };
+	  
 });

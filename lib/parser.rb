@@ -23,8 +23,6 @@ module Parser
           persist_line result
           line = f.gets
         end
-        @config['seek_pos'] = f.tell
-        File.open('config/parser_config.yml', 'w+') {|f| f.write @config.to_yaml }
       else
         Parser.write_log "Parser couldn't find file: #{path}"
         raise ParserException, "File not found"
@@ -32,6 +30,11 @@ module Parser
     rescue ApacheLogRegex::ParseError => e
       Parser.write_log "Parser format exception #{e.message}"
       raise ParserException, "Formato incorrecto"
+    ensure
+      unless f == nil
+        @config['seek_pos'] = f.tell
+        File.open('config/parser_config.yml', 'w+') {|f| f.write @config.to_yaml }
+      end
     end 
   end
 

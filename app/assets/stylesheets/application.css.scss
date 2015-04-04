@@ -17,7 +17,7 @@
  */
 @import "bootstrap-sprockets";
 @import "bootstrap";
-@import url(http://fonts.googleapis.com/css?family=Chelsea+Market);
+@import url(http://fonts.googleapis.com/css?family=Oswald);
 
 #snapCont {
   background-color: #fff;
@@ -54,10 +54,10 @@ width: 100%;
 }
 
 #cabecera h1 {
-  font-family: 'Chelsea Market', cursive;
+  font-family: 'Oswald', sans-serif;
   color: azure;
   margin: 0px;
-  font-size: 60px;
+  font-size: 50px;
 }
 
 #userInfo {
@@ -79,7 +79,7 @@ div#month_per_year  div {
 }
 
 #menu {
-background-color: rgb(33, 32, 37);
+background-color: #28272C;
 }
 
 #menuButton {
@@ -105,7 +105,7 @@ background-color: rgb(33, 32, 37);
   border-bottom-color: black;
   border-left-width: 7px;
   border-left-style: solid;
-  border-left-color: rgba(23, 0, 218, 0.9);
+  border-left-color: rgba(164, 161, 186, 0.9)
 }
 
 #menu li:hover {
@@ -122,7 +122,7 @@ background-color: rgb(33, 32, 37);
 }
 
 #menu li a {
-  font-family: 'Chelsea Market', cursive;
+  font-family: 'Oswald', sans-serif;
   font-size: 20px;
   margin-left: 15px;
   vertical-align: super;

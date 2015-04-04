@@ -1,10 +1,10 @@
 <div ng-controller="StatsController">
-	<div>
+	<div id="menuContainer">
 	<nav id="cssmenu">
   		<ul>
-  			<li class='active'><a ng-click="page = 'stats/connections/_connections.html'" id="Conexiones">Conexiones</a></li>
-			<li><a ng-click="page = 'stats/geolocation/_locations.html'" id="Localizacion">Localización</a></li>
-			<li class='last'><a ng-click="page = 'stats/pages/_pages.html'" id="Paginas">Páginas</a></li>
+  			<li ng-class="{'active': selectedOption == 'conexiones' }"><a ng-click="clickConexiones()" id="Conexiones">Conexiones</a></li>
+			<li ng-class="{'active': selectedOption == 'localizaciones' }"><a ng-click="clickLocalizaciones()" id="Localizacion">Localización</a></li>
+			<li ng-class="{'active': selectedOption == 'paginas' }"><a ng-click="clickPaginas()" id="Paginas">Páginas</a></li>
   		</ul>
 	</nav>
 	</div>
