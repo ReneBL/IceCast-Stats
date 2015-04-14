@@ -70,7 +70,10 @@ module Parser
   end
   
   def Parser.get_geo_info ip
-    info = Geocoder.search ip
+    info = Rails.cache.fetch ip do
+      solvedIp = Geocoder.search ip
+      solvedIp
+    end
     [info[0].data["country_name"], info[0].data["region_name"], info[0].data["city"]]
   end
 end
