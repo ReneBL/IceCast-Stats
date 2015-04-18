@@ -11,6 +11,7 @@
 // about supported directives.
 //
 //= require jquery
+//= require jquery-ui
 //= require angular/angular
 //= require angular-route/angular-route
 //= require angular-snap/angular-snap

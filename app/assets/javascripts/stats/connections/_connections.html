@@ -1,6 +1,5 @@
 <div ng-controller="ConnectionsController">
 	<h1 class="text-center">STATS</h1>
-	<p>This page is not implemented yet</p>
 	
 	<div ng-controller="YearsConnectionsController">
 		<span ng-if="yearsChartLoaded">
@@ -11,9 +10,51 @@
 	<select id="years" ng-controller="YearsController" ng-model="year" ng-options="y._id.year for y in years">
 	</select>
 	
+	<div id="datePickers" ng-controller="DatesController">
+		<div ng-show="invalid">
+			<div class="alert alert-danger alert-dismissible">
+				Fechas inválidas
+			</div>
+		</div>
+		<span>
+			<label>Fecha Inicio: </label>
+			<input type="date" id="fechaIni" ng-model = "fechaInicio" ng-change="changedDate()" required/>
+		</span>
+		<span>
+			<label>Fecha Fin: </label>
+			<input type="date" id="fechaFin" ng-model = "fechaFin" ng-change="changedDate()" required/>
+		</span>
+		<div class="btn-group" role="group">
+  			<button type="button" ng-class="{true:'btn btn-danger', false:'btn btn-default'}[groupBy == 'year']" ng-click="group('year')">Year</button>
+  			<button type="button" ng-class="{true:'btn btn-danger', false:'btn btn-default'}[groupBy == 'month']" ng-click="group('month')">Month</button>
+  			<button type="button" ng-class="{true:'btn btn-danger', false:'btn btn-default'}[groupBy == 'day']" ng-click="group('day')">Day</button>
+		</div>
+		<label>Visitantes únicos:
+    		<input type="checkbox" ng-model="unique">
+  		</label><br/>
+  		<div ng-show="dataEmpty">
+  			<div class="panel panel-default">
+  				<div class="panel-body">
+    				No existen datos para estas fechas
+  				</div>
+			</div>
+  		</div>
+		<div ng-if="loaded">
+			<div ng-if="groupBy == 'year'">
+				<div id="cbdYear" chart chart-type="Bar"></div>
+			</div>
+			<div ng-if="groupBy == 'month'">
+				<div id="cbdMonth" chart chart-type="Column"></div>
+			</div>
+			<div ng-if="groupBy == 'day'">
+				<div id="cbdDay" chart chart-type="Calendar"></div>
+			</div>
+		</div>
+	</div>
+	
 	<div ng-controller="RangesController">
 		<span ng-if="rangesDataLoaded">
-			<div id="time_connections" style="width: 50%" chart chart-type="Pie"></div>
+			<div id="time_connections" chart chart-type="Pie"></div>
 		</span>
 	</div>
 </div>

@@ -2,38 +2,38 @@ require 'rails_helper'
 require 'json'
 
 RSpec.describe ConnectionsController, type: :controller do
-  describe "when access to controllers index" do
-    before(:each) do
-      2.times do
-        FactoryGirl.create(:connection_on_2013)
-      end
-    
-      FactoryGirl.create(:connection_on_2014)
-    
-      3.times do
-        FactoryGirl.create(:connection_on_2015)
-      end
-    
-      year_connections_array = [
-        { :_id => { :year => 2015 }, :count => 3 },
-        { :_id => { :year => 2014 }, :count => 1 },
-        { :_id => { :year => 2013 }, :count => 2 }
-      ]
-      @year_connections = year_connections_array.to_json
-      admin = FactoryGirl.create(:admin)
-      log_in(admin)
-    end
-    it "should response" do
-      get :index
-      expect(response).to be_success
-      expect(response).to have_http_status(200)
-    end
-  
-    it "should response year connections in JSON" do
-      xhr :get, :index, :format => :json
-      expect(response.body).to eql(@year_connections)
-    end
-  end
+  # describe "when access to controllers index" do
+    # before(:each) do
+      # 2.times do
+        # FactoryGirl.create(:connection_on_2013)
+      # end
+#     
+      # FactoryGirl.create(:connection_on_2014)
+#     
+      # 3.times do
+        # FactoryGirl.create(:connection_on_2015)
+      # end
+#     
+      # year_connections_array = [
+        # { :_id => { :year => 2015 }, :count => 3 },
+        # { :_id => { :year => 2014 }, :count => 1 },
+        # { :_id => { :year => 2013 }, :count => 2 }
+      # ]
+      # @year_connections = year_connections_array.to_json
+      # admin = FactoryGirl.create(:admin)
+      # log_in(admin)
+    # end
+    # it "should response" do
+      # get :index
+      # expect(response).to be_success
+      # expect(response).to have_http_status(200)
+    # end
+#   
+    # it "should response year connections in JSON" do
+      # xhr :get, :index, :format => :json
+      # expect(response.body).to eql(@year_connections)
+    # end
+  # end
   
   describe "when access to controllers months" do
     before(:each) do
@@ -122,8 +122,8 @@ RSpec.describe ConnectionsController, type: :controller do
       xhr :get, :years, :format => :json
       expect(response).to redirect_to(login_form_path)
       
-      xhr :get, :index, :format => :json
-      expect(response).to redirect_to(login_form_path)
+      # xhr :get, :index, :format => :json
+      # expect(response).to redirect_to(login_form_path)
       
       xhr :get, :months, :year => 2014, :format => :json
       expect(response).to redirect_to(login_form_path)
@@ -299,7 +299,7 @@ RSpec.describe ConnectionsController, type: :controller do
   end
   
   def xhrRequestConnBetweenDates(expected, st_date='18/01/2014', end_date='01/01/2015', group_by='year', unique='false')
-    xhr :get, :connections_between_dates, :start_date => st_date, :end_date => end_date, :unique => unique,
+    xhr :get, :connections_between_dates, :start_date => st_date, :end_date => end_date, :unique_visitors => unique,
      :group_by => group_by, :format => :json
     expect(response.body).to eql(expected)
   end

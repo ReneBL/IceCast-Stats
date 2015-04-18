@@ -22,5 +22,5 @@ module ControllersHelperSpec
 end
 
 RSpec.configure do |config|
-  config.include ControllersHelperSpec, :type => :controller
+  config.include ControllersHelperSpec
 end

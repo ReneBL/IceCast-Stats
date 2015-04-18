@@ -2,12 +2,11 @@ Rails.application.routes.draw do
   root :to => 'users#index'
   get 'home' => 'layouts#index'
   
-  get 'connections/index'
+  #get 'connections/index'
   get 'connections/months/:year' => 'connections#months'
   get 'connections/years' => 'connections#years'
   get 'connections/ranges' => 'connections#ranges'
-  get 'connections/connections_between_dates/:start_date/:end_date/:group_by/:unique' => 'connections#connections_between_dates'
-  resources :connections
+  get 'connections/connections_between_dates/:start_date/:end_date/:group_by/:unique_visitors' => 'connections#connections_between_dates'
 
   post 'login' => 'users#create'
   get 'logout' => 'users#destroy'

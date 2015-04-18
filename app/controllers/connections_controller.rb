@@ -4,18 +4,18 @@ class ConnectionsController < ApplicationController
   before_action :start_end_date_params, :unique_visitor_param, only: [:connections_between_dates]
   
   def index
-    result = Connection.collection.aggregate(
-        {
-          "$project" => {'year' => {"$year" => "$datetime"}}
-        }, 
-        {
-          "$group" => {'_id' => {'year' => "$year"}, 'count' => {"$sum" => 1}}
-        }
-    )
-    respond_to do |format|
-      format.html
-      format.json {render :json => result}
-    end
+    # result = Connection.collection.aggregate(
+        # {
+          # "$project" => {'year' => {"$year" => "$datetime"}}
+        # }, 
+        # {
+          # "$group" => {'_id' => {'year' => "$year"}, 'count' => {"$sum" => 1}}
+        # }
+    # )
+    # respond_to do |format|
+      # format.html
+      # format.json {render :json => result}
+    # end
   end
   
   def months
@@ -75,30 +75,26 @@ class ConnectionsController < ApplicationController
   end
   
   def connections_between_dates
-    start, finish_date = strings_to_datetime @st_date, @end_date
-    project, group_by = dynamic_parts params[:group_by], @unique
-    match_filter = {"$match" => {"datetime" => {"$gte" => start, "$lte" => finish_date}}}
-    sort = {"$sort" => {"_id" => 1}}
-    if project != nil && group_by != nil
-      if @unique
-        unwind, group = distinct_visitors_count
-        result = Connection.collection.aggregate(match_filter, project, group_by, unwind, group, sort)
-      else
-        result = Connection.collection.aggregate(match_filter, project, group_by, sort)
+    start, finish_date = ConnectionsHelper.begin_end_dates_to_mongo @st_date, @end_date
+    project, group_by, error = DynamicQueryResolver.project_group_parts params[:group_by], @unique
+    if error == nil
+      match_filter = {"$match" => {"datetime" => {"$gte" => start, "$lte" => finish_date}}}
+      sort = {"$sort" => {"_id" => 1}}
+      if project != nil && group_by != nil
+        if @unique
+          unwind, group = DynamicQueryResolver.distinct_visitors_count
+          result = Connection.collection.aggregate(match_filter, project, group_by, unwind, group, sort)
+        else
+          result = Connection.collection.aggregate(match_filter, project, group_by, sort)
+        end
+        render :json => result
       end
-      render :json => result
+    else
+      render :json => error.to_json
     end
   end
   
   private
-  
-  def strings_to_datetime start, finish
-    start += ":00:00:00"
-    finish += ":23:59:59"
-    dateStart = DateTime.evolve(DateTime.strptime(start, "%d/%m/%Y:%H:%M:%S"))
-    dateFinish = DateTime.evolve(DateTime.strptime(finish, "%d/%m/%Y:%H:%M:%S"))
-    [dateStart, dateFinish]
-  end
   
   def start_end_date_params
     @st_date = params[:start_date]
@@ -112,50 +108,8 @@ class ConnectionsController < ApplicationController
     end
   end
   
-  def dynamic_parts group_by, unique
-    case group_by
-    when "year"   
-      if unique
-        project = {"$project" => {"year" => {"$year" => "$datetime"}, "datetime" => 1, "ip" => 1}}
-        group = {"$group" => { "_id" => {"year" => "$year"}, "ips" => {"$addToSet" => "$ip"}}}
-      else
-        project = {"$project" => {"year" => {"$year" => "$datetime"}, "datetime" => 1}}
-        group = {"$group" => { "_id" => {"year" => "$year"}, "count" => {"$sum" => 1}}}
-      end
-    when "month"
-      if unique
-        project = {"$project" => {"year" => {"$year" => "$datetime"}, "month" => {"$month" => "$datetime"}, "datetime" => 1, "ip" => 1}}
-        group = {"$group" => { "_id" => {"year" => "$year", "month" => "$month"}, "ips" => {"$addToSet" => "$ip"}}}
-      else
-        project = {"$project" => {"year" => {"$year" => "$datetime"}, "month" => {"$month" => "$datetime"}, "datetime" => 1}}
-        group = {"$group" => {"_id" => {"year" => "$year", "month" => "$month"}, "count" => {"$sum" => 1}}}
-      end
-    when "day"
-      if unique
-        project = {"$project" => {"datetime" => 1, "ip" => 1}}
-        group = {"$group" => { "_id" => {"year" => {"$year" => "$datetime"}, "month" => {"$month" => "$datetime"},
-         "day" => {"$dayOfMonth" => "$datetime"}}, "ips" => {"$addToSet" => "$ip"}}}
-      else
-        project = {"$project" => {"datetime" => 1}}
-        group = {"$group" => { "_id" => {"year" => {"$year" => "$datetime"}, "month" => {"$month" => "$datetime"},
-         "day" => {"$dayOfMonth" => "$datetime"}}, "count" => {"$sum" => 1}}}
-      end
-    else
-      error = {"error" => "Invalid group by option: try year, month or day"}
-      render :json => error.to_json
-      return
-    end
-    [project, group]
-  end
-  
-  def distinct_visitors_count        
-    unwind = {"$unwind" => "$ips"}
-    group = {"$group" => {"_id" => "$_id", "count" => {"$sum" => 1}}}
-    [unwind, group]
-  end
-  
   def unique_visitor_param
-    case params[:unique]
+    case params[:unique_visitors]
     when "true"
       @unique = true
     when "false"
