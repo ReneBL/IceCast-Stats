@@ -27,20 +27,21 @@ feature "connections between dates" do
     visit "/home#/stats"
     page.should have_content("No existen datos para estas fechas")
     page.should_not have_content("Fechas inválidas")
-    fill_in 'fechaFin', :with => Date.new(2000,1,1)
-    page.should have_content("No existen datos para estas fechas")
-    page.should have_content("Fechas inválidas")
-    
-    # fill_in 'fechaIni', :with => '01/01/2013'
-    # fill_in 'fechaFin', :with => '01/01/2014' 
+    # fill_in 'fechaFin', :with => Date.new(2000,1,1)
+    # page.should have_content("No existen datos para estas fechas")
+    # page.should have_content("Fechas inválidas")    
+    fill_in 'fechaIni', :with => Date.new(2013,1,1) #'01/01/2013'
+    # page.should have_content("No existen datos para estas fechas")
+    # page.should have_content("Fechas inválidas")    
+    # fill_in 'fechaFin', :with => Date.new(2014,1,1) #'01/01/2014' 
     # page.should have_content("2013")
     # page.should have_content("2014")
 #     
-    # click_button 'Month'
-    # page.should have_content("01/2013")
-    # page.should have_content("02/2013")
-    # page.should have_content("03/2013")
-    # page.should have_content("01/2014")
+    click_button 'Month'
+    page.should have_content("01/2013")
+    page.should have_content("02/2013")
+    page.should have_content("03/2013")
+    page.should have_content("01/2014")
 #     
     # select '25/03/2013', :from => 'fechaFin'
     # page.should have_content("01/2013")
