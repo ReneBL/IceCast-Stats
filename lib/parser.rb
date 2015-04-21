@@ -16,12 +16,19 @@ module Parser
       if File.exists? path
         parser = ApacheLogRegex.new(@config['log_format'])
         f = File.open(path, 'r+')
-        f.seek(@config['seek_pos'], :SET)
-        line = f.gets
-        while (line != nil) do
-          result = parser.parse!(line)
-          persist_line result
-          line = f.gets
+        #f.seek(@config['seek_pos'], :SET)
+        #line = f.gets
+        line = get_first_line_to_read f
+        unless line == nil
+          while (true) do
+            begin
+              result = parser.parse!(line)
+              persist_line result
+              line = f.readline
+            rescue EOFError
+              break
+            end
+          end
         end
       else
         Parser.write_log "Parser couldn't find file: #{path}"
@@ -33,6 +40,7 @@ module Parser
     ensure
       unless f == nil
         @config['seek_pos'] = f.tell
+        @config['last_line'] = line ||= ""
         File.open('config/parser_config.yml', 'w+') {|f| f.write @config.to_yaml }
       end
     end 
@@ -59,6 +67,27 @@ module Parser
   end
   
   private
+  # Obtenemos la primera línea a leer del fichero, comprobando si ha rotado o no desde la última vez
+  def Parser.get_first_line_to_read file
+    # Leemos parámetros de configuración: Offset y la última linea procesada
+    offset = @config['seek_pos']
+    last_line_read = @config['last_line']
+    # Avanzamos hasta la posición anterior a la última linea procesada y obtenemos la linea. Para obtener la posición a
+    # buscar, tenemos que comprobar el tamaño de la ultima linea leida, si es 0, no pasa nada, pero en caso contrario, es necesario
+    # tener en cuenta el \n que se produce al leer la linea, y por eso se le suma 1 al bytesize
+    seek_position = last_line_read.bytesize == 0 ? (offset - last_line_read.bytesize) : (offset - (last_line_read.bytesize + 1)) 
+    file.seek(seek_position, :SET)
+    last_line_file = file.gets
+    # Si la línea que acabamos de leer es la misma que la última procesada, el log no ha rotado, por lo tanto,
+    # avanzamos hasta el offset. En caso contrario, el log ha rotado, por lo que rebobinamos al inicio del fichero
+    # Como antes ha leido la linea con el \n, usamos chomp para eliminarselo
+    (last_line_read.eql? last_line_file.chomp) ? file.seek(offset, :SET) : file.seek(File::SEEK_SET, :SET)
+    # Hacemos gets y no readline para evitar catch de la excepcion y devolver nil. 
+    # Si es el final del fichero, devolvemos nil directamente
+    line = file.gets
+    line
+  end
+
   def Parser.string_to_datetime str
     time = str
     date = DateTime.evolve(DateTime.strptime(time, "[%d/%b/%Y:%H:%M:%S %Z]"))

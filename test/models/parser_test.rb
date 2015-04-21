@@ -19,6 +19,7 @@ class ParserTest < ActiveSupport::TestCase
     Database.cleanConnectionCollection
     config = YAML.load_file('config/parser_config.yml')
     config['seek_pos'] = 0
+    config['last_line'] = ""
     File.open('config/parser_config.yml', 'w+') {|f| f.write config.to_yaml }
   end
 
@@ -92,6 +93,33 @@ class ParserTest < ActiveSupport::TestCase
     assert comparator result, connections
   end
 
+  test "simulate log file rotation" do
+  	writeToFile @@connection
+  	Parser.parse 'logTest'
+  	connections = [build(:connection_ok)]
+  	# Recupero de BD
+  	collection = Database.getConnectionCollection
+  	result = collection.find.to_a
+  	# Comparo resultado de BD con linea procesada
+  	assert_equal result.count, 1
+  	assert comparator result, connections
+  	# Renombro logTest
+  	File.rename("logTest", "logTest2")
+  	createLogFile
+  	# Escribo connection1 y connection2
+  	writeToFile @@connection2
+  	writeToFile @@connection3
+  	connections.push build(:connection2)
+  	connections.push build(:connection3)
+  	# Levanto el parser
+  	Parser.parse 'logTest'
+  	# Recupero de BD
+  	result2 = collection.find.to_a
+  	# Comparo resultado de BD con las lineas totales procesadas
+  	assert_equal result2.count, 3
+  	assert comparator result2, connections
+  end
+
   test "parse file with invalid format" do
     writeToFile @@bad_format_connection
     err = assert_raises(ParserException) {Parser.parse 'logTest'}
@@ -121,5 +149,4 @@ class ParserTest < ActiveSupport::TestCase
     err = assert_raises(ParserException) {Parser.parse 'NonExistentFile'}
     assert_equal "File not found", err.message
   end
-
 end
