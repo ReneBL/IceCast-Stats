@@ -78,7 +78,10 @@ class ConnectionsController < ApplicationController
     start, finish_date = ConnectionsHelper.begin_end_dates_to_mongo @st_date, @end_date
     project, group_by, error = DynamicQueryResolver.project_group_parts params[:group_by], @unique
     if error == nil
-      match_filter = {"$match" => {"datetime" => {"$gte" => start, "$lte" => finish_date}}}
+      # El filtro match ya estará inicializado, bien a vacio o bien al filtro correspondiente si la request llega
+      # con un source metido en la session
+      @match["$match"].merge!({"datetime" => {"$gte" => start, "$lte" => finish_date}})
+      match_filter = @match
       sort = {"$sort" => {"_id" => 1}}
       if project != nil && group_by != nil
         if @unique

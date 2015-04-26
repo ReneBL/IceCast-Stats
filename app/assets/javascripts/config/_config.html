@@ -1,0 +1,10 @@
+<div class="container" ng-controller="ConfigurationController">
+	<h1>CONFIGURATION PAGE</h1>
+	<div ng-show="changedSource">
+		<div ng-model="source">
+			Seleccionado filtro: {{source}}
+		</div>
+	</div>
+	<select id="comboSources" ng-model="source" ng-options="source for source in sources">
+	</select>
+</div>

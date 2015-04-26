@@ -41,6 +41,7 @@ app.controller('DatesController', function($scope, $filter, ConnectionsBetweenDa
 	   $scope.invalid = false;
 
    $scope.$watch("unique", function(newValue, oldValue) {
+   		// Antes de realizar la peticion, comprobamos si las fechas son validas
    	   if(!$scope.invalid) {
    	   	  cleanContext();
    	   	  $scope.doGetData();

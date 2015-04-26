@@ -14,9 +14,9 @@ icecast.factory("ConnBetDatesDataProvider", function() {
 	          return dt;
 	        } else if (groupBy == 'day') {
 	   	       data = new google.visualization.DataTable();
-          data.addColumn({ type: 'date', id: 'Date' });
-          data.addColumn({ type: 'number', id: 'Listeners' });
-          for(var i=0; i < datos.length; i++) {
+            data.addColumn({ type: 'date', id: 'Date' });
+            data.addColumn({ type: 'number', id: 'Listeners' });
+            for(var i=0; i < datos.length; i++) {
 	   	         data.addRow([new Date(datos[i]._id.year, datos[i]._id.month - 1, datos[i]._id.day), datos[i].count]);
 	          }
 	          return data;

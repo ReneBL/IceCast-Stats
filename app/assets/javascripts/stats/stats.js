@@ -1,6 +1,6 @@
 var app = angular.module('icecastStats');
 
-app.controller('StatsController', function($scope) {
+app.controller('StatsController', function($scope, StateFactory) {
 	  $scope.page = 'stats/connections/_connections.html';
 	  $scope.selectedOption = 'conexiones';
 	  
@@ -18,5 +18,7 @@ app.controller('StatsController', function($scope) {
 	  	  $scope.page = 'stats/pages/_pages.html';
 	  	  $scope.selectedOption = 'paginas';
 	  };
+	  // Obtenemos el source actual de la factoria que contiene el estado
+	  $scope.source = StateFactory.getSelectedSource();
 	  
 });

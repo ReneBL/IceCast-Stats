@@ -1,4 +1,12 @@
 GIT
+  remote: git://github.com/deivid-rodriguez/byebug.git
+  revision: 7565dccea58810558621a23c157175b6e4f92036
+  branch: master
+  specs:
+    byebug (4.0.5)
+      columnize (= 0.9.0)
+
+GIT
   remote: git://github.com/mongoid/mongoid.git
   revision: a9f9464cfd1ee805d727f7b728a6e9fc64eeb700
   specs:
@@ -64,8 +72,6 @@ GEM
     bson (2.3.0)
     bson_ext (1.5.1)
     builder (3.2.2)
-    byebug (4.0.4)
-      columnize (= 0.9.0)
     capybara (2.4.4)
       mime-types (>= 1.16)
       nokogiri (>= 1.3.3)
@@ -241,7 +247,7 @@ DEPENDENCIES
   bower-rails
   bson
   bson_ext
-  byebug (~> 4.0.4)
+  byebug!
   capybara
   capybara-angular
   coffee-rails (~> 4.1.0)

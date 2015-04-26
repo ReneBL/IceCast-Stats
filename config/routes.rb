@@ -13,6 +13,13 @@ Rails.application.routes.draw do
   get 'login_form' => 'users#login_form'
   resources :users
 
+  get 'sources' => 'sources#get_sources'
+  post 'sources/:source' => 'sources#set_source', :constraints => {:source => /([a-zA-Z0-9].*)+\.[a-zA-Z0-9]+|Todos/}
+  resources :sources
+
+  # Establecemos una expresion regular para decirle a Rails que en el parametro "source" deje pasar valores del tipo "nombre.extension"
+  #map.resources :sources, :requirements => { :source => /[a-z]+\.[a-z]+/}
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

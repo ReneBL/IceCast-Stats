@@ -1,4 +1,4 @@
-var app = angular.module('icecastStats', ['snap', 'ngRoute', 'templates', 'iceServices', 'connFactories']);
+var app = angular.module('icecastStats', ['snap', 'ngRoute', 'templates', 'iceServices', 'connFactories', 'configState']);
 
 app.config(['$routeProvider',
   function($routeProvider) {
@@ -8,8 +8,12 @@ app.config(['$routeProvider',
         controller: 'PruebaController'
       }).
       when('/stats', {
-      	  templateUrl: 'stats/_stats.html',
-      	  controller: 'StatsController'
+      	  templateUrl: 'stats/_stats.html'
+      	  //controller: 'StatsController'
+      }).
+      when('/config', {
+          templateUrl : 'config/_config.html'
+          //controller: 'ConfigurationController'
       }).
       otherwise({
         redirectTo: '/'

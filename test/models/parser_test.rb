@@ -21,6 +21,10 @@ class ParserTest < ActiveSupport::TestCase
     config['seek_pos'] = 0
     config['last_line'] = ""
     File.open('config/parser_config.yml', 'w+') {|f| f.write config.to_yaml }
+    File.delete 'logTest'
+    unless !File.exists? 'logTest2'
+      File.delete 'logTest2'
+    end
   end
 
   def createLogFile
