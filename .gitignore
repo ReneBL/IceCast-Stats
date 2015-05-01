@@ -49,3 +49,11 @@ app/assets/images/.keep
 *.prefs
 
 logTest
+
+*.rb~
+
+Bowerfile~
+
+Gemfile~
+
+*.css.scss~

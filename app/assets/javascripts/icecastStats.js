@@ -1,4 +1,5 @@
-var app = angular.module('icecastStats', ['snap', 'ngRoute', 'templates', 'iceServices', 'connFactories', 'configState', 'dataServerParser']);
+var app = angular.module('icecastStats', ['snap', 'ngRoute', 'templates', 'iceServices',
+    'connFactories', 'configState', 'dataServerParser', 'notificationService']);
 
 app.config(['$routeProvider',
   function($routeProvider) {

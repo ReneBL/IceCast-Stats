@@ -72,7 +72,7 @@ feature 'filter data by time' do
     page.should have_content("La hora fin no puede ser vacía!")
 
     # Por defecto la opción de agrupamiento es por año, así que comprobamos que no se ha pintado ninguna gráfica
-    within '#datePickers' do
+    within '#cgcController' do
       page.should_not have_content("2013")
       page.should_not have_content("2014")
     end
@@ -110,7 +110,7 @@ feature 'filter data by time' do
     fill_in 'horaFin', :with => "05:27:03"
 
     # La pagina contendrá 2013 y 2014 porque al ser las horas no válidas, no recarga la gráfica
-    within '#datePickers' do
+    within '#cgcController' do
       page.should have_content("2013")
       page.should have_content("2014")
     end
@@ -119,7 +119,7 @@ feature 'filter data by time' do
     fill_in 'horaFin', :with => "10:07:58"
     page.should_not have_content("La hora de inicio es mayor que la hora de fin")
 
-    within '#datePickers' do
+    within '#cgcController' do
       page.should have_content("No existen datos para estas fechas")
       page.should_not have_content("2013")
       page.should_not have_content("2014")

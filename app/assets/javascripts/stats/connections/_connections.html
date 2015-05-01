@@ -9,62 +9,13 @@
 	<select id="years" ng-controller="YearsController" ng-model="year" ng-options="y._id.year for y in years">
 	</select>
 	
-	<div id="datePickers" ng-controller="DatesController">
-		<div ng-show="invalid">
-			<div class="alert alert-danger alert-dismissible">
-				Fechas inválidas
-			</div>
-		</div>
-		<span>
-			<label>Fecha Inicio: </label>
-			<input type="date" id="fechaIni" ng-model = "fechaInicio" ng-change="changedDate()" required/>
-		</span>
-		<span>
-			<label>Fecha Fin: </label>
-			<input type="date" id="fechaFin" ng-model = "fechaFin" ng-change="changedDate()" required/>
-		</span>
+	<div id="cgcController" ng-controller="ConnectionsGroupedChartController">
 		<div class="btn-group" role="group">
   			<button type="button" ng-class="{true:'btn btn-danger', false:'btn btn-default'}[groupBy == 'year']" ng-click="group('year')">Year</button>
   			<button type="button" ng-class="{true:'btn btn-danger', false:'btn btn-default'}[groupBy == 'month']" ng-click="group('month')">Month</button>
   			<button type="button" ng-class="{true:'btn btn-danger', false:'btn btn-default'}[groupBy == 'day']" ng-click="group('day')">Day</button>
 		</div>
-		<label>Visitantes únicos:
-    		<input type="checkbox" ng-model="unique">
-  		</label>
-  		<label>Franja horaria:
-    		<input id="showHourRange" type="checkbox" ng-model="showHourRange" ng-change="changedCheckBoxHourRange()">
-  		</label>
-  		<br/>
-  		<form name = "hours">
-  			<div ng-show="showHourRange">
-  				<span>
-					<label>Desde las </label>
-					<input type="time" id="horaInicio" name="inputHoraInicio" ng-model="horaInicio"
-       					placeholder="HH:mm:ss" min="00:00:00" max="23:59:59" ng-change="changedHour(hours.$valid)" required />
-				</span>
-				<span>
-					<label>hasta las </label>
-					<input type="time" id="horaFin" name="inputHoraFin" ng-model="horaFin"
-       					placeholder="HH:mm:ss" min="00:00:00" max="23:59:59" ng-change="changedHour(hours.$valid)" required />
-				</span>
-				<span class="error" ng-show="hours.inputHoraInicio.$error.required">
-      				La hora inicio no puede ser vacía!
-      			</span>
-    			<span class="error" ng-show="hours.inputHoraFin.$error.required">
-      				La hora fin no puede ser vacía!
-      			</span>
-      			<span class="error" ng-show="!hours.inputHoraInicio.$valid">
-      				Hora de inicio no válida
-      			</span>
-    			<span class="error" ng-show="!hours.inputHoraFin.$valid">
-      				Hora de fin no válida
-      			</span>
-      			<span class="error" ng-show="startNotLesserEnd">
-      				La hora de inicio es mayor que la hora de fin
-      			</span>
-  			</div>
-  		</form>
-  		<div ng-show="dataEmpty">
+		<div ng-show="dataEmpty">
   			<div class="panel panel-default">
   				<div class="panel-body">
     				No existen datos para estas fechas
