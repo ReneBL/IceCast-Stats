@@ -17,7 +17,7 @@ feature "navigation over application" do
       fill_in 'Password', :with => 'admin'
       click_button 'Login'
     end
-    page.should have_content("PAGINA DE PRUEBA")
+    page.should have_content("Oyentes actuales")
     click_button "menuButton"
     click_link 'Estadísticas'
     page.should have_content("STATS")

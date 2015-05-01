@@ -2,6 +2,8 @@ var app = angular.module('icecastStats');
 
 app.controller('ConfigurationController', function($scope, Sources, StateFactory) {
 	$scope.changedSource = false;
+	$scope.refreshSeconds = StateFactory.getRefreshSeconds() / 1000;
+	$scope.server = StateFactory.getServer();
 	Sources.query(function (data) {
 		$scope.sources = data;
 		$scope.sources.unshift('Todos');
@@ -15,5 +17,14 @@ app.controller('ConfigurationController', function($scope, Sources, StateFactory
    	   		StateFactory.setSelectedSource(newValue);
    	   		$scope.changedSource = true;
    	    }
-   });
+    });
+  $scope.$watch("refreshSeconds", function(newValue, oldValue) {
+   	if(newValue != oldValue){
+   	   		StateFactory.setRefreshSeconds(newValue * 1000);
+   	  }
+  });
+  $scope.setServer = function () {
+    var server = $scope.server;
+    StateFactory.setServer(server);
+  };
 });

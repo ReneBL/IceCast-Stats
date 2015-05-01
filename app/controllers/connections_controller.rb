@@ -1,21 +1,9 @@
 require 'parser'
 
 class ConnectionsController < ApplicationController
-  before_action :start_end_date_params, :unique_visitor_param, only: [:connections_between_dates]
+  before_action :generate_query_params, only: [:connections_between_dates]
   
   def index
-    # result = Connection.collection.aggregate(
-        # {
-          # "$project" => {'year' => {"$year" => "$datetime"}}
-        # }, 
-        # {
-          # "$group" => {'_id' => {'year' => "$year"}, 'count' => {"$sum" => 1}}
-        # }
-    # )
-    # respond_to do |format|
-      # format.html
-      # format.json {render :json => result}
-    # end
   end
   
   def months
@@ -75,21 +63,23 @@ class ConnectionsController < ApplicationController
   end
   
   def connections_between_dates
-    start, finish_date = ConnectionsHelper.begin_end_dates_to_mongo @st_date, @end_date
-    project, group_by, error = DynamicQueryResolver.project_group_parts params[:group_by], @unique
+    project, group_by, error = DynamicQueryResolver.project_group_parts
     if error == nil
-      # El filtro match ya estará inicializado, bien a vacio o bien al filtro correspondiente si la request llega
-      # con un source metido en la session
-      @match["$match"].merge!({"datetime" => {"$gte" => start, "$lte" => finish_date}})
-      match_filter = @match
-      sort = {"$sort" => {"_id" => 1}}
+      # Al resolver le pasamos el match inicializado por el controller padre que puede contener el filtro,
+      # si se da el caso, de los sources
+      filters = []
+      filters << (DynamicQueryResolver.match_part @match)
       if project != nil && group_by != nil
-        if @unique
+        # Le decimos al resolver que nos de el filtro por horas si existe, si no, devolvera [], lo cual para el 
+        # pipeline no es relevante
+        filters << project << DynamicQueryResolver.hours_filter << group_by
+        #debugger
+        if DynamicQueryResolver.is_unique
           unwind, group = DynamicQueryResolver.distinct_visitors_count
-          result = Connection.collection.aggregate(match_filter, project, group_by, unwind, group, sort)
-        else
-          result = Connection.collection.aggregate(match_filter, project, group_by, sort)
+          filters << unwind << group
         end
+        filters << DynamicQueryResolver.sort_part
+        result = Connection.collection.aggregate(filters)
         render :json => result
       end
     else
@@ -98,26 +88,74 @@ class ConnectionsController < ApplicationController
   end
   
   private
+  # Metodo que se llamara cada vez que se realice una peticion al controlador. Obtendrá los parámetros necesarios
+  # para hacer la query y los encapsulará en un objeto QueryParams para inicializar el resolver
+  def generate_query_params
+    unique = unique_visitor_param
+    start, finish_date = start_end_date_params
+    start_hour, end_hour = start_end_hours
+    qp = QueryParams.new(params[:group_by], unique, start, finish_date, start_hour, end_hour)
+    DynamicQueryResolver.initialize qp
+  end
   
-  def start_end_date_params
-    @st_date = params[:start_date]
-    @end_date = params[:end_date]
-    begin
-      DateTime.strptime(@st_date, "%d/%m/%Y")
-      DateTime.strptime(@end_date, "%d/%m/%Y")
-    rescue ArgumentError
-      error = { "error" => "One date is invalid. Correct format: d/m/Y"}
-      render :json => error.to_json
+  def start_end_hours
+    st = params[:start_hour]
+    fn = params[:end_hour]
+    unless ((st == nil) && (fn == nil))  
+      error_format = parse_date_time st, fn, "%H:%M:%S", "One hour is invalid. Correct format: HH:MM:SS"
+      if (!error_format) 
+        error_time = start_minor_end? st, fn, "Start time is lesser than end time"
+        if (error_time)
+          return
+        end
+      end
     end
+    [st, fn]
+  end
+
+  def start_minor_end? start_hour, end_hour, msg
+    hs, ms, ss = start_hour.split(":")
+    he, me, se = end_hour.split(":")
+    time_start = Time.new(1970, 1, 1, hs.to_i, ms.to_i, ss.to_i) 
+    time_end = Time.new(1970, 1, 1, he.to_i, me.to_i, se.to_i)
+    if (time_end < time_start)
+      render :json => { "error" => msg }.to_json
+      return true
+    end
+    return false
+  end
+
+  def start_end_date_params
+    st_date = params[:start_date]
+    end_date = params[:end_date]
+    error = parse_date_time st_date, end_date, "%d/%m/%Y", "One date is invalid. Correct format: d/m/Y"  
+    unless error
+      formated_st, formated_end = ConnectionsHelper.begin_end_dates_to_mongo st_date, end_date
+      return [formated_st, formated_end]
+    end
+    return
+  end
+
+  def parse_date_time st, fn, format, errormsg
+    begin
+      DateTime.strptime(st, format)
+      DateTime.strptime(fn, format)
+    rescue ArgumentError
+      error = { "error" => errormsg }
+      render :json => error.to_json
+      return true
+    end
+    return false
   end
   
   def unique_visitor_param
     case params[:unique_visitors]
     when "true"
-      @unique = true
+      unique = true
     when "false"
-      @unique = false
+      unique = false
     end
+    return unique
   end
   
 end

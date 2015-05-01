@@ -1,0 +1,18 @@
+<div class="container" ng-controller="HomeController">
+
+<h1>PAGINA DE PRUEBA</h1>
+	<div class="alert alert-danger" role="alert" ng-show="invalidData" ng-model="message">
+		No existen datos. Por favor, compruebe que la URL del servidor IceCast es correcta.
+	</div>
+	<div class="panel panel-default">
+		<div class="text-center">
+			<label>
+				Oyentes actuales
+			</label>
+		</div>
+  		<div class="panel-body text-center" ng-model="listeners">
+    		{{listeners}}
+  		</div>
+	</div>
+	
+</div>

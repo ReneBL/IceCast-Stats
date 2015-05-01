@@ -5,6 +5,7 @@ require 'spec_helper'
 require 'rspec/rails'
 require 'capybara/rspec'
 require 'capybara/rails'
+require 'rspec/mocks'
 # require 'capybara/poltergeist'
 # Capybara.javascript_driver = :poltergeist
 # Add additional requires below this line. Rails is not loaded until this point!

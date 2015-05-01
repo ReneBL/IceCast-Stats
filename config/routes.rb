@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   get 'connections/months/:year' => 'connections#months'
   get 'connections/years' => 'connections#years'
   get 'connections/ranges' => 'connections#ranges'
-  get 'connections/connections_between_dates/:start_date/:end_date/:group_by/:unique_visitors' => 'connections#connections_between_dates'
+  get 'connections/connections_between_dates/:start_date/:end_date/:group_by/:unique_visitors(/:start_hour/:end_hour)' => 'connections#connections_between_dates'
 
   post 'login' => 'users#create'
   get 'logout' => 'users#destroy'
@@ -16,6 +16,8 @@ Rails.application.routes.draw do
   get 'sources' => 'sources#get_sources'
   post 'sources/:source' => 'sources#set_source', :constraints => {:source => /([a-zA-Z0-9].*)+\.[a-zA-Z0-9]+|Todos/}
   resources :sources
+
+  get 'poll/:route' => "polling#poll", :constraints => {:route => /.*/}
 
   # Establecemos una expresion regular para decirle a Rails que en el parametro "source" deje pasar valores del tipo "nombre.extension"
   #map.resources :sources, :requirements => { :source => /[a-z]+\.[a-z]+/}

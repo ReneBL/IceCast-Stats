@@ -61,32 +61,32 @@ feature "connections between dates" do
     assert_end_date_long_time_ago
   end
 
-#     page.text.should match("/\A.*1\/2014.*\z/")
-    #page.text.should match("\A.*2\/2014.*\z")
-    #page.text.should match("\A.*3\/2014.*\z")
-    #page.text.should match("\A.*1\/2015.*\z")
+# #     page.text.should match("/\A.*1\/2014.*\z/")
+#     #page.text.should match("\A.*2\/2014.*\z")
+#     #page.text.should match("\A.*3\/2014.*\z")
+#     #page.text.should match("\A.*1\/2015.*\z")
 
-    # select '25/03/2013', :from => 'fechaFin'
-    # page.should have_content("01/2013")
-    # page.should have_content("02/2013")
-    # page.should have_content("03/2013")
-    # page.should_not have_content("01/2014")
-#     
-    # select '02/02/2013', :from => 'fechaIni'
-    # page.should_not have_content("01/2013")
-    # page.should have_content("02/2013")
-    # page.should have_content("03/2013")
-    # page.should_not have_content("01/2014")
-#     
-    # click_button 'Year'
-    # page.should have_content("2013")
-    # page.should_not have_content("2014")
+#     # select '25/03/2013', :from => 'fechaFin'
+#     # page.should have_content("01/2013")
+#     # page.should have_content("02/2013")
+#     # page.should have_content("03/2013")
+#     # page.should_not have_content("01/2014")
+# #     
+#     # select '02/02/2013', :from => 'fechaIni'
+#     # page.should_not have_content("01/2013")
+#     # page.should have_content("02/2013")
+#     # page.should have_content("03/2013")
+#     # page.should_not have_content("01/2014")
+# #     
+#     # click_button 'Year'
+#     # page.should have_content("2013")
+#     # page.should_not have_content("2014")
     
-    # click_button 'Day'
-    # page.should have_content("01/01/2013")
-    # page.should have_content("18/01/2013")
-    # page.should have_content("02/02/2013")
-    # page.should have_content("15/12/2013")
-    # page.should have_content("01/01/2014")
+#     # click_button 'Day'
+#     # page.should have_content("01/01/2013")
+#     # page.should have_content("18/01/2013")
+#     # page.should have_content("02/02/2013")
+#     # page.should have_content("15/12/2013")
+#     # page.should have_content("01/01/2014")
   
 end

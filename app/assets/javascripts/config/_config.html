@@ -5,6 +5,28 @@
 			Seleccionado filtro: {{source}}
 		</div>
 	</div>
-	<select id="comboSources" ng-model="source" ng-options="source for source in sources">
-	</select>
+	<div>
+		<label>
+			Filtrar en base a 
+			<select id="comboSources" ng-model="source" ng-options="source for source in sources">
+			</select>
+		</label>
+	</div>
+	<form name="params">
+		<div>
+			<label>Actualizar estadísticas en tiempo real cada <input type="number" name="input" ng-model="refreshSeconds"
+           			min="1" max="60" required> segundos 
+           	</label>
+		</div>
+		<div>
+			<label>Dirección del servidor IceCast: <input type="text" name="input" ng-model="server" ng-minlength="3" ng-change="setServer()" required>
+				<span class="error" ng-show="params.input.$error.required">
+      				La dirección no puede ser vacía!
+      			</span>
+    			<span class="error" ng-show="params.input.$error.minlength">
+      				La dirección debe tener al menos 3 caracteres!
+      			</span>
+			</label>
+		</div>
+	</form>
 </div>

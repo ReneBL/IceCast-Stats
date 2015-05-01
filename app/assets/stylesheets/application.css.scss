@@ -139,3 +139,9 @@ background-color: #28272C;
 #menu li span {
   font-size: 30px;
 }
+
+@media (min-width: 800px) {
+  #icecastImage img {
+    width: 4%;
+  }
+}

@@ -3,36 +3,36 @@ require 'json'
 
 RSpec.describe ConnectionsController, type: :controller do
   # describe "when access to controllers index" do
-    # before(:each) do
-      # 2.times do
-        # FactoryGirl.create(:connection_on_2013)
-      # end
-#     
-      # FactoryGirl.create(:connection_on_2014)
-#     
-      # 3.times do
-        # FactoryGirl.create(:connection_on_2015)
-      # end
-#     
-      # year_connections_array = [
-        # { :_id => { :year => 2015 }, :count => 3 },
-        # { :_id => { :year => 2014 }, :count => 1 },
-        # { :_id => { :year => 2013 }, :count => 2 }
-      # ]
-      # @year_connections = year_connections_array.to_json
-      # admin = FactoryGirl.create(:admin)
-      # log_in(admin)
-    # end
-    # it "should response" do
-      # get :index
-      # expect(response).to be_success
-      # expect(response).to have_http_status(200)
-    # end
-#   
-    # it "should response year connections in JSON" do
-      # xhr :get, :index, :format => :json
-      # expect(response.body).to eql(@year_connections)
-    # end
+  #   before(:each) do
+  #     2.times do
+  #       FactoryGirl.create(:connection_on_2013)
+  #     end
+    
+  #     FactoryGirl.create(:connection_on_2014)
+    
+  #     3.times do
+  #       FactoryGirl.create(:connection_on_2015)
+  #     end
+    
+  #     year_connections_array = [
+  #       { :_id => { :year => 2015 }, :count => 3 },
+  #       { :_id => { :year => 2014 }, :count => 1 },
+  #       { :_id => { :year => 2013 }, :count => 2 }
+  #     ]
+  #     @year_connections = year_connections_array.to_json
+  #     admin = FactoryGirl.create(:admin)
+  #     log_in(admin)
+  #   end
+  #   it "should response" do
+  #     get :index
+  #     expect(response).to be_success
+  #     expect(response).to have_http_status(200)
+  #   end
+  
+  #   it "should response year connections in JSON" do
+  #     xhr :get, :index, :format => :json
+  #     expect(response.body).to eql(@year_connections)
+  #   end
   # end
   
   describe "when access to controllers months" do
@@ -303,5 +303,4 @@ RSpec.describe ConnectionsController, type: :controller do
      :group_by => group_by, :format => :json
     expect(response.body).to eql(expected)
   end
-  
 end

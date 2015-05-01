@@ -1,5 +1,5 @@
-<div ng-controller="ConnectionsController">
-	<h1 class="text-center">STATS</h1>
+<div class="container" ng-controller="ConnectionsController">
+	<h1>STATS</h1>
 	<div ng-controller="YearsConnectionsController">
 		<span ng-if="yearsChartLoaded">
 			<div id="chart" style="width: 50%" chart chart-type="Bar"></div>
@@ -30,7 +30,40 @@
 		</div>
 		<label>Visitantes únicos:
     		<input type="checkbox" ng-model="unique">
-  		</label><br/>
+  		</label>
+  		<label>Franja horaria:
+    		<input id="showHourRange" type="checkbox" ng-model="showHourRange" ng-change="changedCheckBoxHourRange()">
+  		</label>
+  		<br/>
+  		<form name = "hours">
+  			<div ng-show="showHourRange">
+  				<span>
+					<label>Desde las </label>
+					<input type="time" id="horaInicio" name="inputHoraInicio" ng-model="horaInicio"
+       					placeholder="HH:mm:ss" min="00:00:00" max="23:59:59" ng-change="changedHour(hours.$valid)" required />
+				</span>
+				<span>
+					<label>hasta las </label>
+					<input type="time" id="horaFin" name="inputHoraFin" ng-model="horaFin"
+       					placeholder="HH:mm:ss" min="00:00:00" max="23:59:59" ng-change="changedHour(hours.$valid)" required />
+				</span>
+				<span class="error" ng-show="hours.inputHoraInicio.$error.required">
+      				La hora inicio no puede ser vacía!
+      			</span>
+    			<span class="error" ng-show="hours.inputHoraFin.$error.required">
+      				La hora fin no puede ser vacía!
+      			</span>
+      			<span class="error" ng-show="!hours.inputHoraInicio.$valid">
+      				Hora de inicio no válida
+      			</span>
+    			<span class="error" ng-show="!hours.inputHoraFin.$valid">
+      				Hora de fin no válida
+      			</span>
+      			<span class="error" ng-show="startNotLesserEnd">
+      				La hora de inicio es mayor que la hora de fin
+      			</span>
+  			</div>
+  		</form>
   		<div ng-show="dataEmpty">
   			<div class="panel panel-default">
   				<div class="panel-body">

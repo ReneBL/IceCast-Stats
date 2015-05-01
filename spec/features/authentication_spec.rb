@@ -59,7 +59,7 @@ feature 'login admin user' do
   
   def click_login_welcome_page
     within '#buttonLogin' do
-    click_button 'Login'
+      click_button 'Login'
     end
   end
   
