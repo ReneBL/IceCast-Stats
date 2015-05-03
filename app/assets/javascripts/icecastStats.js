@@ -1,5 +1,5 @@
 var app = angular.module('icecastStats', ['snap', 'ngRoute', 'templates', 'iceServices',
-    'connFactories', 'configState', 'dataServerParser', 'notificationService']);
+    'connFactories', 'configState', 'dataServerParser', 'notificationService', 'ui-rangeSlider']);
 
 app.config(['$routeProvider',
   function($routeProvider) {
@@ -20,6 +20,13 @@ app.config(['$routeProvider',
         redirectTo: '/'
       });
   }]);
+
+app.config(function(snapRemoteProvider) {
+  snapRemoteProvider.globalOptions = {
+    touchToDrag: 'false',
+    disable: 'right'
+  };
+});
 
 google.setOnLoadCallback(function () {
 	  angular.bootstrap(document.body, ['icecastStats']);

@@ -4,6 +4,8 @@
     "angular": "latest",
     "angular-route": "latest",
     "angular-snap": "latest",
-    "angular-resource": "latest"
+    "angular-resource": "latest",
+    "amplitude": "latest",
+    "angular-rangeslider": "latest"
   }
 }

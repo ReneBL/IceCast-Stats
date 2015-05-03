@@ -2,38 +2,6 @@ require 'rails_helper'
 require 'json'
 
 RSpec.describe ConnectionsController, type: :controller do
-  # describe "when access to controllers index" do
-  #   before(:each) do
-  #     2.times do
-  #       FactoryGirl.create(:connection_on_2013)
-  #     end
-    
-  #     FactoryGirl.create(:connection_on_2014)
-    
-  #     3.times do
-  #       FactoryGirl.create(:connection_on_2015)
-  #     end
-    
-  #     year_connections_array = [
-  #       { :_id => { :year => 2015 }, :count => 3 },
-  #       { :_id => { :year => 2014 }, :count => 1 },
-  #       { :_id => { :year => 2013 }, :count => 2 }
-  #     ]
-  #     @year_connections = year_connections_array.to_json
-  #     admin = FactoryGirl.create(:admin)
-  #     log_in(admin)
-  #   end
-  #   it "should response" do
-  #     get :index
-  #     expect(response).to be_success
-  #     expect(response).to have_http_status(200)
-  #   end
-  
-  #   it "should response year connections in JSON" do
-  #     xhr :get, :index, :format => :json
-  #     expect(response.body).to eql(@year_connections)
-  #   end
-  # end
   
   describe "when access to controllers months" do
     before(:each) do
@@ -86,37 +54,10 @@ RSpec.describe ConnectionsController, type: :controller do
     end
   end
   
-  describe "when access to ranges" do
-    before(:each) do
-      FactoryGirl.create(:connection_with_5_seconds)
-      FactoryGirl.create(:connection_with_20_seconds)
-      
-      FactoryGirl.create(:connection_with_30_seconds)
-      FactoryGirl.create(:connection_with_60_seconds)
-      
-      FactoryGirl.create(:connection_with_120_seconds)     
-      
-      ranges_array = [
-        { :_id => "range 0-20", :count => 2},
-        { :_id => "range 20-60", :count => 2},
-        { :_id => "range > 60", :count => 1}
-      ]
-      @ranges = ranges_array.to_json
-      
-      admin = FactoryGirl.create(:admin)
-      log_in(admin)
-    end
-    
-    it "should return ranges of seconds" do
-      xhr :get, :ranges, :format => :json
-      expect(response.body).to eql(@ranges)
-    end
-    
-  end
-  
   describe "when admin not authenticated" do
     it "should redirect to login form page" do
-      xhr :get, :ranges, :format => :json
+      xhr :get, :ranges, :start_date => '01/01/2014', :end_date => '01/01/2014', :unique_visitors => 'true',
+        :min => 5, :max => 10, :format => :json
       expect(response).to redirect_to(login_form_path)
       
       xhr :get, :years, :format => :json
@@ -303,4 +244,112 @@ RSpec.describe ConnectionsController, type: :controller do
      :group_by => group_by, :format => :json
     expect(response.body).to eql(expected)
   end
+
+  describe "when access to connections range of duration" do
+    before(:each) do
+      2.times do
+        FactoryGirl.create(:connection_with_5_seconds)
+      end
+      
+      FactoryGirl.create(:connection_with_20_seconds)
+      FactoryGirl.create(:connection_with_30_seconds)
+      FactoryGirl.create(:connection_with_60_seconds)
+      FactoryGirl.create(:connection_with_120_seconds)
+      FactoryGirl.create(:connection_with_200_seconds)
+      
+      admin = FactoryGirl.create(:admin)
+      log_in(admin)
+    end
+
+    it "should return connections filtered by seconds of connection" do
+      ranges_array = [
+        { :_id => "A: <= 5", :count => 2},
+        { :_id => "B: 5-120", :count => 4},
+        { :_id => "C: > 120", :count => 1}
+      ]
+      xhrRequestConnRanges(ranges_array)
+
+      ranges_array = [
+        { :_id => "A: <= 5", :count => 1},
+        { :_id => "B: 5-120", :count => 4},
+        { :_id => "C: > 120", :count => 1}
+      ]
+      xhrRequestConnRanges(ranges_array, 5, 120, 'true')
+
+      ranges_array = [
+        { :_id => "A: <= 20", :count => 3},
+        { :_id => "B: 20-60", :count => 2},
+        { :_id => "C: > 60", :count => 2}
+      ]
+      xhrRequestConnRanges(ranges_array, 20, 60) 
+
+      ranges_array = [
+        { :_id => "A: <= 20", :count => 2},
+        { :_id => "B: 20-30", :count => 1},
+        { :_id => "C: > 30", :count => 3}
+      ]
+      xhrRequestConnRanges(ranges_array, 20, 30, 'true')
+
+      ranges_array = [
+        { :_id => "A: <= 7", :count => 2},
+        { :_id => "B: 7-200", :count => 5}
+      ]
+      xhrRequestConnRanges(ranges_array, 7, 200)
+
+      ranges_array = [
+        { :_id => "A: <= 20", :count => 3},
+        { :_id => "C: > 20", :count => 4}
+      ]
+      xhrRequestConnRanges(ranges_array, 20, 20)
+
+      ranges_array = { "error" => "Rango no válido (min <= max | min && max not null | min && max >= 0)" }
+      xhrRequestConnRanges(ranges_array, 30, 5)
+
+      ranges_array = { "error" => "Rango no válido (min <= max | min && max not null | min && max >= 0)" }
+      xhrRequestConnRanges(ranges_array, 0, -1)
+
+      ranges_array = { "error" => "Rango no válido (min <= max | min && max not null | min && max >= 0)" }
+      xhrRequestConnRanges(ranges_array, -1, 0)
+
+      ranges_array = { "error" => "Rango no válido (min <= max | min && max not null | min && max >= 0)" }
+      xhrRequestConnRanges(ranges_array, -1, -1)
+
+    end
+
+  end
+
+  def xhrRequestConnRanges(expected_array, min=5, max=120, unique='false', st_date='18/01/2014', end_date='01/01/2015')
+    expected = expected_array.to_json
+    xhr :get, :ranges, :start_date => st_date, :end_date => end_date, :unique_visitors => unique,
+     :min => min, :max => max, :format => :json
+    expect(response.body).to eql(expected)
+  end
+
+  # describe "when access to ranges" do
+  #   before(:each) do
+  #     FactoryGirl.create(:connection_with_5_seconds)
+  #     FactoryGirl.create(:connection_with_20_seconds)
+      
+  #     FactoryGirl.create(:connection_with_30_seconds)
+  #     FactoryGirl.create(:connection_with_60_seconds)
+      
+  #     FactoryGirl.create(:connection_with_120_seconds)     
+      
+  #     ranges_array = [
+  #       { :_id => "rango 0-20", :count => 2},
+  #       { :_id => "rango 20-60", :count => 2},
+  #       { :_id => "rango > 60", :count => 1}
+  #     ]
+  #     @ranges = ranges_array.to_json
+      
+  #     admin = FactoryGirl.create(:admin)
+  #     log_in(admin)
+  #   end
+    
+  #   it "should return ranges of seconds" do
+  #     xhr :get, :ranges, :format => :json
+  #     expect(response.body).to eql(@ranges)
+  #   end
+    
+  # end
 end

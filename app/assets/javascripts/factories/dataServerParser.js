@@ -16,8 +16,22 @@ app.factory("ServerStreamingDataParser", function() {
 		}
 	}
 
+	var fromJsonGetCurrentContent = function(jsonData) {
+		var object = jsonData;
+		if (object.hasOwnProperty("error")) {
+			return object
+		} else {
+			var sources = object.icestats.source;
+			var playing = sources[0].yp_currently_playing;
+			var genre = sources[0].genre;
+			var url = sources[0].listenurl;
+			return {playing: playing, genre: genre, url: url};
+		}
+	}
+
 	return {
-		fromJsonGetListeners: fromJsonGetListeners
+		fromJsonGetListeners: fromJsonGetListeners,
+		fromJsonGetContent: fromJsonGetCurrentContent
 	}
 
 });

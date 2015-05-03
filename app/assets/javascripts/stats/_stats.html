@@ -26,7 +26,7 @@
 			<input type="date" id="fechaFin" ng-model = "fechaFin" ng-change="changedDate()" required/>
 		</span>
 		<label>Visitantes únicos:
-    		<input type="checkbox" ng-model="unique" ng-change="changedCheckBoxUniqueVisitors()">
+    		<input id="uniqueVisitors" type="checkbox" ng-model="unique" ng-change="changedCheckBoxUniqueVisitors()">
   		</label>
   		<label>Franja horaria:
     		<input id="showHourRange" type="checkbox" ng-model="showHourRange" ng-change="changedCheckBoxHourRange()">

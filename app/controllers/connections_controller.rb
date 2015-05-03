@@ -1,7 +1,7 @@
 require 'parser'
 
 class ConnectionsController < ApplicationController
-  before_action :generate_query_params, only: [:connections_between_dates]
+  before_action :generate_query_params, only: [:connections_between_dates, :ranges]
   
   def index
   end
@@ -46,19 +46,36 @@ class ConnectionsController < ApplicationController
   end
   
   def ranges
-    result = Connection.collection.aggregate(
-      { 
-        "$project" => {"_id" => 0, "range" => {"$concat"=> 
-          [
-           {"$cond" => [{ "$lte" => ["$seconds_connected", 20] }, "range 0-20", ""]}, 
-           {"$cond" => [{ "$and" => [{"$gt" => ["$seconds_connected", 20]},{"$lte" => ["$seconds_connected", 60]}]}, "range 20-60", ""]}, 
-           {"$cond" => [{"$gt" => ["$seconds_connected", 60]}, "range > 60", "" ]}
-          ]
-        }
-      }},
-      { "$group" => { "_id" => "$range", "count" => { "$sum" => 1 }}},
-      { "$sort" => { "_id" => 1 }}
-    )
+    # Obtenemos los parametros min y max
+    min, max, error = ranges_params
+    # Si ha habido un error, salimos de la ejecución del método
+    return if (error != nil)
+    # Creamos el array de filtros
+    filters = []
+    # Siempre llevará como primer stage el match de las fechas, por lo tanto, lo añadimos
+    filters << (DynamicQueryResolver.match_part @match)
+    # Inicializamos project y group
+    project = {"$project" => {"seconds_connected" => 1}}
+    group_by = {"$group" => {}}
+    # Añadimos la proyección de los segundos totales por conexion y el group by de los rangos, respectivamente
+    DynamicQueryResolver.project_totalSeconds_decorator project 
+    RangesHelper.ranges_resolver min, max, group_by
+    # Comprobamos si la query es por visitantes unicos
+    if DynamicQueryResolver.is_unique
+      # Si es así, decoramos project y group by para que agrupe por IP's y haga count gracias a unwind y un segundo group
+      DynamicQueryResolver.project_ip_decorator project
+      DynamicQueryResolver.group_by_distinct_visitors_decorator group_by
+      unwind, group = DynamicQueryResolver.distinct_visitors_count
+    end
+    # Añadimos las stages a filters
+    filters << project << DynamicQueryResolver.hours_filter << group_by
+    if ((unwind != nil) && (group != nil))
+      filters << unwind << group
+    end
+    # Añadimos la stage de ordenación
+    filters << DynamicQueryResolver.sort_part
+    #debugger
+    result = Connection.collection.aggregate(filters)
     render :json => result
   end
   
@@ -93,6 +110,7 @@ class ConnectionsController < ApplicationController
   def generate_query_params
     unique = unique_visitor_param
     start, finish_date = start_end_date_params
+    #debugger
     start_hour, end_hour = start_end_hours
     qp = QueryParams.new(params[:group_by], unique, start, finish_date, start_hour, end_hour)
     DynamicQueryResolver.initialize qp
@@ -126,6 +144,7 @@ class ConnectionsController < ApplicationController
   end
 
   def start_end_date_params
+    #debugger
     st_date = params[:start_date]
     end_date = params[:end_date]
     error = parse_date_time st_date, end_date, "%d/%m/%Y", "One date is invalid. Correct format: d/m/Y"  
@@ -156,6 +175,18 @@ class ConnectionsController < ApplicationController
       unique = false
     end
     return unique
+  end
+
+  def ranges_params
+    min = params[:min]
+    max = params[:max]
+    valid = ((min != nil) && (max != nil) && (min.to_i <= max.to_i) && (min.to_i >= 0) && (max.to_i >= 0))
+    unless !valid
+      return [min.to_i, max.to_i, nil]
+    end
+    error = { "error" => "Rango no válido (min <= max | min && max not null | min && max >= 0)" }
+    render :json => error.to_json
+    return [min.to_i, max.to_i, error]
   end
   
 end

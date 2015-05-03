@@ -2,4 +2,6 @@ asset 'angular'
 asset 'angular-route'
 asset 'angular-snap'
 asset 'angular-resource'
+asset 'amplitude'
+asset 'angular-rangeslider'
 # vim: ft=ruby

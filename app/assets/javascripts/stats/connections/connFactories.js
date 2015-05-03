@@ -29,44 +29,70 @@ icecast.factory("ConnBetDatesOptionsProvider", function() {
 	   return {
 	   	   provide : function(groupBy) {
 	        if (groupBy == 'year') {
-	        	  var options = {
-            title: 'Connections grouped by year',
-            hAxis: {
-              title: 'Listeners',
-              minValue: 0
-            },
-            animation: {
-              duration: 1000,
+	        	var options = {
+            	title: 'Oyentes agrupados por año',
+            	hAxis: {
+              	title: 'Listeners',
+              	minValue: 0
+            	},
+            	animation: {
+              	duration: 1000,
             	  easing: 'in',
             	  startup: true
-            },
-            vAxis: {
-              title: 'Year'
-            },
-            bar: { groupWidth: "90%" }
-          };
+            	},
+            	vAxis: {
+              	title: 'Year'
+            	},
+            	bar: { groupWidth: "90%" }
+          	};
 	          return options;
 	        } else if (groupBy == 'month') {
-	        	  var options = {
-            title: 'Connections grouped by month',
-            chartArea: {width: '60%'},
-            animation: {
+	        	var options = {
+            	title: 'Oyentes agrupados por mes',
+            	chartArea: {width: '60%'},
+            	animation: {
             	  duration: 1000,
             	  easing: 'in',
             	  startup: true
-            },
-            vAxis: {
-              title: 'Listeners'
-            }
-          };
-          return options;
+            	},
+            	vAxis: {
+              	title: 'Listeners'
+            	}
+          	};
+          	return options;
 	        } else if (groupBy == 'day') {
 	          var options = {
-            title: "Listeners per day",
-            height: 350,
-          };
+            	title: "Oyentes por día",
+            	height: 350,
+          	};
 	          return options;
 	        }
 	      }
 	   };
+});
+
+icecast.factory("RangesDataProvider", function() {
+     	return {
+         provide : function(datos) {
+         	var array = [['Rango', 'Porcentaje de conexiones por rango']];
+       		for(var i=0; i < datos.length; i++) {
+          	var str = datos[i]._id;
+          	array.push([str.substr(2, str.length).trim(), datos[i].count]);
+       		}
+       		var data = new google.visualization.arrayToDataTable(array);
+        	return data;
+        }
+     	};
+});
+
+icecast.factory("RangesOptionsProvider", function() {
+     return {
+         provide : function() {
+        	var options = {
+       			title: 'Porcentaje de conexiones por rango',
+       			is3D: true,
+    			};
+    			return options;
+        }
+     };
 });

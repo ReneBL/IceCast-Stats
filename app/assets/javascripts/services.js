@@ -9,7 +9,10 @@ iceServices.factory("YearsConnections", ['$resource', function($resource) {
 }]);
 
 iceServices.factory("Ranges", ['$resource', function($resource) {
-  return $resource('connections/ranges.json', {}, {})	;
+  return $resource('connections/ranges/:start_date/:end_date/:unique_visitors/:max/:min/:start_hour/:end_hour:json', 
+  			{start_date : '@start_date', end_date : '@end_date', unique_visitors : '@unique_visitors', 
+	     		max: "@max", min : "@min", start_hour: "00:00:00", end_hour : "23:59:59"}, 
+	     	{isArray : false});
 }]);
 
 iceServices.factory("ConnectionsBetweenDates", ['$resource', function($resource) {

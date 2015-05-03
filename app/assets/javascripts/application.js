@@ -18,6 +18,8 @@
 //= require snapjs/snap
 //= require angular-rails-templates
 //= require angular-resource/angular-resource
+//= require amplitude/js/amplitude
+//= require angular-rangeslider/angular.rangeSlider
 //= require icecastStats
 //= require bootstrap-sprockets
 //= require_tree .

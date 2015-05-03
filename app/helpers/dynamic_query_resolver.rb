@@ -7,29 +7,32 @@ module DynamicQueryResolver
   def self.project_group_parts
     error = nil
     case @qp.group_by
-    when "year"   
-      if @qp.unique
-        project = {"$project" => {"year" => {"$year" => "$datetime"}, "datetime" => 1, "ip" => 1}}
-        group = {"$group" => { "_id" => {"year" => "$year"}, "ips" => {"$addToSet" => "$ip"}}}
+    when "year"
+      project = {"$project" => {"year" => {"$year" => "$datetime"}, "datetime" => 1}} 
+      if @qp.unique       
+        group = {"$group" => { "_id" => {"year" => "$year"}}}
+        project_ip_decorator project
+        group_by_distinct_visitors_decorator group
       else
-        project = {"$project" => {"year" => {"$year" => "$datetime"}, "datetime" => 1}}
         group = {"$group" => { "_id" => {"year" => "$year"}, "count" => {"$sum" => 1}}}
       end
     when "month"
+      project = {"$project" => {"year" => {"$year" => "$datetime"}, "month" => {"$month" => "$datetime"}, "datetime" => 1}}
       if @qp.unique
-        project = {"$project" => {"year" => {"$year" => "$datetime"}, "month" => {"$month" => "$datetime"}, "datetime" => 1, "ip" => 1}}
-        group = {"$group" => { "_id" => {"year" => "$year", "month" => "$month"}, "ips" => {"$addToSet" => "$ip"}}}
+        group = {"$group" => { "_id" => {"year" => "$year", "month" => "$month"}}}
+        project_ip_decorator project
+        group_by_distinct_visitors_decorator group
       else
-        project = {"$project" => {"year" => {"$year" => "$datetime"}, "month" => {"$month" => "$datetime"}, "datetime" => 1}}
         group = {"$group" => {"_id" => {"year" => "$year", "month" => "$month"}, "count" => {"$sum" => 1}}}
       end
     when "day"
+      project = {"$project" => {"datetime" => 1}}
       if @qp.unique
-        project = {"$project" => {"datetime" => 1, "ip" => 1}}
         group = {"$group" => { "_id" => {"year" => {"$year" => "$datetime"}, "month" => {"$month" => "$datetime"},
-        "day" => {"$dayOfMonth" => "$datetime"}}, "ips" => {"$addToSet" => "$ip"}}}
+        "day" => {"$dayOfMonth" => "$datetime"}}}}
+        project_ip_decorator project
+        group_by_distinct_visitors_decorator group
       else
-        project = {"$project" => {"datetime" => 1}}
         group = {"$group" => { "_id" => {"year" => {"$year" => "$datetime"}, "month" => {"$month" => "$datetime"},
         "day" => {"$dayOfMonth" => "$datetime"}}, "count" => {"$sum" => 1}}}
       end
@@ -37,10 +40,22 @@ module DynamicQueryResolver
       error = {"error" => "Invalid group by option: try year, month or day"}
     end
     if ((error == nil) && (@qp.has_hour_filters?))
-      project["$project"].merge!({"totalSeconds" => {"$add" => [{"$multiply" => [{"$hour" =>"$datetime"}, 3600]}, {"$multiply" => [{"$minute" => "$datetime"}, 60]},
-           {"$second" => "$datetime"}]}})
+      project_totalSeconds_decorator project
     end
     [project, group, error]
+  end
+
+  def self.project_ip_decorator project
+    project["$project"].merge!({"ip" => 1})
+  end
+
+  def self.project_totalSeconds_decorator project
+    project["$project"].merge!({"totalSeconds" => {"$add" => [{"$multiply" => [{"$hour" =>"$datetime"}, 3600]}, {"$multiply" => [{"$minute" => "$datetime"}, 60]},
+           {"$second" => "$datetime"}]}})
+  end
+
+  def self.group_by_distinct_visitors_decorator group
+    group["$group"].merge!({"ips" => {"$addToSet" => "$ip"}})
   end
   
   def self.distinct_visitors_count        
@@ -78,12 +93,5 @@ module DynamicQueryResolver
   def self.is_unique
     @qp.unique
   end
-
-  # def self.get_filters
-  #   [project, group, error] = self.project_group_parts
-  #   if error == nil
-  #     if self.is_unique
-        
-  # end
   
 end
