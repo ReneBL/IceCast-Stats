@@ -22,6 +22,18 @@ iceServices.factory("ConnectionsBetweenDates", ['$resource', function($resource)
 	     {isArray : false});
 }]);
 
+iceServices.factory("CountriesConnections", ['$resource', function($resource) {
+	  return $resource('locations/countries/:start_date/:end_date/:unique_visitors/:start_hour/:end_hour:json', 
+	     {start_date : '@start_date', end_date : '@end_date', unique_visitors : '@unique_visitors', start_hour: "00:00:00", end_hour : "23:59:59"},
+	     {});
+}]);
+
+iceServices.factory("CountriesTotalTime", ['$resource', function($resource) {
+	  return $resource('locations/countries_time/:start_date/:end_date/:start_hour/:end_hour:json', 
+	     {start_date : '@start_date', end_date : '@end_date', start_hour: "00:00:00", end_hour : "23:59:59"},
+	     {});
+}]);
+
 iceServices.factory("Sources", ['$resource', function($resource) {
 	  return $resource('sources/:source:json', {source: '@source'}, {});
 }]);

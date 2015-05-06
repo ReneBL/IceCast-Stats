@@ -8,33 +8,32 @@ module DynamicQueryResolver
     error = nil
     case @qp.group_by
     when "year"
-      project = {"$project" => {"year" => {"$year" => "$datetime"}, "datetime" => 1}} 
+      project = {"$project" => {"year" => {"$year" => "$datetime"}, "datetime" => 1}}
+      group = {"$group" => { "_id" => {"year" => "$year"}}}
       if @qp.unique       
-        group = {"$group" => { "_id" => {"year" => "$year"}}}
         project_ip_decorator project
         group_by_distinct_visitors_decorator group
       else
-        group = {"$group" => { "_id" => {"year" => "$year"}, "count" => {"$sum" => 1}}}
+        count_group_by_part_decorator group
       end
     when "month"
       project = {"$project" => {"year" => {"$year" => "$datetime"}, "month" => {"$month" => "$datetime"}, "datetime" => 1}}
+      group = {"$group" => {"_id" => {"year" => "$year", "month" => "$month"}}}
       if @qp.unique
-        group = {"$group" => { "_id" => {"year" => "$year", "month" => "$month"}}}
         project_ip_decorator project
         group_by_distinct_visitors_decorator group
       else
-        group = {"$group" => {"_id" => {"year" => "$year", "month" => "$month"}, "count" => {"$sum" => 1}}}
+        count_group_by_part_decorator group
       end
     when "day"
       project = {"$project" => {"datetime" => 1}}
-      if @qp.unique
-        group = {"$group" => { "_id" => {"year" => {"$year" => "$datetime"}, "month" => {"$month" => "$datetime"},
+      group = {"$group" => { "_id" => {"year" => {"$year" => "$datetime"}, "month" => {"$month" => "$datetime"},
         "day" => {"$dayOfMonth" => "$datetime"}}}}
+      if @qp.unique  
         project_ip_decorator project
         group_by_distinct_visitors_decorator group
       else
-        group = {"$group" => { "_id" => {"year" => {"$year" => "$datetime"}, "month" => {"$month" => "$datetime"},
-        "day" => {"$dayOfMonth" => "$datetime"}}, "count" => {"$sum" => 1}}}
+        count_group_by_part_decorator group
       end
     else
       error = {"error" => "Invalid group by option: try year, month or day"}
@@ -60,7 +59,8 @@ module DynamicQueryResolver
   
   def self.distinct_visitors_count        
     unwind = {"$unwind" => "$ips"}
-    group = {"$group" => {"_id" => "$_id", "count" => {"$sum" => 1}}}
+    group = {"$group" => {"_id" => "$_id"}}
+    count_group_by_part_decorator group
     [unwind, group]
   end
 
@@ -74,6 +74,14 @@ module DynamicQueryResolver
   def self.sort_part
     sort = {"$sort" => {"_id" => 1}}
     sort
+  end
+
+  def self.count_group_by_part_decorator group
+    group["$group"].merge!({"count" => {"$sum" => 1}})
+  end
+
+  def self.count_seconds_group_by_part_decorator group
+    group["$group"].merge!({"count" => {"$sum" => "$seconds_connected"}})
   end
 
   def self.hours_filter

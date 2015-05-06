@@ -32,7 +32,7 @@ app.controller("FilterController", function($scope, $filter, NotificationService
 	$scope.horaInicio = inicioDia;
 	$scope.horaFin = finDia;
 	$scope.showHourRange = false;
-	$scope.validHoursForm = true;
+	$scope.validFormWhenHoursActived = true;
 	$scope.unique = false;
 	$scope.invalid = false;
 
@@ -41,9 +41,10 @@ app.controller("FilterController", function($scope, $filter, NotificationService
 	   	     end_date : $filter('date')($scope.fechaFin, 'dd/MM/yyyy'), unique_visitors : $scope.unique.toString()};
 
 	   	// Solo si el checkbox está activado y las horas son validas las añadimos como parametros
-	   	// validHoursForm se seteará a true cuando haya un cambio en la hora inicio o fin y el formulario que las engloba
-	   	// es correcto. Es decir, si hora inicio y hora fin son correctas
-	   	if ($scope.showHourRange && $scope.validHoursForm) {
+	   	// validFormWhenHoursActived se seteará a true cuando haya un cambio en la hora inicio o fin y el formulario que las engloba
+	   	// es correcto. Es decir, si hora inicio y hora fin son correctas. Es una "foto" de la validez en el último instante en que quedaron las horas
+	   	// inicio y fin
+	   	if ($scope.showHourRange && $scope.validFormWhenHoursActived) {
 	   		params["start_hour"] = formatDateToString($scope.horaInicio);
 	   		params["end_hour"] = formatDateToString($scope.horaFin);
 	   	}
@@ -55,24 +56,35 @@ app.controller("FilterController", function($scope, $filter, NotificationService
    		NotificationService.sendScopeChanged(data);
 	};
 
-   	$scope.changedCheckBoxUniqueVisitors = function() {
-   		// Antes de realizar la peticion, comprobamos si las fechas son validas
-		if(!$scope.invalid) {
-			sendBroadcast();
+	var sendBroadcastUnique = function() {
+		var data = $scope.doGetParams();
+   		NotificationService.sendUniqueChanged(data);	
+	}
+
+   	$scope.changedCheckBoxUniqueVisitors = function(validForm, validDates) {
+   		var checkHoursOk = ($scope.showHourRange && validForm && (!scope.invalid) && (!$scope.startNotLesserEnd))
+   		 	|| (!$scope.showHourRange && validDates && (!$scope.invalid));
+   		// Antes de realizar la peticion, comprobamos si está activo el formulario
+   		// de las horas. Si es así y el formulario es válido, OK, pero si no está activo tiene que ser
+   		// válido porque no se va a tener en cuenta si las horas son válidas o no, se hará una petición con la hora estándar
+   		// de un día (de 00:00:00 a 23:59:59)
+		if(!$scope.invalid && validForm && checkHoursOk) {
+			sendBroadcastUnique();
    		}
    	};
 
 	$scope.changedHour = function(validForm) {
 	   	$scope.startNotLesserEnd = ($scope.horaInicio > $scope.horaFin); 
-	   	$scope.validHoursForm = validForm;
-	   	if ($scope.validHoursForm && !$scope.startNotLesserEnd) {
+	   	// Tenemos que comprobar si todo el formulario de filtros es válido antes de hacer ninguna petición
+	   	$scope.validFormWhenHoursActived = validForm;
+	   	if ($scope.validFormWhenHoursActived && !$scope.startNotLesserEnd) {
 	   		sendBroadcast();
 		}
 	};
 
-	$scope.changedDate = function() {
+	$scope.changedDate = function(validForm) {
 		$scope.invalid = ($scope.fechaFin < $scope.fechaInicio); 
-		if (!$scope.invalid) {
+		if (!$scope.invalid && (validForm)) {
 	   		sendBroadcast();
 	   	}
 	};
@@ -82,10 +94,15 @@ app.controller("FilterController", function($scope, $filter, NotificationService
 		return ("0" + (date.getHours())).slice(-2) + ":" + ("0" + (date.getMinutes())).slice(-2) + ":" + ("0" + (date.getSeconds())).slice(-2)
 	};
 
-	$scope.changedCheckBoxHourRange = function() {
-	   	// Si la hora inicio y al checkear y descheckear son iguales que el inicio y final de un dia, respectivamente, no
-	   	// es necesario realizar de nuevo otra petición
-	   	if (!(($scope.horaInicio == inicioDia) && ($scope.horaFin == finDia))) {
+	$scope.changedCheckBoxHourRange = function(fechaIniValid, fechaFinValid, horaIniValid, horaFinValid) {
+		var validDates = fechaIniValid && fechaFinValid;
+		var validHours = horaIniValid && horaFinValid;
+		// ok será true si no está activo el form de horas y las fechas son válidas, o si el form está activo y 
+		// tanto las fechas como las horas son válidas
+		var ok = (!$scope.showHourRange) ? validDates : (validDates && validHours && !scope.startNotLesserEnd);
+		// Si la hora inicio y fin al checkear y descheckear son iguales que el inicio y final de un dia, respectivamente, no
+	   	// es necesario realizar de nuevo otra petición. Comprobamos además que el formulario sea válido
+	   	if (!(($scope.horaInicio == inicioDia) && ($scope.horaFin == finDia)) && ok) {
 	   		sendBroadcast();
 	   	}
 	}

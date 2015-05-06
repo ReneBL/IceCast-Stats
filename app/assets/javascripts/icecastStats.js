@@ -1,5 +1,5 @@
 var app = angular.module('icecastStats', ['snap', 'ngRoute', 'templates', 'iceServices',
-    'connFactories', 'configState', 'dataServerParser', 'notificationService', 'ui-rangeSlider']);
+    'connFactories', 'configState', 'dataServerParser', 'notificationService', 'ui-rangeSlider', 'locationFactories']);
 
 app.config(['$routeProvider',
   function($routeProvider) {

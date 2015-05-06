@@ -1,5 +1,5 @@
 var app = angular.module('icecastStats');
-app.controller('YearsConnectionsController', function($scope, YearsConnections) {  
+app.controller('YearsConnectionsController', function ($scope, YearsConnections) {  
 
 });
 
@@ -11,7 +11,7 @@ app.controller('YearsController', function($scope, Years) {
 	  });
 });
 
-app.controller('RangesController', function($scope, Ranges, RangesDataProvider, RangesOptionsProvider, NotificationService) {
+app.controller('RangesController', function ($scope, Ranges, RangesDataProvider, RangesOptionsProvider, NotificationService) {
 	var minRange = 5;
 	var maxRange = 120;
 	$scope.range = {
@@ -63,13 +63,21 @@ app.controller('RangesController', function($scope, Ranges, RangesDataProvider, 
 		}
 	};
 
-	NotificationService.onChangeScope($scope, function(message) {
+	var refreshDataOnBroadCast = function(params) {
 		$scope.cleanContext();
-		$scope.doGetData(message.params);
+		$scope.doGetData(params);
+	};
+
+	NotificationService.onChangeScope($scope, function(message) {
+		refreshDataOnBroadCast(message.params);
+	});
+
+	NotificationService.onUniqueChanged($scope, function(message) {
+		refreshDataOnBroadCast(message.params);
 	});
 });
 
-app.controller('ConnectionsGroupedChartController', function($scope, ConnectionsBetweenDates, ConnBetDatesDataProvider,
+app.controller('ConnectionsGroupedChartController', function ($scope, ConnectionsBetweenDates, ConnBetDatesDataProvider,
 	  ConnBetDatesOptionsProvider, NotificationService) {
 
 	$scope.groupBy = 'year';
@@ -106,8 +114,16 @@ app.controller('ConnectionsGroupedChartController', function($scope, Connections
 	   	$scope.loaded = false;
 	};
 
-	NotificationService.onChangeScope($scope, function(message) {
+	var refreshDataOnBroadCast = function(params) {
 		$scope.cleanContext();
-		$scope.doGetData(message.params);
+		$scope.doGetData(params);
+	};
+
+	NotificationService.onChangeScope($scope, function(message) {
+		refreshDataOnBroadCast(message.params);
+	});
+
+	NotificationService.onUniqueChanged($scope, function(message) {
+		refreshDataOnBroadCast(message.params);
 	});
 });

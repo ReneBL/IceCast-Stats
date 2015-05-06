@@ -325,31 +325,31 @@ RSpec.describe ConnectionsController, type: :controller do
     expect(response.body).to eql(expected)
   end
 
-  # describe "when access to ranges" do
-  #   before(:each) do
-  #     FactoryGirl.create(:connection_with_5_seconds)
-  #     FactoryGirl.create(:connection_with_20_seconds)
+  # # describe "when access to ranges" do
+  # #   before(:each) do
+  # #     FactoryGirl.create(:connection_with_5_seconds)
+  # #     FactoryGirl.create(:connection_with_20_seconds)
       
-  #     FactoryGirl.create(:connection_with_30_seconds)
-  #     FactoryGirl.create(:connection_with_60_seconds)
+  # #     FactoryGirl.create(:connection_with_30_seconds)
+  # #     FactoryGirl.create(:connection_with_60_seconds)
       
-  #     FactoryGirl.create(:connection_with_120_seconds)     
+  # #     FactoryGirl.create(:connection_with_120_seconds)     
       
-  #     ranges_array = [
-  #       { :_id => "rango 0-20", :count => 2},
-  #       { :_id => "rango 20-60", :count => 2},
-  #       { :_id => "rango > 60", :count => 1}
-  #     ]
-  #     @ranges = ranges_array.to_json
+  # #     ranges_array = [
+  # #       { :_id => "rango 0-20", :count => 2},
+  # #       { :_id => "rango 20-60", :count => 2},
+  # #       { :_id => "rango > 60", :count => 1}
+  # #     ]
+  # #     @ranges = ranges_array.to_json
       
-  #     admin = FactoryGirl.create(:admin)
-  #     log_in(admin)
-  #   end
+  # #     admin = FactoryGirl.create(:admin)
+  # #     log_in(admin)
+  # #   end
     
-  #   it "should return ranges of seconds" do
-  #     xhr :get, :ranges, :format => :json
-  #     expect(response.body).to eql(@ranges)
-  #   end
+  # #   it "should return ranges of seconds" do
+  # #     xhr :get, :ranges, :format => :json
+  # #     expect(response.body).to eql(@ranges)
+  # #   end
     
-  # end
+  # # end
 end

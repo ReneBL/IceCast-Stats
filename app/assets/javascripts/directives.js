@@ -12,6 +12,8 @@ app.directive("chart", function() {
 	  	   	                  break;
 	  	   	  case 'Calendar' : chart = new google.visualization.Calendar(elm[0]);
 	  	   	                    break;
+	  	   	  case 'Geo' : chart = new google.visualization.GeoChart(elm[0]);
+	  	   	  					break;
 	  	   	  default: console.log('Gráfica no disponible');
 	  	   }
 	  	   chart != null? chart.draw($scope.data, $scope.options) : console.log("Error interno");

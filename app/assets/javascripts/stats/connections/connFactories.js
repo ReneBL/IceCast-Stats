@@ -13,7 +13,7 @@ icecast.factory("ConnBetDatesDataProvider", function() {
 	          var dt = new google.visualization.arrayToDataTable(array);
 	          return dt;
 	        } else if (groupBy == 'day') {
-	   	       data = new google.visualization.DataTable();
+	   	      data = new google.visualization.DataTable();
             data.addColumn({ type: 'date', id: 'Date' });
             data.addColumn({ type: 'number', id: 'Listeners' });
             for(var i=0; i < datos.length; i++) {

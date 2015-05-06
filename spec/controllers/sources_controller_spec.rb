@@ -10,6 +10,9 @@ RSpec.describe SourcesController, type: :controller do
 		f << "cuacfm-128k.mp3\n"
 		f << "cuacfm.mp3\n"
 		f << "pepito.ogg\n"
+		f << "pepito.ogg\n"
+		f << "cuacfm.mp3\n"
+		f << "cuacfm.mp3\n"
 		# OJO : nunca cerrar el fichero porque nunca se podria volver a abrir desde codigo
 		f.flush
 		admin = FactoryGirl.create(:admin)

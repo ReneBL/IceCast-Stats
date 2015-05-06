@@ -28,7 +28,7 @@ class SourcesController < ApplicationController
 	def sources_file_lines
 		config = YAML.load_file('config/sources_config.yml')
 		f = File.open(config['source_file_path'], "r+")
-		sources = f.readlines
+		sources = f.readlines.uniq
 		# Recorremos y modificamos cada linea del fichero con collect! para eliminar saltos de linea, con chomp
 		sources.collect! do |line|
 			line.chomp
