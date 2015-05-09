@@ -316,40 +316,54 @@ RSpec.describe ConnectionsController, type: :controller do
 
     end
 
+    def xhrRequestConnRanges(expected_array, min=5, max=120, unique='false', st_date='18/01/2014', end_date='01/01/2015')
+      expected = expected_array.to_json
+      xhr :get, :ranges, :start_date => st_date, :end_date => end_date, :unique_visitors => unique,
+        :min => min, :max => max, :format => :json
+      expect(response.body).to eql(expected)
+    end
   end
 
-  def xhrRequestConnRanges(expected_array, min=5, max=120, unique='false', st_date='18/01/2014', end_date='01/01/2015')
-    expected = expected_array.to_json
-    xhr :get, :ranges, :start_date => st_date, :end_date => end_date, :unique_visitors => unique,
-     :min => min, :max => max, :format => :json
-    expect(response.body).to eql(expected)
+  describe "when access to total number of connections seconds" do
+
+    before(:each) do
+      2.times do
+        FactoryGirl.create(:connection_with_5_seconds)
+      end
+      
+      FactoryGirl.create(:connection_with_20_seconds)
+      FactoryGirl.create(:connection_with_30_seconds)
+      FactoryGirl.create(:connection_with_60_seconds)
+      FactoryGirl.create(:connection_with_120_seconds)
+      FactoryGirl.create(:connection_with_200_seconds)
+      
+      admin = FactoryGirl.create(:admin)
+      log_in(admin)
+    end
+
+    it "should return a number representing total amount of seconds in a period" do
+      total_time_array = [
+        { :_id => "total", :count => 440 }
+      ]
+      xhrRequestTotalTime total_time_array
+
+      total_time_array = [
+        { :_id => "total", :count => 410 }
+      ]
+      xhrRequestTotalTime total_time_array, '15/04/2014'
+
+      total_time_array = [
+        { :_id => "total", :count => 120 }
+      ]
+      xhrRequestTotalTime total_time_array, '25/03/2014', '09/10/2014'
+
+    end
+
+    def xhrRequestTotalTime(expected_array, st_date='25/03/2014', end_date='01/01/2015')
+      expected = expected_array.to_json
+      xhr :get, :total_seconds, :start_date => st_date, :end_date => end_date, :format => :json
+      expect(response.body).to eql(expected)
+    end
   end
 
-  # # describe "when access to ranges" do
-  # #   before(:each) do
-  # #     FactoryGirl.create(:connection_with_5_seconds)
-  # #     FactoryGirl.create(:connection_with_20_seconds)
-      
-  # #     FactoryGirl.create(:connection_with_30_seconds)
-  # #     FactoryGirl.create(:connection_with_60_seconds)
-      
-  # #     FactoryGirl.create(:connection_with_120_seconds)     
-      
-  # #     ranges_array = [
-  # #       { :_id => "rango 0-20", :count => 2},
-  # #       { :_id => "rango 20-60", :count => 2},
-  # #       { :_id => "rango > 60", :count => 1}
-  # #     ]
-  # #     @ranges = ranges_array.to_json
-      
-  # #     admin = FactoryGirl.create(:admin)
-  # #     log_in(admin)
-  # #   end
-    
-  # #   it "should return ranges of seconds" do
-  # #     xhr :get, :ranges, :format => :json
-  # #     expect(response.body).to eql(@ranges)
-  # #   end
-    
-  # # end
 end

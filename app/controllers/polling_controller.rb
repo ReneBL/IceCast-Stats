@@ -8,7 +8,7 @@ class PollingController < ApplicationController
 		uri = URI.parse(url)
 		begin
 			response_raw = Net::HTTP.get_response(uri)
-			JsonSchemaValidator.valid? response_raw.body
+			#JsonSchemaValidator.valid? response_raw.body
 			response = response_raw.body
 		rescue TypeError
 			response = {"error" => "No existen datos. Por favor, compruebe que la URL del servidor IceCast es correcta."}

@@ -1,14 +1,30 @@
 var app = angular.module('icecastStats');
-app.controller('YearsConnectionsController', function ($scope, YearsConnections) {  
 
-});
+app.controller("TotalTimeController", function ($scope, TotalTime, NotificationService) {
 
-app.controller('YearsController', function($scope, Years) {
-	//Inyectamos los servicios RESTFul implementados con $resource
-	  $scope.data = Years.query(function (data) {
-    	$scope.years = data;
-    	$scope.year = data[0];
-	  });
+	var refresh = function() {
+		var params = $scope.$parent.doGetParams();
+		delete params.unique_visitors;
+		TotalTime.query(params, function (datos) {
+			var hours = Math.floor(datos[0].count / (60 * 60));
+			var divisor_for_minutes = datos[0].count % (60 * 60);
+    		var minutes = Math.floor(divisor_for_minutes / 60);
+ 
+    		var divisor_for_seconds = divisor_for_minutes % 60;
+    		var seconds = Math.ceil(divisor_for_seconds);
+			$scope.time = {
+				hours: hours,
+				minutes: minutes,
+				seconds: seconds
+			}
+		});
+	};
+
+	$scope.time = refresh();
+
+	NotificationService.onChangeScope($scope, function(message) {
+		refresh();
+	});
 });
 
 app.controller('RangesController', function ($scope, Ranges, RangesDataProvider, RangesOptionsProvider, NotificationService) {

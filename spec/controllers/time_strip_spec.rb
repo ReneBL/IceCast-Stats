@@ -312,4 +312,54 @@ RSpec.describe ConnectionsController, type: :controller do
       expect(response.body).to eql(expected)
     end
   end
+
+  describe "when access to total number of connections seconds filtered by time strip" do
+    before(:each) do
+      2.times do
+        FactoryGirl.create(:connection_with_5_seconds)
+      end
+      
+      FactoryGirl.create(:connection_with_20_seconds)
+      FactoryGirl.create(:connection_with_30_seconds)
+      FactoryGirl.create(:connection_with_60_seconds)
+      FactoryGirl.create(:connection_with_120_seconds)
+      FactoryGirl.create(:connection_with_200_seconds)
+      
+      admin = FactoryGirl.create(:admin)
+      log_in(admin)
+    end
+
+    it "should return total amount in a time strip" do
+      total_time_array = [
+        { :_id => "total", :count => 440 }
+      ]
+      xhrRequestTotalTime total_time_array
+
+      total_time_array = [
+        { :_id => "total", :count => 310 }
+      ]
+      xhrRequestTotalTime total_time_array, '06:27:05'
+
+      total_time_array = [
+        { :_id => "total", :count => 50 }
+      ]
+      xhrRequestTotalTime total_time_array, '06:27:05', '11:17:03'
+
+      total_time_array = [
+        { :_id => "total", :count => 110 }
+      ]
+      xhrRequestTotalTime total_time_array, '06:27:05', '23:59:59', '25/03/2014', '31/12/2014'
+
+      total_time_array = [
+        { :_id => "total", :count => 120 }
+      ]
+      xhrRequestTotalTime total_time_array, '00:00:00', '04:50:04', '25/03/2014', '31/12/2014'
+    end
+
+    def xhrRequestTotalTime(expected_array, from="00:00:00", to="23:59:59", st_date='25/03/2014', end_date='01/01/2015')
+      expected = expected_array.to_json
+      xhr :get, :total_seconds, :start_date => st_date, :end_date => end_date, :start_hour => from, :end_hour => to, :format => :json
+      expect(response.body).to eql(expected)
+    end
+  end
 end

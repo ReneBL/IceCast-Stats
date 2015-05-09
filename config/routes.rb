@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   get 'connections/years' => 'connections#years'
   get 'connections/ranges/:start_date/:end_date/:unique_visitors/:max/:min(/:start_hour/:end_hour)' => 'connections#ranges'
   get 'connections/connections_between_dates/:start_date/:end_date/:group_by/:unique_visitors(/:start_hour/:end_hour)' => 'connections#connections_between_dates'
+  get 'connections/total_seconds/:start_date/:end_date(/:start_hour/:end_hour)' => 'connections#total_seconds'
 
   post 'login' => 'users#create'
   get 'logout' => 'users#destroy'

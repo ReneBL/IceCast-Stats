@@ -1,6 +1,5 @@
 <div class="container" ng-controller="HomeController">
 
-<h1>PAGINA DE PRUEBA</h1>
 	<div class="alert alert-danger" role="alert" ng-show="invalidData" ng-model="message">
 		No existen datos. Por favor, compruebe que la URL del servidor IceCast es correcta.
 	</div>
@@ -16,24 +15,12 @@
   			</div>
   			<br/><br/><br/><br/><br/>
 		</div>
-		<div id="currentlyPlaying col-xs-8">
-			<div id="player-top">
-				<div id="now-playing-title" amplitude-song-info="name"></div>
-				<div class="album-information">
-					<span amplitude-song-info="artist"></span>
-					-
-					<span amplitude-song-info="album"></span>
-				</div>
-			</div>
-			<img class="amplitude-album-art" amplitude-song-info="cover">
-			<div id="player-bottom">
-				<div id="control-container">
-					<div class="amplitude-play-pause amplitude-paused"></div>
-				</div>
-			</div>
-			<!-- <label id="programa" ng-model="programa">Programa: {{programa}}</label><br/>
-			<label id="genero" ng-model="genero">Género: {{genero}}</label><br/>
-			<label id="url">URL: <a id="linkDirecto" ng-href="{{serverUrl}}"></label><br/> -->
+		<div id="currentlyPlaying" class ="col-xs-8">
+			<h2>Actualmente sonando : </h2>
+			<span id="broadcast" class="glyphicon glyphicon-bullhorn" ng-class="{'broadcastHidden' : intermitent}">
+			</span>
+			<label ng-model="programa">{{programa}}</label>
+			<br/><br/><br/><br/><br/>
 		</div>
 	</div>
 	

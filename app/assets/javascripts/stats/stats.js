@@ -62,7 +62,7 @@ app.controller("FilterController", function($scope, $filter, NotificationService
 	}
 
    	$scope.changedCheckBoxUniqueVisitors = function(validForm, validDates) {
-   		var checkHoursOk = ($scope.showHourRange && validForm && (!scope.invalid) && (!$scope.startNotLesserEnd))
+   		var checkHoursOk = ($scope.showHourRange && validForm && (!$scope.invalid) && (!$scope.startNotLesserEnd))
    		 	|| (!$scope.showHourRange && validDates && (!$scope.invalid));
    		// Antes de realizar la peticion, comprobamos si está activo el formulario
    		// de las horas. Si es así y el formulario es válido, OK, pero si no está activo tiene que ser
@@ -99,7 +99,7 @@ app.controller("FilterController", function($scope, $filter, NotificationService
 		var validHours = horaIniValid && horaFinValid;
 		// ok será true si no está activo el form de horas y las fechas son válidas, o si el form está activo y 
 		// tanto las fechas como las horas son válidas
-		var ok = (!$scope.showHourRange) ? validDates : (validDates && validHours && !scope.startNotLesserEnd);
+		var ok = (!$scope.showHourRange) ? validDates : (validDates && validHours && !$scope.startNotLesserEnd);
 		// Si la hora inicio y fin al checkear y descheckear son iguales que el inicio y final de un dia, respectivamente, no
 	   	// es necesario realizar de nuevo otra petición. Comprobamos además que el formulario sea válido
 	   	if (!(($scope.horaInicio == inicioDia) && ($scope.horaFin == finDia)) && ok) {

@@ -1,13 +1,14 @@
 <div class="container">
-	<h1>STATS</h1>
-	<div ng-controller="YearsConnectionsController">
-		<span ng-if="yearsChartLoaded">
-			<div id="chart" style="width: 50%" chart chart-type="Bar"></div>
-		</span>
+	<div id="totalTime" ng-controller="TotalTimeController">
+		<div class="panel panel-default">
+			Tiempo total de escucha
+  			<div class="panel-body">
+    			<label ng-model="time.hours">{{time.hours}} horas</label>
+    			<label ng-model="time.minutes">{{time.minutes}} minutos</label>
+    			<label ng-model="time.seconds">{{time.seconds}} segundos</label>
+  			</div>
+		</div>
 	</div>
-
-	<select id="years" ng-controller="YearsController" ng-model="year" ng-options="y._id.year for y in years">
-	</select>
 	
 	<div id="cgcController" ng-controller="ConnectionsGroupedChartController">
 		<div class="btn-group" role="group">

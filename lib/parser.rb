@@ -8,12 +8,18 @@ module Parser
     @config = YAML.load_file('config/parser_config.yml')
   end
 
+  def Parser.parse_without_path
+    Parser.initialize_parser
+    Parser.parse @config['log_path']
+  end
+
   # Recorre las línes del fichero de log que se pasa como parámetro, por defecto el fichero de log del servidor
   # Además, obtiene el offset del fichero de configuración para obviar las líneas que ya han sido parseadas
   # Por último actualiza dicho fichero de configuración guardando el offset donde se ha quedado 
-  def Parser.parse(path=@config['log_path'])
+  def Parser.parse(path)
     begin
-      if File.exists? path
+      # Pasamos a string para evitar que nos manden nil o cualquier otro tipo de dato
+      if File.exists? path.to_s
         parser = ApacheLogRegex.new(@config['log_format'])
         f = File.open(path, 'r+')
         #f.seek(@config['seek_pos'], :SET)

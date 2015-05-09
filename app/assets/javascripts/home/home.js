@@ -2,6 +2,7 @@ var app = angular.module('icecastStats');
 
 app.controller("HomeController", function($scope, $interval, StateFactory,
 					 	IceCastServer, ServerStreamingDataParser) {
+    $scope.intermitent = false;
 	$scope.listeners = StateFactory.getListeners();
 	$scope.invalidData = false;
 	var poll = $interval(function () {
@@ -14,10 +15,15 @@ app.controller("HomeController", function($scope, $interval, StateFactory,
 			}
 		});
 	}, StateFactory.getRefreshSeconds());
+    var intermitent = $interval(function () {
+        $scope.intermitent = !$scope.intermitent;
+    }, 1000);
+
 	// Cuando se cambie de página, se emitirá un evento "destroy", lo capturaremos para cancelar el intervalo
 	// establecido anteriormente, y también nos servirá para guardar los listeners que había antes
 	$scope.$on('$destroy', function() {
         $interval.cancel(poll);
+        $interval.cancel(intermitent);
         StateFactory.setListeners($scope.listeners);
     });
 

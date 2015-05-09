@@ -43,6 +43,21 @@ class ConnectionsController < StatsController
       })
       render :json => result
   end
+
+  def total_seconds
+    filters = []
+    filters << (DynamicQueryResolver.match_part @match)
+    project = {"$project" => {"seconds_connected" => 1}}
+    group_by = {"$group" => {"_id" => "total"}}
+    DynamicQueryResolver.project_totalSeconds_decorator project 
+    DynamicQueryResolver.count_seconds_group_by_part_decorator group_by
+    # Añadimos las stages a filters
+    filters << project << DynamicQueryResolver.hours_filter << group_by
+    # Añadimos la stage de ordenación
+    filters << DynamicQueryResolver.sort_part
+    result = Connection.collection.aggregate(filters)
+    render :json => result
+  end
   
   def ranges
     # Obtenemos los parametros min y max
@@ -65,6 +80,7 @@ class ConnectionsController < StatsController
       DynamicQueryResolver.project_ip_decorator project
       DynamicQueryResolver.group_by_distinct_visitors_decorator group_by
       unwind, group = DynamicQueryResolver.distinct_visitors_count
+      DynamicQueryResolver.count_group_by_part_decorator group
     else 
       DynamicQueryResolver.count_group_by_part_decorator group_by
     end
@@ -94,6 +110,7 @@ class ConnectionsController < StatsController
         #debugger
         if DynamicQueryResolver.is_unique
           unwind, group = DynamicQueryResolver.distinct_visitors_count
+          DynamicQueryResolver.count_group_by_part_decorator group
           filters << unwind << group
         end
         filters << DynamicQueryResolver.sort_part
@@ -117,6 +134,10 @@ class ConnectionsController < StatsController
     error = { "error" => "Rango no válido (min <= max | min && max not null | min && max >= 0)" }
     render :json => error.to_json
     return [min.to_i, max.to_i, error]
+  end
+
+  def seconds_filter_aggregator filters
+
   end
   
 end
