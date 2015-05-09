@@ -21,6 +21,12 @@ iceServices.factory("TotalTime", ['$resource', function($resource) {
 	     {isArray : false});
 }]);
 
+iceServices.factory("AvgTime", ['$resource', function($resource) {
+	  return $resource('connections/avg_seconds/:start_date/:end_date/:start_hour/:end_hour:json', 
+	     {start_date : '@start_date', end_date : '@end_date', start_hour: "00:00:00", end_hour : "23:59:59"},
+	     {isArray : false});
+}]);
+
 iceServices.factory("ConnectionsBetweenDates", ['$resource', function($resource) {
 	  return $resource('connections/connections_between_dates/:start_date/:end_date/:group_by/:unique_visitors/:start_hour/:end_hour:json', 
 	     {start_date : '@start_date', end_date : '@end_date', group_by : '@group_by', unique_visitors : '@unique_visitors', 

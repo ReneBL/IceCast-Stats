@@ -1,25 +1,44 @@
 var app = angular.module('icecastStats');
 
-app.controller("TotalTimeController", function ($scope, TotalTime, NotificationService) {
-
+app.controller("TotalTimeController", function ($scope, TotalTime, SecondsConverter, NotificationService) {
 	var refresh = function() {
 		var params = $scope.$parent.doGetParams();
 		delete params.unique_visitors;
 		TotalTime.query(params, function (datos) {
-			var hours = Math.floor(datos[0].count / (60 * 60));
-			var divisor_for_minutes = datos[0].count % (60 * 60);
-    		var minutes = Math.floor(divisor_for_minutes / 60);
- 
-    		var divisor_for_seconds = divisor_for_minutes % 60;
-    		var seconds = Math.ceil(divisor_for_seconds);
-			$scope.time = {
-				hours: hours,
-				minutes: minutes,
-				seconds: seconds
+			$scope.dataEmpty = (datos.length == 0);
+			if (!$scope.dataEmpty) {
+				var time = SecondsConverter.toHoursMinutesSeconds(datos[0].count);
+				$scope.time = {
+					hours: time.hours,
+					minutes: time.minutes,
+					seconds: time.seconds
+				};
 			}
 		});
 	};
+	$scope.time = refresh();
 
+	NotificationService.onChangeScope($scope, function(message) {
+		refresh();
+	});
+});
+
+app.controller("AvgTimeController", function ($scope, AvgTime, SecondsConverter, NotificationService) {
+	var refresh = function() {
+		var params = $scope.$parent.doGetParams();
+		delete params.unique_visitors;
+		AvgTime.query(params, function (datos) {
+			$scope.dataEmpty = (datos.length == 0);
+			if (!$scope.dataEmpty) {
+				var time = SecondsConverter.toHoursMinutesSeconds(datos[0].count);
+				$scope.time = {
+					hours: time.hours,
+					minutes: time.minutes,
+					seconds: time.seconds
+				};
+			}
+		});
+	};
 	$scope.time = refresh();
 
 	NotificationService.onChangeScope($scope, function(message) {

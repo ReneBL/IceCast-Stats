@@ -1,5 +1,6 @@
 class StatsController < ApplicationController
-  before_action :generate_query_params, only: [:connections_between_dates, :ranges, :countries, :countries_time, :total_seconds]
+  before_action :generate_query_params, only: [:connections_between_dates, :ranges, :countries,
+    :countries_time, :total_seconds, :avg_seconds]
 
   # Esta "controlador" servirá como filtro de entrada a las peticiones destinadas a cualquiera de los controladores 
   # que hereden de éste

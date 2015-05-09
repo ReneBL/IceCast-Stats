@@ -4,45 +4,6 @@ class ConnectionsController < StatsController
   
   def index
   end
-  
-  def months
-    year = params[:year].to_i
-    result = Connection.collection.aggregate(
-      {
-        "$project" => {'month' => {'$month' => '$datetime'},'year' => {'$year' => '$datetime'}}
-      },
-      {
-        '$match' => {'year' => year}
-      },
-      {
-        "$group" => {'_id' => {'month' => '$month'},'count' => {'$sum' => 1}}
-      },
-      {
-        "$sort" => {'_id' => 1}
-      }
-    )   
-    render :json => result
-  end
-  
-  def years
-    result = Connection.collection.aggregate(
-      {
-        "$project" => {
-          'year' => {"$year" => "$datetime"}
-        }
-      }, 
-      {
-        "$group" => { 
-          '_id' => {'year' => "$year"}
-         }
-      }, 
-      {
-        "$sort" => {
-          '_id' => -1
-        }
-      })
-      render :json => result
-  end
 
   def total_seconds
     filters = []
@@ -51,6 +12,21 @@ class ConnectionsController < StatsController
     group_by = {"$group" => {"_id" => "total"}}
     DynamicQueryResolver.project_totalSeconds_decorator project 
     DynamicQueryResolver.count_seconds_group_by_part_decorator group_by
+    # Añadimos las stages a filters
+    filters << project << DynamicQueryResolver.hours_filter << group_by
+    # Añadimos la stage de ordenación
+    filters << DynamicQueryResolver.sort_part
+    result = Connection.collection.aggregate(filters)
+    render :json => result
+  end
+
+  def avg_seconds
+    filters = []
+    filters << (DynamicQueryResolver.match_part @match)
+    project = {"$project" => {"seconds_connected" => 1}}
+    group_by = {"$group" => {"_id" => "avg"}}
+    DynamicQueryResolver.project_totalSeconds_decorator project 
+    DynamicQueryResolver.avg_seconds_group_by_part_decorator group_by
     # Añadimos las stages a filters
     filters << project << DynamicQueryResolver.hours_filter << group_by
     # Añadimos la stage de ordenación
@@ -104,15 +80,20 @@ class ConnectionsController < StatsController
       filters = []
       filters << (DynamicQueryResolver.match_part @match)
       if project != nil && group_by != nil
-        # Le decimos al resolver que nos de el filtro por horas si existe, si no, devolvera [], lo cual para el 
-        # pipeline no es relevante
-        filters << project << DynamicQueryResolver.hours_filter << group_by
         #debugger
         if DynamicQueryResolver.is_unique
+          # Si es así, decoramos project y group by para que agrupe por IP's y haga count gracias a unwind y un segundo group
+          DynamicQueryResolver.project_ip_decorator project
+          DynamicQueryResolver.group_by_distinct_visitors_decorator group_by
           unwind, group = DynamicQueryResolver.distinct_visitors_count
           DynamicQueryResolver.count_group_by_part_decorator group
-          filters << unwind << group
+        else 
+        	DynamicQueryResolver.count_group_by_part_decorator group_by
         end
+        filters << project << DynamicQueryResolver.hours_filter << group_by
+    		if ((unwind != nil) && (group != nil))
+      		filters << unwind << group
+    		end
         filters << DynamicQueryResolver.sort_part
         result = Connection.collection.aggregate(filters)
         render :json => result

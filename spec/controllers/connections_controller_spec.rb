@@ -3,71 +3,20 @@ require 'json'
 
 RSpec.describe ConnectionsController, type: :controller do
   
-  describe "when access to controllers months" do
-    before(:each) do
-      2.times do
-        FactoryGirl.create(:connection_on_Jan_2014)
-      end
-      
-      FactoryGirl.create(:connection_on_Feb_2014)
-      FactoryGirl.create(:connection_on_Mar_2014)
-      FactoryGirl.create(:connection_on_2015)
-      
-      month_connections_per_year_array = [
-        { :_id => { :month => 1 }, :count => 2 },
-        { :_id => { :month => 2 }, :count => 1 },
-        { :_id => { :month => 3 }, :count => 1 }
-      ]
-      @month_connections_per_year = month_connections_per_year_array.to_json
-      
-      admin = FactoryGirl.create(:admin)
-      log_in(admin)
-    end
-    
-    it "should response month connections per 2014 year in JSON" do
-      xhr :get, :months, :year => 2014, :format => :json
-      expect(response.body).to eql(@month_connections_per_year)
-    end
-  end
-  
-  describe "when access to controllers years" do
-    before(:each) do
-      
-      FactoryGirl.create(:connection_on_2015)
-      FactoryGirl.create(:connection_on_2014)
-      FactoryGirl.create(:connection_on_2013)
-      
-      years_array = [
-        { :_id => { :year => 2015 }},
-        { :_id => { :year => 2014 }},
-        { :_id => { :year => 2013 }}
-      ]
-      @years = years_array.to_json
-      
-      admin = FactoryGirl.create(:admin)
-      log_in(admin)
-    end
-    
-    it "should response years in JSON" do
-      xhr :get, :years, :format => :json
-      expect(response.body).to eql(@years)
-    end
-  end
-  
   describe "when admin not authenticated" do
     it "should redirect to login form page" do
       xhr :get, :ranges, :start_date => '01/01/2014', :end_date => '01/01/2014', :unique_visitors => 'true',
         :min => 5, :max => 10, :format => :json
       expect(response).to redirect_to(login_form_path)
       
-      xhr :get, :years, :format => :json
-      expect(response).to redirect_to(login_form_path)
+      # xhr :get, :years, :format => :json
+      # expect(response).to redirect_to(login_form_path)
       
       # xhr :get, :index, :format => :json
       # expect(response).to redirect_to(login_form_path)
       
-      xhr :get, :months, :year => 2014, :format => :json
-      expect(response).to redirect_to(login_form_path)
+      # xhr :get, :months, :year => 2014, :format => :json
+      # expect(response).to redirect_to(login_form_path)
     end
   end
   
@@ -362,6 +311,48 @@ RSpec.describe ConnectionsController, type: :controller do
     def xhrRequestTotalTime(expected_array, st_date='25/03/2014', end_date='01/01/2015')
       expected = expected_array.to_json
       xhr :get, :total_seconds, :start_date => st_date, :end_date => end_date, :format => :json
+      expect(response.body).to eql(expected)
+    end
+  end
+
+  describe "when access to avg number of connections seconds" do
+
+    before(:each) do
+      2.times do
+        FactoryGirl.create(:connection_with_5_seconds)
+      end
+      
+      FactoryGirl.create(:connection_with_20_seconds)
+      FactoryGirl.create(:connection_with_30_seconds)
+      FactoryGirl.create(:connection_with_60_seconds)
+      FactoryGirl.create(:connection_with_120_seconds)
+      FactoryGirl.create(:connection_with_200_seconds)
+      
+      admin = FactoryGirl.create(:admin)
+      log_in(admin)
+    end
+
+    it "should return a number representing avg amount of seconds in a period" do
+      total_time_array = [
+        { :_id => "avg", :count => 62.857142857142854 }
+      ]
+      xhrRequestAvgTime total_time_array
+
+      total_time_array = [
+        { :_id => "avg", :count => 86.0 }
+      ]
+      xhrRequestAvgTime total_time_array, '05/04/2014'
+
+      total_time_array = [
+        { :_id => "avg", :count => 24.0 }
+      ]
+      xhrRequestAvgTime total_time_array, '25/03/2014', '09/10/2014'
+
+    end
+
+    def xhrRequestAvgTime(expected_array, st_date='25/03/2014', end_date='01/01/2015')
+      expected = expected_array.to_json
+      xhr :get, :avg_seconds, :start_date => st_date, :end_date => end_date, :format => :json
       expect(response.body).to eql(expected)
     end
   end

@@ -1,12 +1,26 @@
 <div class="container">
-	<div id="totalTime" ng-controller="TotalTimeController">
-		<div class="panel panel-default">
-			Tiempo total de escucha
-  			<div class="panel-body">
-    			<label ng-model="time.hours">{{time.hours}} horas</label>
-    			<label ng-model="time.minutes">{{time.minutes}} minutos</label>
-    			<label ng-model="time.seconds">{{time.seconds}} segundos</label>
-  			</div>
+	<div id="panelTimeContainer">
+		<div id="totalTime" class="col-xs-6" ng-controller="TotalTimeController" ng-switch on="dataEmpty">
+			<span ng-switch-when="true">
+  				<span id="template" ng-include="'_noData.html'"></span>
+  			</span>
+  			<span ng-switch-when="false">
+				<div class="panel panel-default">
+					Tiempo total de escucha
+  					<span id="template" ng-include="'_panelBodyTime.html'"></span>
+				</div>
+			</span>
+		</div>
+		<div id="avgTime" class="col-xs-6" ng-controller="AvgTimeController" ng-switch on="dataEmpty">
+			<span ng-switch-when="true">
+  				<span id="template" ng-include="'_noData.html'"></span>
+  			</span>
+  			<span ng-switch-when="false">
+				<div class="panel panel-default">
+					Tiempo medio de escucha
+  					<span id="template" ng-include="'_panelBodyTime.html'"></span>
+				</div>
+			</span>
 		</div>
 	</div>
 	
@@ -17,11 +31,7 @@
   			<button type="button" ng-class="{true:'btn btn-danger', false:'btn btn-default'}[groupBy == 'day']" ng-click="group('day')">Day</button>
 		</div>
 		<div ng-show="dataEmpty">
-  			<div class="panel panel-default">
-  				<div class="panel-body">
-    				No existen datos para estas fechas
-  				</div>
-			</div>
+  			<span id="template" ng-include="'_noData.html'"></span>
   		</div>
 		<div ng-if="loaded">
 			<div ng-if="groupBy == 'year'">
@@ -68,11 +78,7 @@
 			<div id="time_connections" chart chart-type="Pie"></div>
 		</span>
 		<div ng-show="dataEmpty">
-  			<div class="panel panel-default">
-  				<div class="panel-body">
-    				No existen datos para estas fechas
-  				</div>
-			</div>
+  			<span id="template" ng-include="'_noData.html'"></span>
   		</div>
 	</div>
 </div>

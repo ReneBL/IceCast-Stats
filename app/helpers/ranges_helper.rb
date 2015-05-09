@@ -11,37 +11,9 @@ module RangesHelper
 		@@MAX
 	end
 
-	# def self.ranges_resolver min, max
-	# 		cond = []
-	# 		if (min == max)
-	# 			# Como descartamos las conexiones menores que 5, nunca podemos dejar que baje de ese limite, sin embargo, puede que, aunque
-	# 			# min y max sean iguales y a su vez sean iguales a MAX, se haga el filtro a 3 partes por que no hay limite maximo de duración
-	# 			if ((min > @@MIN) && (min <= @@MAX))
-	# 				cond.push({"$cond" => [{ "$lt" => ["$seconds_connected", min] }, "rango < " + min.to_s, ""]})
-	# 				cond.push({"$cond" => [{ "$eq" => ["$seconds_connected", min] }, "rango = " + min.to_s, ""]})
-	# 				cond.push({"$cond" => [{ "$gt" => ["$seconds_connected", min] }, "rango > " + min.to_s, ""]})
-	# 				# {"$cond" => [{ "$lte" => ["$seconds_connected", 20] }, "rango 0-20", ""]}, 
- #     #       {"$cond" => [{ "$and" => [{"$gt" => ["$seconds_connected", 20]},{"$lte" => ["$seconds_connected", 60]}]}, "rango 20-60", ""]}, 
- #     #       {"$cond" => [{"$gt" => ["$seconds_connected", 60]}, "rango > 60", "" ]}
-	# 			elsif (min == @@MIN)
-	# 				cond.push({"$cond" => [{ "$lte" => ["$seconds_connected", min] }, "rango = " + min.to_s, ""]})
-	# 				cond.push({"$cond" => [{ "$gt" => ["$seconds_connected", min] }, "rango > " + min.to_s, ""]})
-	# 			end
-	# 		elsif min == @@MIN
- #      	cond.push({"$cond" => [{ "$lte" => ["$seconds_connected", min] }, "rango = " + min.to_s, ""]})
- #      	cond.push({"$cond" => [{ "$and" => [{"$gt" => ["$seconds_connected", min]},{"$lt" => ["$seconds_connected", max]}]}, "rango " + min.to_s + "-" + max.to_s, ""]})
- #      	cond.push({"$cond" => [{"$gte" => ["$seconds_connected", max]}, "rango >= " + max.to_s, "" ]})
- #    	else
- #    		cond.push({"$cond" => [{ "$lte" => ["$seconds_connected", min] }, "rango <= " + min.to_s, ""]})
- #      	cond.push({"$cond" => [{ "$and" => [{"$gt" => ["$seconds_connected", min]},{"$lt" => ["$seconds_connected", max]}]}, "rango " + min.to_s + "-" + max.to_s, ""]})
- #      	cond.push({"$cond" => [{"$gte" => ["$seconds_connected", max]}, "rango >= " + max.to_s, "" ]})
-
- #    	end
- #    	cond
- #  end
- def self.ranges_resolver min, max, group
- 	group["$group"].merge!({"_id"=> {"$cond"=> [{"$lte"=> ["$seconds_connected", min] },"A: <= " + min.to_s,{"$cond"=> [{"$and"=> [{"$gt"=> ["$seconds_connected", min] },{"$lte"=> ["$seconds_connected", max] }]},"B: " + min.to_s + "-" + max.to_s, {"$cond"=> [{"$gt"=> ["$seconds_connected", max ] },"C: > " + max.to_s, "null"]}]}]}})
- end
+	def self.ranges_resolver min, max, group
+ 		group["$group"].merge!({"_id"=> {"$cond"=> [{"$lte"=> ["$seconds_connected", min] },"A: <= " + min.to_s,{"$cond"=> [{"$and"=> [{"$gt"=> ["$seconds_connected", min] },{"$lte"=> ["$seconds_connected", max] }]},"B: " + min.to_s + "-" + max.to_s, {"$cond"=> [{"$gt"=> ["$seconds_connected", max ] },"C: > " + max.to_s, "null"]}]}]}})
+ 	end
 
 end
 

@@ -10,31 +10,13 @@ module DynamicQueryResolver
     when "year"
       project = {"$project" => {"year" => {"$year" => "$datetime"}, "datetime" => 1}}
       group = {"$group" => { "_id" => {"year" => "$year"}}}
-      if @qp.unique       
-        project_ip_decorator project
-        group_by_distinct_visitors_decorator group
-      else
-        count_group_by_part_decorator group
-      end
     when "month"
       project = {"$project" => {"year" => {"$year" => "$datetime"}, "month" => {"$month" => "$datetime"}, "datetime" => 1}}
       group = {"$group" => {"_id" => {"year" => "$year", "month" => "$month"}}}
-      if @qp.unique
-        project_ip_decorator project
-        group_by_distinct_visitors_decorator group
-      else
-        count_group_by_part_decorator group
-      end
     when "day"
       project = {"$project" => {"datetime" => 1}}
       group = {"$group" => { "_id" => {"year" => {"$year" => "$datetime"}, "month" => {"$month" => "$datetime"},
         "day" => {"$dayOfMonth" => "$datetime"}}}}
-      if @qp.unique  
-        project_ip_decorator project
-        group_by_distinct_visitors_decorator group
-      else
-        count_group_by_part_decorator group
-      end
     else
       error = {"error" => "Invalid group by option: try year, month or day"}
     end
@@ -82,6 +64,10 @@ module DynamicQueryResolver
 
   def self.count_seconds_group_by_part_decorator group
     group["$group"].merge!({"count" => {"$sum" => "$seconds_connected"}})
+  end
+
+  def self.avg_seconds_group_by_part_decorator group
+    group["$group"].merge!({"count" => {"$avg" => "$seconds_connected"}})
   end
 
   def self.hours_filter
