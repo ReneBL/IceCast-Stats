@@ -20,9 +20,6 @@ module DynamicQueryResolver
     else
       error = {"error" => "Invalid group by option: try year, month or day"}
     end
-    if ((error == nil) && (@qp.has_hour_filters?))
-      project_totalSeconds_decorator project
-    end
     [project, group, error]
   end
 
@@ -42,7 +39,6 @@ module DynamicQueryResolver
   def self.distinct_visitors_count        
     unwind = {"$unwind" => "$ips"}
     group = {"$group" => {"_id" => "$_id"}}
-    count_group_by_part_decorator group
     [unwind, group]
   end
 
@@ -68,6 +64,22 @@ module DynamicQueryResolver
 
   def self.avg_seconds_group_by_part_decorator group
     group["$group"].merge!({"count" => {"$avg" => "$seconds_connected"}})
+  end
+
+  def self.set_unique_if_exists project, group_by, groupDecorator
+  	if is_unique
+    	# Si es así, decoramos project y group by para que agrupe por IP's y haga count gracias a unwind y un segundo group
+      project_ip_decorator project
+      group_by_distinct_visitors_decorator group_by
+      unwind, group = distinct_visitors_count
+      gd = GroupDecorator.new group, groupDecorator
+      gd.decorate
+      return [unwind, group]
+    else
+    	gd = GroupDecorator.new group_by, groupDecorator
+      gd.decorate
+      return [nil, nil]
+    end
   end
 
   def self.hours_filter

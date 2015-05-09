@@ -1,3 +1,5 @@
+require 'group_by_decorator'
+
 class StatsController < ApplicationController
   before_action :generate_query_params, only: [:connections_between_dates, :ranges, :countries,
     :countries_time, :total_seconds, :avg_seconds]
