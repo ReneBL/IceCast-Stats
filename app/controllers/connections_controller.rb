@@ -47,6 +47,25 @@ class ConnectionsController < StatsController
     result = Connection.collection.aggregate(filters)
     render :json => result
   end
+
+  def total_seconds_grouped
+  	project, group_by, error = DynamicQueryResolver.project_group_parts
+    if error == nil
+      if project != nil && group_by != nil
+      	project["$project"].merge!({"seconds_connected" => 1})
+      	qb = QueryBuilder.new
+      	qb.add_project project
+      	qb.add_match @match
+      	qb.add_group_by group_by
+      	qb.add_group_decorator TotalSecondsGroupDecorator.new
+        filters = qb.construct
+        result = Connection.collection.aggregate(filters)
+        render :json => result
+      end
+    else
+      render :json => error.to_json
+    end
+  end
   
   def connections_between_dates
     project, group_by, error = DynamicQueryResolver.project_group_parts

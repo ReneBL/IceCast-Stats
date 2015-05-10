@@ -1,11 +1,11 @@
 var icecast = angular.module("connFactories", []);
 
-icecast.factory("ConnBetDatesDataProvider", function() {
+icecast.factory("GroupedChartDataProvider", function() {
 	   return {
-	   	   provide : function(groupBy, datos) {
+	   	   provide : function(groupBy, datos, columnDescription) {
 	        if (groupBy == 'year' || groupBy == 'month') {
 	   	       // Capitalize first letter
-	   	       var array = [[groupBy.charAt(0).toUpperCase() + groupBy.slice(1), "Total listeners"]];
+	   	       var array = [[groupBy.charAt(0).toUpperCase() + groupBy.slice(1), columnDescription]];
 	          for(var i=0; i < datos.length; i++) {
 	     	       groupBy == 'year' ? array.push([datos[i]._id.year.toString(), datos[i].count]) : 
 	     	          array.push([datos[i]._id.month.toString() + "/" + datos[i]._id.year.toString(), datos[i].count]);
@@ -32,7 +32,7 @@ icecast.factory("ConnBetDatesOptionsProvider", function() {
 	        	var options = {
             	title: 'Oyentes agrupados por año',
             	hAxis: {
-              	title: 'Listeners',
+              	title: 'Oyentes',
               	minValue: 0
             	},
             	animation: {
@@ -41,7 +41,7 @@ icecast.factory("ConnBetDatesOptionsProvider", function() {
             	  startup: true
             	},
             	vAxis: {
-              	title: 'Year'
+              	title: 'Año'
             	},
             	bar: { groupWidth: "90%" }
           	};
@@ -49,14 +49,14 @@ icecast.factory("ConnBetDatesOptionsProvider", function() {
 	        } else if (groupBy == 'month') {
 	        	var options = {
             	title: 'Oyentes agrupados por mes',
-            	chartArea: {width: '60%'},
+            	chartArea: {width: '60%', height: '150%'},
             	animation: {
             	  duration: 1000,
             	  easing: 'in',
             	  startup: true
             	},
             	vAxis: {
-              	title: 'Listeners'
+              	title: 'Oyentes'
             	}
           	};
           	return options;
@@ -93,6 +93,56 @@ icecast.factory("RangesOptionsProvider", function() {
        			is3D: true,
     			};
     			return options;
+        }
+     };
+});
+
+icecast.factory("GroupedTotalSecondsOptionsProvider", function() {
+         return {
+         provide : function(groupBy) {
+          if (groupBy == 'year') {
+            var options = {
+              title: 'Tiempo total agrupado por año',
+              subtitle: 'en segundos',
+              hAxis: {
+                title: 'Año',
+                minValue: 0
+              },
+              animation: {
+                duration: 1000,
+                easing: 'in',
+                startup: true
+              },
+              vAxis: {
+                title: 'Segundos'
+              },
+              curveType: 'function',
+              chartArea:{width:'75%', height:'75%'}
+            };
+            return options;
+          } else if (groupBy == 'month') {
+            var options = {
+              title: 'Tiempo total agrupado por mes',
+              subtitle: 'en segundos',
+              chartArea: {width: '60%', height:'75%'},
+              animation: {
+                duration: 1000,
+                easing: 'in',
+                startup: true
+              },
+              vAxis: {
+                title: 'Segundos'
+              }
+            };
+            return options;
+          } else if (groupBy == 'day') {
+            var options = {
+              title: "Tiempo total agrupado por día",
+              subtitle: 'en segundos',
+              height: 350,
+            };
+            return options;
+          }
         }
      };
 });

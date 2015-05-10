@@ -2,7 +2,7 @@ require 'group_by_decorator'
 
 class StatsController < ApplicationController
   before_action :generate_query_params, only: [:connections_between_dates, :ranges, :countries,
-    :countries_time, :total_seconds, :avg_seconds]
+    :countries_time, :total_seconds, :avg_seconds, :total_seconds_grouped]
 
   # Esta "controlador" servirá como filtro de entrada a las peticiones destinadas a cualquiera de los controladores 
   # que hereden de éste

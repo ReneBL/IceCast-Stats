@@ -54,17 +54,17 @@ module DynamicQueryResolver
     sort
   end
 
-  def self.count_group_by_part_decorator group
-    group["$group"].merge!({"count" => {"$sum" => 1}})
-  end
+  # def self.count_group_by_part_decorator group
+  #   group["$group"].merge!({"count" => {"$sum" => 1}})
+  # end
 
-  def self.count_seconds_group_by_part_decorator group
-    group["$group"].merge!({"count" => {"$sum" => "$seconds_connected"}})
-  end
+  # def self.count_seconds_group_by_part_decorator group
+  #   group["$group"].merge!({"count" => {"$sum" => "$seconds_connected"}})
+  # end
 
-  def self.avg_seconds_group_by_part_decorator group
-    group["$group"].merge!({"count" => {"$avg" => "$seconds_connected"}})
-  end
+  # def self.avg_seconds_group_by_part_decorator group
+  #   group["$group"].merge!({"count" => {"$avg" => "$seconds_connected"}})
+  # end
 
   def self.set_unique_if_exists project, group_by, groupDecorator
   	if is_unique
