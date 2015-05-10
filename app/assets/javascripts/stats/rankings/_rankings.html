@@ -1,0 +1,30 @@
+<div class="container">	
+	<h1>RANKINGS</h1>
+	<div id="rankingPais" class="panel panel-primary" ng-controller="CountryRanking">
+		<div class="panel-heading">Ranking de países</div>
+  		<table class="table">
+    		<tr>
+    			<th>#</th>
+    			<th>País</th>
+    			<th>Oyentes totales</th>
+    			<th>Bytes consumidos</th>
+    			<th>Tiempo total de escucha</th>
+    		</tr>
+    		<tr ng-repeat="row in data">
+    			<td ng-model="startIndex">{{(startIndex + $index) + 1}}</td>
+    			<td>{{row._id}}</td>
+    			<td>{{row.listeners}}</td>
+    			<td>{{row.bytes}}</td>
+    			<td>{{row.time}}</td>
+    		</tr>
+  		</table>
+  		<div id="botonera">
+  			<span ng-show="backButton">
+  				<button id="botonAnterior" class="btn btn-primary" ng-click="anterior()">< Anterior</button>
+  			</span>
+  			<span ng-show="hasMore">
+  				<button id="botonSiguiente" class="btn btn-primary" ng-click="siguiente()">Siguiente ></button>
+  			</span>
+  		</div>
+	</div>
+</div>

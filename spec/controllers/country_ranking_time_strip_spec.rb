@@ -29,25 +29,29 @@ RSpec.describe RankingController, type: :controller do
   			{:_id => "Spain", :listeners => 2, :bytes => 22712, :time => 6},
   			{:_id => "Italy", :listeners => 2, :bytes => 9074, :time => 146},
   			{:_id => "United States", :listeners => 1, :bytes => 2567546, :time => 20},
-  			{:_id => "Germany", :listeners => 1, :bytes => 42890, :time => 18}
+  			{:_id => "Germany", :listeners => 1, :bytes => 42890, :time => 18},
+        {:hasMore => true}
   		]
   		xhrRequestCountryRanking expected_array
 
   		expected_array = [
   			{:_id => "France", :listeners => 3, :bytes => 26298, :time => 30},
   			{:_id => "Germany", :listeners => 1, :bytes => 42890, :time => 18},
-  			{:_id => "China", :listeners => 1, :bytes => 23978, :time => 6}
+  			{:_id => "China", :listeners => 1, :bytes => 23978, :time => 6},
+        {:hasMore => false}
   		]
   		xhrRequestCountryRanking expected_array, '05:27:05', '10:55:42'
 
   		expected_array = [
   			{:_id => "France", :listeners => 3, :bytes => 26298, :time => 30},
-  			{:_id => "Germany", :listeners => 1, :bytes => 42890, :time => 18}
+  			{:_id => "Germany", :listeners => 1, :bytes => 42890, :time => 18},
+        {:hasMore => true}
   		]
   		xhrRequestCountryRanking expected_array, '05:27:05', '10:55:42', 0, 2
 
   		expected_array = [
-  			{:_id => "China", :listeners => 1, :bytes => 23978, :time => 6}
+  			{:_id => "China", :listeners => 1, :bytes => 23978, :time => 6},
+        {:hasMore => false}
   		]
   		xhrRequestCountryRanking expected_array, '05:27:05', '10:55:42', 2, 2
     end
@@ -55,24 +59,35 @@ RSpec.describe RankingController, type: :controller do
     it "should return ranking of countries filtered by time and date and paginated" do
     	expected_array = [
   			{:_id => "France", :listeners => 3, :bytes => 26298, :time => 30},
-  			{:_id => "Germany", :listeners => 1, :bytes => 42890, :time => 18}
+  			{:_id => "Germany", :listeners => 1, :bytes => 42890, :time => 18},
+        {:hasMore => true}
   		]
   		xhrRequestCountryRanking expected_array, '05:27:05', '23:59:59', 0, 2, '14/11/2014', '24/03/2015'
 
   		expected_array = [
-  			{:_id => "China", :listeners => 1, :bytes => 23978, :time => 6}
+  			{:_id => "China", :listeners => 1, :bytes => 23978, :time => 6},
+        {:hasMore => false}
   		]
   		xhrRequestCountryRanking expected_array, '05:27:05', '23:59:59', 2, 2, '14/11/2014', '24/03/2015'
 
+      expected_array = [
+        {:_id => "Italy", :listeners => 2, :bytes => 9074, :time => 146},
+        {:_id => "China", :listeners => 1, :bytes => 23978, :time => 6},
+        {:hasMore => false}
+      ]
+      xhrRequestCountryRanking expected_array, '09:40:02', '23:59:59', 0, 5, '14/11/2014', '25/03/2015'
+
   		expected_array = [
   			{:_id => "France", :listeners => 3, :bytes => 26298, :time => 30},
-  			{:_id => "Spain", :listeners => 2, :bytes => 22712, :time => 6}
+  			{:_id => "Spain", :listeners => 2, :bytes => 22712, :time => 6},
+        {:hasMore => true}
   		]
   		xhrRequestCountryRanking expected_array, '03:10:40', '23:59:59', 0, 2, '14/11/2014', '24/03/2015'
 
   		expected_array = [
   			{:_id => "Germany", :listeners => 1, :bytes => 42890, :time => 18},
-  			{:_id => "China", :listeners => 1, :bytes => 23978, :time => 6}
+  			{:_id => "China", :listeners => 1, :bytes => 23978, :time => 6},
+        {:hasMore => false}
   		]
   		xhrRequestCountryRanking expected_array, '03:10:40', '23:59:59', 2, 2, '14/11/2014', '24/03/2015'
 

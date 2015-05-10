@@ -16,7 +16,7 @@ app.controller("TotalTimeController", function ($scope, TotalTime, SecondsConver
 			}
 		});
 	};
-	$scope.time = refresh();
+	refresh();
 
 	NotificationService.onChangeScope($scope, function(message) {
 		refresh();
@@ -39,7 +39,7 @@ app.controller("AvgTimeController", function ($scope, AvgTime, SecondsConverter,
 			}
 		});
 	};
-	$scope.time = refresh();
+	refresh();
 
 	NotificationService.onChangeScope($scope, function(message) {
 		refresh();
@@ -69,7 +69,7 @@ app.controller('RangesController', function ($scope, Ranges, RangesDataProvider,
 	// Debemos hacer esta llamada. Solo se realiza cuando se inicializa el controlador. Esto es necesario ya que seria muy arriesgado
 	// inicializar los datos mediante un broadcast del controlador padre, ya que lo recibirían TODOS los controladores que estén suscritos
 	// al broadcast, y por lo tanto se harían peticiones innecesarias, reduciendo el rendimiento considerablemente.
-	$scope.data = $scope.doGetData($scope.$parent.doGetParams());
+	$scope.doGetData($scope.$parent.doGetParams());
 	$scope.cleanContext = function() {
 		$scope.data = null;
 	   	$scope.options = null;
@@ -133,7 +133,7 @@ app.controller('GroupedTotalSecondsChartController', function ($scope, GroupedTo
 	// Debemos hacer esta llamada. Solo se realiza cuando se inicializa el controlador. Esto es necesario ya que seria muy arriesgado
 	// inicializar los datos mediante un broadcast del controlador padre, ya que lo recibirían TODOS los controladores que estén suscritos
 	// al broadcast, y por lo tanto se harían peticiones innecesarias, reduciendo el rendimiento considerablemente.
-	$scope.data = $scope.doGetData($scope.$parent.doGetParams());
+	$scope.doGetData($scope.$parent.doGetParams());
 
 	$scope.group = function(value) {
 		if($scope.groupBy != value) { 	 
@@ -180,7 +180,7 @@ app.controller('ConnectionsGroupedChartController', function ($scope, Connection
 	// Debemos hacer esta llamada. Solo se realiza cuando se inicializa el controlador. Esto es necesario ya que seria muy arriesgado
 	// inicializar los datos mediante un broadcast del controlador padre, ya que lo recibirían TODOS los controladores que estén suscritos
 	// al broadcast, y por lo tanto se harían peticiones innecesarias, reduciendo el rendimiento considerablemente.
-	$scope.data = $scope.doGetData($scope.$parent.doGetParams());
+	$scope.doGetData($scope.$parent.doGetParams());
    
 	$scope.group = function(value) {
 		if($scope.groupBy != value) { 	 

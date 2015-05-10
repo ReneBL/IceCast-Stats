@@ -14,9 +14,9 @@ app.controller('StatsController', function($scope, StateFactory) {
 	  	  $scope.selectedOption = 'localizaciones';
 	  };
 	  
-	  $scope.clickPaginas = function () {
-	  	  $scope.page = 'stats/pages/_pages.html';
-	  	  $scope.selectedOption = 'paginas';
+	  $scope.clickRankings = function () {
+	  	  $scope.page = 'stats/rankings/_rankings.html';
+	  	  $scope.selectedOption = 'rankings';
 	  };
 	  // Obtenemos el source actual de la factoria que contiene el estado
 	  $scope.source = StateFactory.getSelectedSource();

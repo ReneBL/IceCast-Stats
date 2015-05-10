@@ -1,11 +1,9 @@
 var iceServices = angular.module("iceServices", ['ngResource']);
 
-iceServices.factory("Years", ['$resource', function($resource) {
-  return $resource('connections/years.json', {}, {})	;
-}]);
-
-iceServices.factory("YearsConnections", ['$resource', function($resource) {
-  return $resource('connections.json', {}, 	{})	;
+iceServices.factory("CountriesRanking", ['$resource', function($resource) {
+  return $resource('ranking/country_ranking/:start_date/:end_date/:start_index/:count/:start_hour/:end_hour:json', 
+	     {start_date : '@start_date', end_date : '@end_date', start_index : '0', count : '10', start_hour: "00:00:00", end_hour : "23:59:59"},
+	     {isArray : false})	;
 }]);
 
 iceServices.factory("Ranges", ['$resource', function($resource) {

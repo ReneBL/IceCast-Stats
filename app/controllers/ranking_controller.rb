@@ -22,9 +22,10 @@ class RankingController < StatsController
     	sort.add "time", SortDecorator::DESC
     	# Lo añadimos al Builder
     	qb.add_sort sort
-    	qb.add_pagination @start_index, @count if (@start_index != nil && @count != nil)
+    	qb.add_pagination @start_index, (@count + 1) if (@start_index != nil && @count != nil)
     	filters = qb.construct
     	result = Connection.collection.aggregate(filters)
+    	adapt_paginate! result if (@start_index != nil && @count != nil && result.count > 0)
     	render :json => result
 	end
 
@@ -39,13 +40,22 @@ class RankingController < StatsController
 			@count = nil
 			@error = nil
 			return
-		elsif (start_index.to_i < 0 || count.to_i < 0)
+		elsif (start_index.to_i < 0 || count.to_i <= 0)
 			error = {"error" => "Not valid indexes"}
 			render :json => error.to_json
 		end
 		@start_index = start_index.to_i
 		@count = count.to_i
 		@error = error
+	end
+
+	def adapt_paginate! result
+		if (result.count == @count + 1)
+			result.delete_at(result.count - 1)
+			result << {"hasMore" => true}
+		else
+			result << {"hasMore" => false}
+		end
 	end
 
 end

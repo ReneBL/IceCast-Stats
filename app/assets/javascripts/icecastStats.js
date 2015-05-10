@@ -1,6 +1,6 @@
 var app = angular.module('icecastStats', ['snap', 'ngRoute', 'templates', 'iceServices',
     'connFactories', 'configState', 'dataServerParser', 'notificationService', 'ui-rangeSlider', 
-    'locationFactories', 'timeFactory']);
+    'locationFactories', 'timeFactory', 'rankingFactories']);
 
 app.config(['$routeProvider',
   function($routeProvider) {
@@ -21,6 +21,9 @@ app.config(['$routeProvider',
         redirectTo: '/'
       });
   }]);
+
+app.constant('START_INDEX', 0).
+    constant('COUNT', 5);
 
 app.config(function(snapRemoteProvider) {
   snapRemoteProvider.globalOptions = {

@@ -29,7 +29,7 @@ RSpec.describe RankingController, type: :controller do
   			{:_id => "Italy", :listeners => 2, :bytes => 9074, :time => 146},
   			{:_id => "United States", :listeners => 1, :bytes => 2567546, :time => 20},
   			{:_id => "Germany", :listeners => 1, :bytes => 42890, :time => 18},
-  			{:_id => "China", :listeners => 1, :bytes => 23978, :time => 6}
+        {:_id => "China", :listeners => 1, :bytes => 23978, :time => 6}
   		]
   		expected = expected_array.to_json
     	xhr :get, :country_ranking, :start_date => '14/11/2014', :end_date => '25/03/2015', :format => :json
@@ -43,7 +43,8 @@ RSpec.describe RankingController, type: :controller do
   			{:_id => "Spain", :listeners => 2, :bytes => 22712, :time => 6},
   			{:_id => "Italy", :listeners => 2, :bytes => 9074, :time => 146},
   			{:_id => "United States", :listeners => 1, :bytes => 2567546, :time => 20},
-  			{:_id => "Germany", :listeners => 1, :bytes => 42890, :time => 18}
+  			{:_id => "Germany", :listeners => 1, :bytes => 42890, :time => 18},
+        {:hasMore => true}
   		]
   		xhrRequestCountryRanking expected_array
 
@@ -52,7 +53,8 @@ RSpec.describe RankingController, type: :controller do
   			{:_id => "Italy", :listeners => 2, :bytes => 9074, :time => 146},
   			{:_id => "United States", :listeners => 1, :bytes => 2567546, :time => 20},
   			{:_id => "Germany", :listeners => 1, :bytes => 42890, :time => 18},
-  			{:_id => "China", :listeners => 1, :bytes => 23978, :time => 6}
+  			{:_id => "China", :listeners => 1, :bytes => 23978, :time => 6},
+        {:hasMore => false}
   		]
   		xhrRequestCountryRanking expected_array, '14/11/2014', '25/03/2015', 1, 6
 
@@ -64,19 +66,22 @@ RSpec.describe RankingController, type: :controller do
   			{:_id => "Italy", :listeners => 2, :bytes => 9074, :time => 146},
   			{:_id => "United States", :listeners => 1, :bytes => 2567546, :time => 20},
   			{:_id => "Germany", :listeners => 1, :bytes => 42890, :time => 18},
-  			{:_id => "China", :listeners => 1, :bytes => 23978, :time => 6}
+  			{:_id => "China", :listeners => 1, :bytes => 23978, :time => 6},
+        {:hasMore => false}
   		]
   		xhrRequestCountryRanking expected_array, '01/02/2015'
 
   		expected_array = [
   			{:_id => "Italy", :listeners => 2, :bytes => 9074, :time => 146},
-  			{:_id => "United States", :listeners => 1, :bytes => 2567546, :time => 20}
+  			{:_id => "United States", :listeners => 1, :bytes => 2567546, :time => 20},
+        {:hasMore => true}
   		]
   		xhrRequestCountryRanking expected_array, '01/02/2015', '25/03/2015', 0, 2
 
   		expected_array = [
   			{:_id => "Germany", :listeners => 1, :bytes => 42890, :time => 18},
-  			{:_id => "China", :listeners => 1, :bytes => 23978, :time => 6}
+  			{:_id => "China", :listeners => 1, :bytes => 23978, :time => 6},
+        {:hasMore => false}
   		]
   		xhrRequestCountryRanking expected_array, '01/02/2015', '25/03/2015', 2, 2
 
@@ -89,6 +94,9 @@ RSpec.describe RankingController, type: :controller do
 
       error = {"error" => "Not valid indexes"}
       xhrRequestCountryRanking error, '14/11/2014', '25/03/2015', 1, -5
+
+      error = {"error" => "Not valid indexes"}
+      xhrRequestCountryRanking error, '14/11/2014', '25/03/2015', 1, 0
   	end
 
   end
