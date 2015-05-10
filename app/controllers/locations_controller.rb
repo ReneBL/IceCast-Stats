@@ -7,7 +7,7 @@ class LocationsController < StatsController
     qb.add_project project
     qb.add_match @match
     qb.add_group_by group_by
-    qb.add_group_decorator TotalSecondsGroupDecorator.new
+    qb.add_group_decorator TotalSecondsGroupDecorator.new "count"
     filters = qb.construct
     result = Connection.collection.aggregate(filters)
     render :json => result
@@ -20,7 +20,7 @@ class LocationsController < StatsController
     qb.add_project project
     qb.add_match @match
     qb.add_group_by group_by
-    qb.add_group_decorator CountGroupDecorator.new
+    qb.add_group_decorator CountGroupDecorator.new "count"
     filters = qb.construct
     result = Connection.collection.aggregate(filters)
     render :json => result

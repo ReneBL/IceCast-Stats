@@ -12,29 +12,68 @@ class GroupDecorator
 
 end
 
-class CountGroupDecorator < GroupDecorator
+class CompositeGroupDecorator < GroupDecorator
+	attr_accessor :childs
+
 	def initialize
+		@childs = []
+	end
+
+	def add group_decorator
+		@childs << group_decorator
 	end
 
 	def decorate group
-		group["$group"].merge!({"count" => {"$sum" => 1}})
+		@childs.each do |child|
+			child.decorate group
+		end
+	end
+end
+
+class CountGroupDecorator < GroupDecorator
+	attr_accessor :name
+
+	def initialize name
+		@name = name
+	end
+
+	def decorate group
+		group["$group"].merge!({name => {"$sum" => 1}})
 	end
 end
 
 class TotalSecondsGroupDecorator < GroupDecorator
-	def initialize
+	attr_accessor :name
+
+	def initialize name
+		@name = name
 	end
 
 	def decorate group
-		group["$group"].merge!({"count" => {"$sum" => "$seconds_connected"}})
+		group["$group"].merge!({name => {"$sum" => "$seconds_connected"}})
 	end
 end
 
 class AvgSecondsGroupDecorator < GroupDecorator
-	def initialize
+	attr_accessor :name
+
+	def initialize name
+		@name = name
 	end
 
 	def decorate group
-		group["$group"].merge!({"count" => {"$avg" => "$seconds_connected"}})
+		group["$group"].merge!({name => {"$avg" => "$seconds_connected"}})
+	end
+end
+
+class TotalBytesGroupDecorator < GroupDecorator
+	attr_accessor :name
+
+	def initialize name
+		@name = name
+	end
+
+	def decorate group
+		group["$group"].merge!({name => {"$sum" => "$bytes"}})
 	end
 end

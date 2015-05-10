@@ -17,6 +17,8 @@ Rails.application.routes.draw do
   get 'locations/countries/:start_date/:end_date/:unique_visitors(/:start_hour/:end_hour)' => 'locations#countries'
   get 'locations/countries_time/:start_date/:end_date(/:start_hour/:end_hour)' => 'locations#countries_time'
 
+  get 'ranking/country_ranking/:start_date/:end_date(/:start_index/:count)(/:start_hour/:end_hour)' => 'ranking#country_ranking'
+
   get 'sources' => 'sources#get_sources'
   post 'sources/:source' => 'sources#set_source', :constraints => {:source => /([a-zA-Z0-9].*)+\.[a-zA-Z0-9]+|Todos/}
   resources :sources

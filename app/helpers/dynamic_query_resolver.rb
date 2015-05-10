@@ -54,29 +54,19 @@ module DynamicQueryResolver
     sort
   end
 
-  # def self.count_group_by_part_decorator group
-  #   group["$group"].merge!({"count" => {"$sum" => 1}})
-  # end
-
-  # def self.count_seconds_group_by_part_decorator group
-  #   group["$group"].merge!({"count" => {"$sum" => "$seconds_connected"}})
-  # end
-
-  # def self.avg_seconds_group_by_part_decorator group
-  #   group["$group"].merge!({"count" => {"$avg" => "$seconds_connected"}})
-  # end
-
-  def self.set_unique_if_exists project, group_by, groupDecorator
+  def self.set_unique_if_exists project, group_by, group_decorator
   	if is_unique
     	# Si es así, decoramos project y group by para que agrupe por IP's y haga count gracias a unwind y un segundo group
       project_ip_decorator project
       group_by_distinct_visitors_decorator group_by
       unwind, group = distinct_visitors_count
-      gd = GroupDecorator.new group, groupDecorator
+      # Si buscamos por visitantes únicos, necesitamos decorar la parte group que genera el distinct_visitors_count
+      gd = GroupDecorator.new group, group_decorator
       gd.decorate
       return [unwind, group]
     else
-    	gd = GroupDecorator.new group_by, groupDecorator
+      # Si no es por visitantes únicos, decoraremos la parte group_by que ha venido dada como parámetro
+    	gd = GroupDecorator.new group_by, group_decorator
       gd.decorate
       return [nil, nil]
     end
@@ -99,5 +89,13 @@ module DynamicQueryResolver
   def self.is_unique
     @qp.unique
   end
+
+  def self.skip_part skip
+    {"$skip" => skip}
+  end
   
+  def self.limit_part limit
+    {"$limit" => limit}
+  end
+
 end

@@ -10,7 +10,7 @@ class ConnectionsController < StatsController
     qb.add_project project
     qb.add_match @match
     qb.add_group_by group_by
-    qb.add_group_decorator TotalSecondsGroupDecorator.new
+    qb.add_group_decorator TotalSecondsGroupDecorator.new "count"
     filters = qb.construct
     result = Connection.collection.aggregate(filters)
     render :json => result
@@ -23,7 +23,7 @@ class ConnectionsController < StatsController
     qb.add_project project
     qb.add_match @match
     qb.add_group_by group_by
-    qb.add_group_decorator AvgSecondsGroupDecorator.new
+    qb.add_group_decorator AvgSecondsGroupDecorator.new "count"
     filters = qb.construct
     result = Connection.collection.aggregate(filters)
     render :json => result
@@ -42,7 +42,7 @@ class ConnectionsController < StatsController
     qb.add_project project
     qb.add_match @match
     qb.add_group_by group_by
-    qb.add_group_decorator CountGroupDecorator.new
+    qb.add_group_decorator CountGroupDecorator.new "count"
     filters = qb.construct
     result = Connection.collection.aggregate(filters)
     render :json => result
@@ -57,7 +57,7 @@ class ConnectionsController < StatsController
       	qb.add_project project
       	qb.add_match @match
       	qb.add_group_by group_by
-      	qb.add_group_decorator TotalSecondsGroupDecorator.new
+      	qb.add_group_decorator TotalSecondsGroupDecorator.new "count"
         filters = qb.construct
         result = Connection.collection.aggregate(filters)
         render :json => result
@@ -75,7 +75,7 @@ class ConnectionsController < StatsController
       	qb.add_project project
       	qb.add_match @match
       	qb.add_group_by group_by
-      	qb.add_group_decorator CountGroupDecorator.new
+      	qb.add_group_decorator CountGroupDecorator.new "count"
         filters = qb.construct
         result = Connection.collection.aggregate(filters)
         render :json => result
