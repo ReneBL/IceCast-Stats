@@ -1,0 +1,227 @@
+<radioschedule>
+<sources>
+  <source name="cuacfm.mp3"/>
+  <source name="cuacfm-128k.mp3"/>
+  <source name="cuacfm.aac"/>    
+  <source name="cuacfm.ogg"/>
+</sources>
+<showtypes>
+<showtype id="0" name="none"/>
+<showtype id="1" name="News"/>
+<showtype id="2" name="Affairs"/>
+<showtype id="3" name="Info"/>
+<showtype id="4" name="Sport"/>
+<showtype id="5" name="Education"/>
+<showtype id="6" name="Drama"/>
+<showtype id="7" name="Cultures"/>
+<showtype id="8" name="Science"/>
+<showtype id="9" name="Varied Speech"/>
+<showtype id="10" name="Pop Music"/>
+<showtype id="11" name="Rock Music"/>
+<showtype id="12" name="Easy Music"/>
+<showtype id="13" name="Light Classics Music"/>
+<showtype id="14" name="Serious Classics"/>
+<showtype id="15" name="Other Music"/>
+<showtype id="16" name="Weather"/>
+<showtype id="17" name="Finance"/>
+<showtype id="18" name="Children"/>
+<showtype id="19" name="Social Affairs"/>
+<showtype id="20" name="Religion"/>
+<showtype id="21" name="Phone In"/>
+<showtype id="22" name="Travel"/>
+<showtype id="23" name="Leisure"/>
+<showtype id="24" name="Jazz Music"/>
+<showtype id="25" name="Country Music"/>
+<showtype id="26" name="National Music"/>
+<showtype id="27" name="Oldies Music"/>
+<showtype id="28" name="Folk Music"/>
+<showtype id="29" name="Documentary"/>
+<showtype id="30" name="Alarm Test"/>
+<showtype id="31" name="Alarm"/>
+</showtypes>
+<schedule valid_from="2015-04-01" valid_until="2015-06-01">
+<day weekday="Mon">
+<show starts_time="00:00:00" ends_time="01:00:00" is_music="0" showtype="9" name="El Rinconcito"/>
+<show starts_time="01:00:00" ends_time="02:00:00" is_music="1" showtype="28" name="Folk in trio"/>
+<show starts_time="02:00:00" ends_time="03:00:00" is_music="1" showtype="11" name="Musica Nocturna"/>
+<show starts_time="03:00:00" ends_time="04:00:00" is_music="1" showtype="11" name="Musica Nocturna"/>
+<show starts_time="04:00:00" ends_time="05:00:00" is_music="1" showtype="11" name="Musica Nocturna"/>
+<show starts_time="05:00:00" ends_time="06:00:00" is_music="1" showtype="11" name="Musica Nocturna"/>
+<show starts_time="06:00:00" ends_time="07:00:00" is_music="1" showtype="11" name="Musica Local"/>
+<show starts_time="07:00:00" ends_time="08:00:00" is_music="0" showtype="1" name="Informativos"/>
+<show starts_time="08:00:00" ends_time="09:00:00" is_music="0" showtype="23" name="Manda Carallo"/>
+<show starts_time="09:00:00" ends_time="10:00:00" is_music="1" showtype="10" name="Expreso de medianoche"/>
+<show starts_time="10:00:00" ends_time="11:00:00" is_music="0" showtype="3" name="A Meiga das Palabras"/>
+<show starts_time="11:00:00" ends_time="12:00:00" is_music="0" showtype="19" name="Radio Prometea - Ondas do Carcere"/>
+<show starts_time="12:00:00" ends_time="13:00:00" is_music="0" showtype="9" name="New Age"/>
+<show starts_time="13:00:00" ends_time="14:00:00" is_music="1" showtype="28" name="Folk in trio"/>
+<show starts_time="14:00:00" ends_time="15:00:00" is_music="0" showtype="1" name="Informativos Mediodia"/>
+<show starts_time="15:00:00" ends_time="16:00:00" is_music="0" showtype="9" name="Baranda"/>
+<show starts_time="16:00:00" ends_time="17:00:00" is_music="1" showtype="11" name="High Street"/>
+<show starts_time="17:00:00" ends_time="18:00:00" is_music="0" showtype="5" name="RH+ - Xeracion Bravu"/>
+<show starts_time="18:00:00" ends_time="19:00:00" is_music="0" showtype="4" name="Falso Nueve"/>
+<show starts_time="19:00:00" ends_time="20:00:00" is_music="0" showtype="4" name="Falso Nueve"/>
+<show starts_time="20:00:00" ends_time="21:00:00" is_music="0" showtype="3" name="El Desinformativo"/>
+<show starts_time="21:00:00" ends_time="22:00:00" is_music="0" showtype="3" name="El Desinformativo"/>
+<show starts_time="22:00:00" ends_time="23:00:00" is_music="0" showtype="9" name="Sin Etiquetas"/>
+<show starts_time="23:00:00" ends_time="00:00:00" is_music="1" showtype="11" name="Fantasma accidental"/>
+</day>
+<day weekday="Tue">
+<show starts_time="00:00:00" ends_time="01:00:00" is_music="0" showtype="3" name="Cuac esta a pasar"/>
+<show starts_time="01:00:00" ends_time="02:00:00" is_music="1" showtype="11" name="ninputaidea"/>
+<show starts_time="02:00:00" ends_time="03:00:00" is_music="1" showtype="11" name="Musica Nocturna"/>
+<show starts_time="03:00:00" ends_time="04:00:00" is_music="1" showtype="11" name="Musica Nocturna"/>
+<show starts_time="04:00:00" ends_time="05:00:00" is_music="1" showtype="11" name="Musica Nocturna"/>
+<show starts_time="05:00:00" ends_time="06:00:00" is_music="1" showtype="11" name="Musica Nocturna"/>
+<show starts_time="06:00:00" ends_time="07:00:00" is_music="1" showtype="11" name="Musica Local"/>
+<show starts_time="07:00:00" ends_time="08:00:00" is_music="0" showtype="1" name="Informativos"/>
+<show starts_time="08:00:00" ends_time="09:00:00" is_music="0" showtype="3" name="El Desinformativo"/>
+<show starts_time="09:00:00" ends_time="10:00:00" is_music="0" showtype="3" name="El Desinformativo"/>
+<show starts_time="10:00:00" ends_time="11:00:00" is_music="1" showtype="11" name="Reversion"/>
+<show starts_time="11:00:00" ends_time="12:00:00" is_music="0" showtype="3" name="Cuac esta a pasar"/>
+<show starts_time="12:00:00" ends_time="13:00:00" is_music="0" showtype="3" name="Carne Cruda"/>
+<show starts_time="13:00:00" ends_time="14:00:00" is_music="0" showtype="3" name="Carne Cruda"/>
+<show starts_time="14:00:00" ends_time="15:00:00" is_music="0" showtype="1" name="Informativos Mediodia"/>
+<show starts_time="15:00:00" ends_time="16:00:00" is_music="1" showtype="11" name="Multiplex"/>
+<show starts_time="16:00:00" ends_time="17:00:00" is_music="0" showtype="3" name="A Meiga das Palabras"/>
+<show starts_time="17:00:00" ends_time="18:00:00" is_music="0" showtype="18" name="A fume de carozo"/>
+<show starts_time="18:00:00" ends_time="19:00:00" is_music="0" showtype="3" name="Alegria"/>
+<show starts_time="19:00:00" ends_time="20:00:00" is_music="0" showtype="7" name="Recendo"/>
+<show starts_time="20:00:00" ends_time="21:00:00" is_music="1" showtype="11" name="Frankly"/>
+<show starts_time="21:00:00" ends_time="22:00:00" is_music="1" showtype="14" name="Una noche en la opera"/>
+<show starts_time="22:00:00" ends_time="23:00:00" is_music="0" showtype="23" name="Spoiler"/>
+<show starts_time="23:00:00" ends_time="00:00:00" is_music="0" showtype="9" name="La enredadera"/>
+</day>
+<day weekday="Wed">
+<show starts_time="00:00:00" ends_time="01:00:00" is_music="0" showtype="9" name="La enredadera"/>
+<show starts_time="01:00:00" ends_time="02:00:00" is_music="0" showtype="9" name="Crea nas ondas"/>
+<show starts_time="02:00:00" ends_time="03:00:00" is_music="1" showtype="11" name="Musica Nocturna"/>
+<show starts_time="03:00:00" ends_time="04:00:00" is_music="1" showtype="11" name="Musica Nocturna"/>
+<show starts_time="04:00:00" ends_time="05:00:00" is_music="1" showtype="11" name="Musica Nocturna"/>
+<show starts_time="05:00:00" ends_time="06:00:00" is_music="1" showtype="11" name="Musica Nocturna"/>
+<show starts_time="06:00:00" ends_time="07:00:00" is_music="1" showtype="11" name="Musica Local"/>
+<show starts_time="07:00:00" ends_time="08:00:00" is_music="0" showtype="1" name="Informativos"/>
+<show starts_time="08:00:00" ends_time="09:00:00" is_music="0" showtype="3" name="Alegria"/>
+<show starts_time="09:00:00" ends_time="10:00:00" is_music="1" showtype="11" name="Abrete de orellas"/>
+<show starts_time="10:00:00" ends_time="11:00:00" is_music="1" showtype="11" name="ninputaidea"/>
+<show starts_time="11:00:00" ends_time="12:00:00" is_music="0" showtype="7" name="Recendo"/>
+<show starts_time="12:00:00" ends_time="13:00:00" is_music="1" showtype="15" name="Azucar Habanero"/>
+<show starts_time="13:00:00" ends_time="14:00:00" is_music="1" showtype="15" name="Azucar Habanero"/>
+<show starts_time="14:00:00" ends_time="15:00:00" is_music="0" showtype="1" name="Informativos Mediodia"/>
+<show starts_time="15:00:00" ends_time="16:00:00" is_music="1" showtype="14" name="Una noche en la opera"/>
+<show starts_time="16:00:00" ends_time="17:00:00" is_music="0" showtype="9" name="Cafe con gotas"/>
+<show starts_time="17:00:00" ends_time="18:00:00" is_music="0" showtype="19" name="Radio Prometea - Ondas do carcere"/>
+<show starts_time="18:00:00" ends_time="19:00:00" is_music="0" showtype="9" name="Baranda"/>
+<show starts_time="19:00:00" ends_time="20:00:00" is_music="1" showtype="11" name="Fantasma accidental"/>
+<show starts_time="20:00:00" ends_time="21:00:00" is_music="0" showtype="19" name="Tranki-magazine"/>
+<show starts_time="21:00:00" ends_time="22:00:00" is_music="0" showtype="19" name="Simplemente gente"/>
+<show starts_time="22:00:00" ends_time="23:00:00" is_music="1" showtype="28" name="Folk in trio"/>
+<show starts_time="23:00:00" ends_time="00:00:00" is_music="1" showtype="11" name="Radiocassette"/>
+</day>
+<day weekday="Thu">
+<show starts_time="00:00:00" ends_time="01:00:00" is_music="0" showtype="4" name="Falso Nueve"/>
+<show starts_time="01:00:00" ends_time="02:00:00" is_music="0" showtype="4" name="Falso Nueve"/>
+<show starts_time="02:00:00" ends_time="03:00:00" is_music="1" showtype="11" name="Musica Nocturna"/>
+<show starts_time="03:00:00" ends_time="04:00:00" is_music="1" showtype="11" name="Musica Nocturna"/>
+<show starts_time="04:00:00" ends_time="05:00:00" is_music="1" showtype="11" name="Musica Nocturna"/>
+<show starts_time="05:00:00" ends_time="06:00:00" is_music="1" showtype="11" name="Musica Nocturna"/>
+<show starts_time="06:00:00" ends_time="07:00:00" is_music="1" showtype="11" name="Musica Local"/>
+<show starts_time="07:00:00" ends_time="08:00:00" is_music="0" showtype="1" name="Informativos"/>
+<show starts_time="08:00:00" ends_time="09:00:00" is_music="0" showtype="18" name="A fume de carozo"/>
+<show starts_time="09:00:00" ends_time="10:00:00" is_music="1" showtype="11" name="Fantasma accidental"/>
+<show starts_time="10:00:00" ends_time="11:00:00" is_music="0" showtype="19" name="Simplemente gente"/>
+<show starts_time="11:00:00" ends_time="12:00:00" is_music="1" showtype="11" name="Multiplex"/>
+<show starts_time="12:00:00" ends_time="13:00:00" is_music="0" showtype="3" name="Carne Cruda"/>
+<show starts_time="13:00:00" ends_time="14:00:00" is_music="0" showtype="3" name="Carne Cruda"/>
+<show starts_time="14:00:00" ends_time="15:00:00" is_music="0" showtype="1" name="Informativos Mediodia"/>
+<show starts_time="15:00:00" ends_time="16:00:00" is_music="0" showtype="19" name="Tranki-magazine"/>
+<show starts_time="16:00:00" ends_time="17:00:00" is_music="0" showtype="3" name="Radioactiva"/>
+<show starts_time="17:00:00" ends_time="18:00:00" is_music="1" showtype="11" name="Orion 2.1"/>
+<show starts_time="18:00:00" ends_time="19:00:00" is_music="1" showtype="11" name="Reversion"/>
+<show starts_time="19:00:00" ends_time="20:00:00" is_music="0" showtype="3" name="Cuac esta a pasar"/>
+<show starts_time="20:00:00" ends_time="21:00:00" is_music="0" showtype="9" name="R que R"/>
+<show starts_time="21:00:00" ends_time="22:00:00" is_music="0" showtype="23" name="Benditos Jueves"/>
+<show starts_time="22:00:00" ends_time="23:00:00" is_music="0" showtype="23" name="Manda Carallo"/>
+<show starts_time="23:00:00" ends_time="00:00:00" is_music="1" showtype="15" name="Azucar Habanero"/>
+</day>
+<day weekday="Fri">
+<show starts_time="00:00:00" ends_time="01:00:00" is_music="1" showtype="15" name="Azucar Habanero"/>
+<show starts_time="01:00:00" ends_time="02:00:00" is_music="0" showtype="5" name="RH+ - Xeracion Bravu"/>
+<show starts_time="02:00:00" ends_time="03:00:00" is_music="1" showtype="11" name="Musica Nocturna"/>
+<show starts_time="03:00:00" ends_time="04:00:00" is_music="1" showtype="11" name="Musica Nocturna"/>
+<show starts_time="04:00:00" ends_time="05:00:00" is_music="1" showtype="11" name="Musica Nocturna"/>
+<show starts_time="05:00:00" ends_time="06:00:00" is_music="1" showtype="11" name="Musica Nocturna"/>
+<show starts_time="06:00:00" ends_time="07:00:00" is_music="1" showtype="11" name="Musica Local"/>
+<show starts_time="07:00:00" ends_time="08:00:00" is_music="0" showtype="1" name="Informativos"/>
+<show starts_time="08:00:00" ends_time="09:00:00" is_music="1" showtype="11" name="Radiocassette"/>
+<show starts_time="09:00:00" ends_time="10:00:00" is_music="0" showtype="9" name="Sin Etiquetas"/>
+<show starts_time="10:00:00" ends_time="11:00:00" is_music="1" showtype="14" name="Una noche en la opera"/>
+<show starts_time="11:00:00" ends_time="12:00:00" is_music="0" showtype="23" name="Benditos Jueves"/>
+<show starts_time="12:00:00" ends_time="13:00:00" is_music="0" showtype="9" name="Crea nas ondas"/>
+<show starts_time="13:00:00" ends_time="14:00:00" is_music="0" showtype="7" name="Recendo"/>
+<show starts_time="14:00:00" ends_time="15:00:00" is_music="0" showtype="1" name="Informativos Mediodia"/>
+<show starts_time="15:00:00" ends_time="16:00:00" is_music="0" showtype="23" name="Spoiler"/>
+<show starts_time="16:00:00" ends_time="17:00:00" is_music="1" showtype="28" name="Folk in trio"/>
+<show starts_time="17:00:00" ends_time="18:00:00" is_music="0" showtype="9" name="Entre apuntes"/>
+<show starts_time="18:00:00" ends_time="19:00:00" is_music="0" showtype="9" name="Proxecto Neo"/>
+<show starts_time="19:00:00" ends_time="20:00:00" is_music="1" showtype="11" name="Multiplex"/>
+<show starts_time="20:00:00" ends_time="21:00:00" is_music="0" showtype="19" name="Radio Prometea - Ondas do Carcere"/>
+<show starts_time="21:00:00" ends_time="22:00:00" is_music="0" showtype="3" name="Alegria"/>
+<show starts_time="22:00:00" ends_time="23:00:00" is_music="0" showtype="9" name="La Parada de los Monstruos"/>
+<show starts_time="23:00:00" ends_time="00:00:00" is_music="0" showtype="9" name="La Parada de los Monstruos"/>
+</day>
+<day weekday="Sat">
+<show starts_time="00:00:00" ends_time="01:00:00" is_music="0" showtype="9" name="La Parada de los Monstruos"/>
+<show starts_time="01:00:00" ends_time="02:00:00" is_music="0" showtype="23" name="Manda carallo"/>
+<show starts_time="02:00:00" ends_time="03:00:00" is_music="1" showtype="11" name="Musica Nocturna"/>
+<show starts_time="03:00:00" ends_time="04:00:00" is_music="1" showtype="11" name="Musica Nocturna"/>
+<show starts_time="04:00:00" ends_time="05:00:00" is_music="1" showtype="11" name="Musica Nocturna"/>
+<show starts_time="05:00:00" ends_time="06:00:00" is_music="1" showtype="11" name="Musica Nocturna"/>
+<show starts_time="06:00:00" ends_time="07:00:00" is_music="1" showtype="11" name="Musica Local"/>
+<show starts_time="07:00:00" ends_time="08:00:00" is_music="0" showtype="1" name="Informativos"/>
+<show starts_time="08:00:00" ends_time="09:00:00" is_music="0" showtype="3" name="Cuac esta a pasar"/>
+<show starts_time="09:00:00" ends_time="10:00:00" is_music="0" showtype="9" name="Cafe con gotas"/>
+<show starts_time="10:00:00" ends_time="11:00:00" is_music="0" showtype="5" name="RH+ - Xeracion Bravu"/>
+<show starts_time="11:00:00" ends_time="12:00:00" is_music="1" showtype="11" name="Orion 2.1"/>
+<show starts_time="12:00:00" ends_time="13:00:00" is_music="1" showtype="11" name="Ar de Coruña"/>
+<show starts_time="13:00:00" ends_time="14:00:00" is_music="1" showtype="11" name="Ar de Coruña"/>
+<show starts_time="14:00:00" ends_time="15:00:00" is_music="0" showtype="1" name="Informativos Fin de Semana"/>
+<show starts_time="15:00:00" ends_time="16:00:00" is_music="0" showtype="18" name="A fume de carozo"/>
+<show starts_time="16:00:00" ends_time="17:00:00" is_music="0" showtype="9" name="Mar de fueguitos"/>
+<show starts_time="17:00:00" ends_time="18:00:00" is_music="1" showtype="11" name="Fantasma accidental"/>
+<show starts_time="18:00:00" ends_time="19:00:00" is_music="0" showtype="9" name="Dentro de un orden"/>
+<show starts_time="19:00:00" ends_time="20:00:00" is_music="0" showtype="9" name="Dentro de un orden"/>
+<show starts_time="20:00:00" ends_time="21:00:00" is_music="0" showtype="9" name="El Rinconcito"/>
+<show starts_time="21:00:00" ends_time="22:00:00" is_music="1" showtype="11" name="ninputaidea"/>
+<show starts_time="22:00:00" ends_time="23:00:00" is_music="0" showtype="9" name="Crea nas ondas"/>
+<show starts_time="23:00:00" ends_time="00:00:00" is_music="0" showtype="7" name="Recendo"/>
+</day>
+<day weekday="Sun">
+<show starts_time="00:00:00" ends_time="01:00:00" is_music="0" showtype="19" name="Radio Prometa-Ondas do Carcere"/>
+<show starts_time="01:00:00" ends_time="02:00:00" is_music="1" showtype="11" name="Multiplex"/>
+<show starts_time="02:00:00" ends_time="03:00:00" is_music="1" showtype="11" name="Musica Nocturna"/>
+<show starts_time="03:00:00" ends_time="04:00:00" is_music="1" showtype="11" name="Musica Nocturna"/>
+<show starts_time="04:00:00" ends_time="05:00:00" is_music="1" showtype="11" name="Musica Nocturna"/>
+<show starts_time="05:00:00" ends_time="06:00:00" is_music="1" showtype="11" name="Musica Nocturna"/>
+<show starts_time="06:00:00" ends_time="07:00:00" is_music="1" showtype="11" name="Musica Local"/>
+<show starts_time="07:00:00" ends_time="08:00:00" is_music="0" showtype="1" name="Informativos"/>
+<show starts_time="08:00:00" ends_time="09:00:00" is_music="0" showtype="5" name="RH+ - Xeracion Bravu"/>
+<show starts_time="09:00:00" ends_time="10:00:00" is_music="0" showtype="9" name="Dentro de un orden"/>
+<show starts_time="10:00:00" ends_time="11:00:00" is_music="0" showtype="9" name="Dentro de un orden"/>
+<show starts_time="11:00:00" ends_time="12:00:00" is_music="0" showtype="7" name="La biblioteca perdida"/>
+<show starts_time="12:00:00" ends_time="13:00:00" is_music="0" showtype="23" name="Manda Carallo"/>
+<show starts_time="13:00:00" ends_time="14:00:00" is_music="1" showtype="11" name="ninputaidea"/>
+<show starts_time="14:00:00" ends_time="15:00:00" is_music="0" showtype="1" name="Informativos fin de semana"/>
+<show starts_time="15:00:00" ends_time="16:00:00" is_music="0" showtype="9" name="R que R"/>
+<show starts_time="16:00:00" ends_time="17:00:00" is_music="0" showtype="9" name="Crea nas ondas"/>
+<show starts_time="17:00:00" ends_time="18:00:00" is_music="0" showtype="9" name="New Age"/>
+<show starts_time="18:00:00" ends_time="19:00:00" is_music="1" showtype="14" name="Una noche en la opera"/>
+<show starts_time="19:00:00" ends_time="20:00:00" is_music="0" showtype="8" name="Planeta Espuni"/>
+<show starts_time="20:00:00" ends_time="21:00:00" is_music="0" showtype="3" name="Alegria"/>
+<show starts_time="21:00:00" ends_time="22:00:00" is_music="0" showtype="18" name="A fume de carozo"/>
+<show starts_time="22:00:00" ends_time="23:00:00" is_music="1" showtype="11" name="Luna hiena"/>
+<show starts_time="23:00:00" ends_time="00:00:00" is_music="1" showtype="10" name="Expreso de medianoche"/>
+</day>
+</schedule>
+</radioschedule>
+

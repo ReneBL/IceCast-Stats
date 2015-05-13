@@ -1,5 +1,6 @@
 class Connection
   include Mongoid::Document
+
   field :ip, type: String
   field :identd, type: String
   field :userid, type: String
@@ -13,6 +14,8 @@ class Connection
   field :city, type: String
   field :region,  type: String
   field :country, type: String
+
+  embeds_many :programs
 
   validates :identd, :userid, :datetime, :request, :status, :bytes, :referrer, :user_agent, 
             :seconds_connected, presence: true

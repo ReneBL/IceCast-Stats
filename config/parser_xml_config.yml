@@ -1,0 +1,1 @@
+xml_path: <%= "#{Rails.root}/lib/radio-schedule.xml" %>
