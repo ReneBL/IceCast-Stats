@@ -116,11 +116,21 @@ module Parser
   end
   
   def Parser.get_geo_info ip
-    info = Rails.cache.fetch ip do
+    geoinfo = Rails.cache.read ip
+    unless (geoinfo != nil)
       solvedIp = Geocoder.search ip
-      solvedIp
+      Rails.cache.write(ip, solvedIp, expires_in: 12.hours) if (!solvedIp.empty?)
     end
-    [info[0].data["country_name"], info[0].data["region_name"], info[0].data["city"]]
+    # info = Rails.cache.fetch ip do
+    #   solvedIp = Geocoder.search ip
+    #   solvedIp
+    # end
+    if (geoinfo == nil)
+      Parser.write_log "Problema en la resolución de localización para la ip ~> #{ip}"
+      ["", "", ""]
+    else
+      [geoinfo[0].data["country_name"], geoinfo[0].data["region_name"], geoinfo[0].data["city"]]
+    end
   end
 
   def Parser.programs_listened programs, end_of_connection, seconds

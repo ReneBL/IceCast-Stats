@@ -3,6 +3,26 @@ class ConnectionsController < StatsController
   def index
   end
 
+  def programs
+    project = {"$project" => {"programs" => 1}}
+    unwind_programs = {"$unwind" => "$programs"}
+    group_by = {"$group" => {"_id" => "$programs.name"}}
+
+    qb = QueryBuilder.new
+    qb.add_project project
+    qb.add_match @match
+    qb.add_group_by group_by
+    qb.add_extra_unwind unwind_programs
+    sort = SortDecorator.new
+    sort.add "_id", SortDecorator::ASC
+    group_decorator = CompositeGroupDecorator.new
+    group_decorator.add(CountGroupDecorator.new "listeners")
+    group_decorator.add(AvgSecondsGroupDecorator.new "avg", "$programs.seconds_listened")
+    group_decorator.add(TotalSecondsGroupDecorator.new "time", "$programs.seconds_listened")
+    qb.add_group_decorator group_decorator
+    do_query qb
+  end
+
   def total_seconds
     project = {"$project" => {"seconds_connected" => 1}}
     group_by = {"$group" => {"_id" => "total"}}
@@ -11,9 +31,7 @@ class ConnectionsController < StatsController
     qb.add_match @match
     qb.add_group_by group_by
     qb.add_group_decorator TotalSecondsGroupDecorator.new "count"
-    filters = qb.construct
-    result = Connection.collection.aggregate(filters)
-    render :json => result
+    do_query qb
   end
 
   def avg_seconds
@@ -24,9 +42,7 @@ class ConnectionsController < StatsController
     qb.add_match @match
     qb.add_group_by group_by
     qb.add_group_decorator AvgSecondsGroupDecorator.new "count"
-    filters = qb.construct
-    result = Connection.collection.aggregate(filters)
-    render :json => result
+    do_query qb
   end
   
   def ranges
@@ -43,9 +59,7 @@ class ConnectionsController < StatsController
     qb.add_match @match
     qb.add_group_by group_by
     qb.add_group_decorator CountGroupDecorator.new "count"
-    filters = qb.construct
-    result = Connection.collection.aggregate(filters)
-    render :json => result
+    do_query qb
   end
 
   def total_seconds_grouped
@@ -58,9 +72,7 @@ class ConnectionsController < StatsController
       	qb.add_match @match
       	qb.add_group_by group_by
       	qb.add_group_decorator TotalSecondsGroupDecorator.new "count"
-        filters = qb.construct
-        result = Connection.collection.aggregate(filters)
-        render :json => result
+        do_query qb
       end
     else
       render :json => error.to_json
@@ -76,9 +88,7 @@ class ConnectionsController < StatsController
       	qb.add_match @match
       	qb.add_group_by group_by
       	qb.add_group_decorator CountGroupDecorator.new "count"
-        filters = qb.construct
-        result = Connection.collection.aggregate(filters)
-        render :json => result
+        do_query qb
       end
     else
       render :json => error.to_json
@@ -99,8 +109,10 @@ class ConnectionsController < StatsController
     return [min.to_i, max.to_i, error]
   end
 
-  def seconds_filter_aggregator filters
-
+  def do_query qb
+    filters = qb.construct
+    result = Connection.collection.aggregate(filters)
+    render :json => result
   end
   
 end

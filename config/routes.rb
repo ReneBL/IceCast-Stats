@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   get 'connections/total_seconds/:start_date/:end_date(/:start_hour/:end_hour)' => 'connections#total_seconds'
   get 'connections/avg_seconds/:start_date/:end_date(/:start_hour/:end_hour)' => 'connections#avg_seconds'
   get 'connections/total_seconds_grouped/:start_date/:end_date/:group_by(/:start_hour/:end_hour)' => 'connections#total_seconds_grouped'
+  get 'connections/programs/:start_date/:end_date/:unique_visitors(/:start_hour/:end_hour)' => 'connections#programs'
 
   post 'login' => 'users#create'
   get 'logout' => 'users#destroy'

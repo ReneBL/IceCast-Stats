@@ -97,6 +97,50 @@ icecast.factory("RangesOptionsProvider", function() {
      };
 });
 
+icecast.factory("ProgramsDataProvider", function() {
+      return {
+         provide : function(datos, unique) {
+          if (unique) {
+            var array = [['Programa', 'Oyentes']];
+            for(var i=0; i < datos.length; i++) {
+              array.push([datos[i]._id, datos[i].listeners]);
+            }
+            var data = new google.visualization.arrayToDataTable(array);
+            return data;
+          } else {
+          	var array = [['Programa', 'Oyentes', 'Tiempo medio de escucha', 'Tiempo total de escucha']];
+          	for(var i=0; i < datos.length; i++) {
+              array.push([datos[i]._id, datos[i].listeners, datos[i].avg / 60, datos[i].time / 3600]);
+            }
+            var data = new google.visualization.arrayToDataTable(array);
+            return data;
+          }
+        }
+      };
+});
+
+icecast.factory("ProgramsOptionsProvider", function() {
+     return {
+         provide : function(unique) {
+         	if (unique) {
+         		var options = {
+            title: 'Oyentes únicos por programa',
+            	pieHole: 0.4,
+          	};
+          	return options;
+         	} else {
+         		var options = {
+    					title : 'Datos de audiencia agrupados por programa',
+    					vAxis: {title: "Total"},
+    					hAxis: {title: "Programa"}
+    					// seriesType: "bars",
+  					}
+  					return options;
+         	}
+        }
+     };
+});
+
 icecast.factory("GroupedTotalSecondsOptionsProvider", function() {
          return {
          provide : function(groupBy) {

@@ -54,6 +54,13 @@ iceServices.factory("Sources", ['$resource', function($resource) {
 	  return $resource('sources/:source:json', {source: '@source'}, {});
 }]);
 
+iceServices.factory("Programs", ['$resource', function($resource) {
+  return $resource('connections/programs/:start_date/:end_date/:unique_visitors/:start_hour/:end_hour:json', 
+  			{start_date : '@start_date', end_date : '@end_date', unique_visitors : '@unique_visitors', 
+	     		start_hour: "00:00:00", end_hour : "23:59:59"}, 
+	     	{isArray : false});
+}]);
+
 iceServices.factory("IceCastServer", ['$resource', function($resource) {
 		return $resource('poll/:url', {url: '@url'}, {isArray : false});
 }]);

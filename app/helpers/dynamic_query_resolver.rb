@@ -86,6 +86,11 @@ module DynamicQueryResolver
     hours_matcher
   end
 
+  def self.group_by_program_parts name, group_by
+    unwind = {"$unwind" => name}
+    group = {"$group" => {"_id" => name}}
+  end
+
   def self.is_unique
     @qp.unique
   end

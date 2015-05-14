@@ -16,6 +16,10 @@ class QueryBuilder
 		@group_by = group_by
 	end
 
+	def add_extra_unwind unwind
+		@unwind_progs = unwind
+	end
+
 	def add_group_decorator decorator
 		@decorator = decorator
 	end
@@ -34,7 +38,9 @@ class QueryBuilder
     filters << (DynamicQueryResolver.match_part @match)
     DynamicQueryResolver.project_totalSeconds_decorator @project
     unwind, group = DynamicQueryResolver.set_unique_if_exists @project, @group_by, decorator
-    filters << @project << DynamicQueryResolver.hours_filter << @group_by
+    filters << @project << DynamicQueryResolver.hours_filter
+    (filters << @unwind_progs) if (@unwind_progs != nil)
+    filters << @group_by
    	if ((unwind != nil) && (group != nil))
     	filters << unwind << group
     end
@@ -43,6 +49,12 @@ class QueryBuilder
 			filters << (DynamicQueryResolver.skip_part @skip) << (DynamicQueryResolver.limit_part @limit)
 		end
     filters
+	end
+
+	def construct_programs_query
+		filters = []
+		filters << (DynamicQueryResolver.match_part @match)
+		DynamicQueryResolver.project_totalSeconds_decorator @project
 	end
 
 end

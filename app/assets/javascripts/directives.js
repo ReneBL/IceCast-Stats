@@ -16,6 +16,8 @@ app.directive("chart", function() {
 	  	   	  			   break;
 	  	   	  case 'Line' : chart = new google.visualization.LineChart(elm[0]);
 	  	   	  				break;
+	  	   	  case 'Combo' : chart = new google.visualization.AreaChart(elm[0]);
+	  	   	  				 break;
 	  	   	  default: console.log('Gráfica no disponible');
 	  	   }
 	  	   chart != null? chart.draw($scope.data, $scope.options) : console.log("Error interno");

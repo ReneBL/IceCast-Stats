@@ -5,7 +5,7 @@
   				<span id="template" ng-include="'_noData.html'"></span>
   			</span>
   			<span ng-switch-when="false">
-				<div class="panel panel-default">
+				<div id="tiempoTotal" class="panel panel-default">
 					Tiempo total de escucha
   					<span id="template" ng-include="'_panelBodyTime.html'"></span>
 				</div>
@@ -16,7 +16,7 @@
   				<span id="template" ng-include="'_noData.html'"></span>
   			</span>
   			<span ng-switch-when="false">
-				<div class="panel panel-default">
+				<div id="tiempoMedio" class="panel panel-default">
 					Tiempo medio de escucha
   					<span id="template" ng-include="'_panelBodyTime.html'"></span>
 				</div>
@@ -102,5 +102,20 @@
 		<div ng-show="dataEmpty">
   			<span id="template" ng-include="'_noData.html'"></span>
   		</div>
+	</div>
+	<div id="programInfo" ng-controller="ProgramsController">
+		<span ng-if="loaded">
+			<div ng-switch on="uniqueVisitors">
+				<span ng-switch-when="true">
+  					<div id="programsDonut" chart chart-type="Pie"></div>
+  				</span>
+  				<span ng-switch-when="false">
+					<div id="programsCombo" chart chart-type="Combo"></div>
+				</span>	
+			</div>
+  		</span>
+  		<div ng-show="dataEmpty">
+  			<span id="template" ng-include="'_noData.html'"></span>
+ 		</div>
 	</div>
 </div>

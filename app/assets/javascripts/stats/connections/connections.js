@@ -1,5 +1,48 @@
 var app = angular.module('icecastStats');
 
+app.controller("ProgramsController", function ($scope, Programs, NotificationService, ProgramsDataProvider,
+	ProgramsOptionsProvider) {
+
+	var refreshUniqueParam = function() {
+		return ("true" === $scope.$parent.doGetParams().unique_visitors);
+	}
+
+	$scope.uniqueVisitors = refreshUniqueParam();
+
+	$scope.doGetData = function(params) {
+		var cloneParams = angular.copy(params);
+		Programs.query(cloneParams, function(datos) {
+	   		$scope.dataEmpty = datos.length == 0;
+	   		if (!$scope.dataEmpty) {
+	   	    	$scope.data = ProgramsDataProvider.provide(datos, $scope.uniqueVisitors);
+	   	     	$scope.options = ProgramsOptionsProvider.provide($scope.uniqueVisitors);
+	    	}
+	        $scope.loaded = !$scope.dataEmpty;
+		});
+	};
+	$scope.doGetData($scope.$parent.doGetParams());
+	$scope.cleanContext = function() {
+		$scope.data = null;
+	   	$scope.options = null;
+	   	$scope.loaded = false;
+	};
+
+	var refreshDataOnBroadCast = function(params) {
+		$scope.cleanContext();
+		$scope.doGetData(params);
+	};
+
+	NotificationService.onChangeScope($scope, function(message) {
+		refreshDataOnBroadCast(message.params);
+	});
+
+	NotificationService.onUniqueChanged($scope, function(message) {
+		$scope.uniqueVisitors = refreshUniqueParam();
+		refreshDataOnBroadCast(message.params);
+	});
+
+});
+
 app.controller("TotalTimeController", function ($scope, TotalTime, SecondsConverter, NotificationService) {
 	var refresh = function() {
 		var params = $scope.$parent.doGetParams();
