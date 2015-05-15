@@ -12,8 +12,8 @@ class RankingController < StatsController
     	# Creamos todos los decoradores del group y los encapsulamos en un Composite
     	group_decorator = CompositeGroupDecorator.new
     	group_decorator.add(CountGroupDecorator.new "listeners")
-    	group_decorator.add(TotalBytesGroupDecorator.new "bytes")
-    	group_decorator.add(TotalSecondsGroupDecorator.new "time") 
+    	group_decorator.add(CountGroupDecorator.new "bytes", "$bytes")
+    	group_decorator.add(CountGroupDecorator.new "time", "$seconds_connected") 
     	qb.add_group_decorator group_decorator
     	# Ordenamos por distinto criterio y campos
     	sort = SortDecorator.new

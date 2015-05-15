@@ -18,7 +18,7 @@ class ConnectionsController < StatsController
     group_decorator = CompositeGroupDecorator.new
     group_decorator.add(CountGroupDecorator.new "listeners")
     group_decorator.add(AvgSecondsGroupDecorator.new "avg", "$programs.seconds_listened")
-    group_decorator.add(TotalSecondsGroupDecorator.new "time", "$programs.seconds_listened")
+    group_decorator.add(CountGroupDecorator.new "time", "$programs.seconds_listened")
     qb.add_group_decorator group_decorator
     do_query qb
   end
@@ -30,7 +30,7 @@ class ConnectionsController < StatsController
     qb.add_project project
     qb.add_match @match
     qb.add_group_by group_by
-    qb.add_group_decorator TotalSecondsGroupDecorator.new "count"
+    qb.add_group_decorator CountGroupDecorator.new "count", "$seconds_connected"
     do_query qb
   end
 
@@ -71,7 +71,7 @@ class ConnectionsController < StatsController
       	qb.add_project project
       	qb.add_match @match
       	qb.add_group_by group_by
-      	qb.add_group_decorator TotalSecondsGroupDecorator.new "count"
+      	qb.add_group_decorator CountGroupDecorator.new "count", "$seconds_connected"
         do_query qb
       end
     else

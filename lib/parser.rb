@@ -71,20 +71,20 @@ module Parser
         # y los segundos que ha escuchado, lo que nos permitira extraer la hora de inicio
         listened = (programs.empty?) ? [] : (programs_listened programs, date, seconds)
         mongo_date = DateTime.evolve(date)
-        cnt, reg, ct = Parser.get_geo_info line["%h"]
+        cnt, reg, ct, ct_code = Parser.get_geo_info line["%h"]
         connection = Connection.create!(ip: line["%h"], identd: line["%l"], userid: line["%u"], datetime: mongo_date, request: request,
           status: line["%>s"], bytes: line["%b"], referrer: line["%{Referer}i"], user_agent: line["%{User-agent}i"],
-          seconds_connected: seconds, city: ct, region: reg, country: cnt)
+          seconds_connected: seconds, city: ct, region: reg, country: cnt, country_code: ct_code)
         connection.programs.create!(listened)
       end
     rescue Mongoid::Errors::Validations => e
-       Parser.write_log "Invalid data parsing line #{e.message}"
-       raise ParserException, "Datos inválidos"
+      Parser.write_log e
+      raise ParserException, "Datos inválidos"
     rescue NoMethodError => e
-      Parser.write_log "Nil line #{e.message}"
+      Parser.write_log e
       raise ParserException, "Linea nula"
     rescue ArgumentError => e
-      Parser.write_log "Exception parsing date #{e.message}"
+      Parser.write_log e
       raise ParserException, "Formato de fecha incorrecto"
     end
   end
@@ -111,8 +111,11 @@ module Parser
     line
   end
   
-  def Parser.write_log message
-    Rails.logger.warn message
+  def Parser.write_log exception
+    Rails.logger.warn exception.class.to_s
+    Rails.logger.warn exception.to_s
+    Rails.logger.warn exception.backtrace.join("\n")
+    Rails.logger.warn exception.message
   end
   
   def Parser.get_geo_info ip
@@ -129,7 +132,8 @@ module Parser
       Parser.write_log "Problema en la resolución de localización para la ip ~> #{ip}"
       ["", "", ""]
     else
-      [geoinfo[0].data["country_name"], geoinfo[0].data["region_name"], geoinfo[0].data["city"]]
+      data = geoinfo[0].data
+      [data["country_name"], data["region_name"], data["city"], data["country_code"]]
     end
   end
 

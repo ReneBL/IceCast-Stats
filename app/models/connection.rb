@@ -14,6 +14,7 @@ class Connection
   field :city, type: String
   field :region,  type: String
   field :country, type: String
+  field :country_code, type: String
 
   embeds_many :programs
 

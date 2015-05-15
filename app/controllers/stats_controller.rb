@@ -3,7 +3,7 @@ require 'group_by_decorator'
 class StatsController < ApplicationController
   before_action :generate_query_params
 
-  # Esta "controlador" servirá como filtro de entrada a las peticiones destinadas a cualquiera de los controladores 
+  # Este "controlador" servirá como filtro de entrada a las peticiones destinadas a cualquiera de los controladores 
   # que hereden de éste
 
   private

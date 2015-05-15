@@ -33,25 +33,26 @@ end
 class CountGroupDecorator < GroupDecorator
 	attr_accessor :name
 
-	def initialize name
-		@name = name
-	end
-
-	def decorate group
-		group["$group"].merge!({@name => {"$sum" => 1}})
-	end
-end
-
-class TotalSecondsGroupDecorator < GroupDecorator
-	attr_accessor :name
-
-	def initialize name, field='$seconds_connected'
+	def initialize name, field=1
 		@name = name
 		@field = field
 	end
 
 	def decorate group
 		group["$group"].merge!({@name => {"$sum" => @field}})
+	end
+end
+
+class FirstResultGroupDecorator < GroupDecorator
+	attr_accessor :name
+
+	def initialize name, field
+		@name = name
+		@field = field
+	end
+
+	def decorate group
+		group["$group"].merge!({@name => {"$first" => @field}})
 	end
 end
 
@@ -68,14 +69,14 @@ class AvgSecondsGroupDecorator < GroupDecorator
 	end
 end
 
-class TotalBytesGroupDecorator < GroupDecorator
-	attr_accessor :name
+# class TotalBytesGroupDecorator < GroupDecorator
+# 	attr_accessor :name
 
-	def initialize name
-		@name = name
-	end
+# 	def initialize name
+# 		@name = name
+# 	end
 
-	def decorate group
-		group["$group"].merge!({name => {"$sum" => "$bytes"}})
-	end
-end
+# 	def decorate group
+# 		group["$group"].merge!({name => {"$sum" => "$bytes"}})
+# 	end
+# end

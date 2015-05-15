@@ -50,11 +50,4 @@ class QueryBuilder
 		end
     filters
 	end
-
-	def construct_programs_query
-		filters = []
-		filters << (DynamicQueryResolver.match_part @match)
-		DynamicQueryResolver.project_totalSeconds_decorator @project
-	end
-
 end
