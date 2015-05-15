@@ -50,8 +50,25 @@ iceServices.factory("CountriesTotalTime", ['$resource', function($resource) {
 	     {});
 }]);
 
+iceServices.factory("RegionsConnections", ['$resource', function($resource) {
+	  return $resource('locations/regions/:start_date/:end_date/:country/:unique_visitors/:start_hour/:end_hour:json', 
+	     {start_date : '@start_date', end_date : '@end_date', unique_visitors : '@unique_visitors', country : '@country',
+	     	start_hour: "00:00:00", end_hour : "23:59:59"},
+	     {});
+}]);
+
+iceServices.factory("RegionsTotalTime", ['$resource', function($resource) {
+	  return $resource('locations/regions_time/:start_date/:end_date/:country/:start_hour/:end_hour:json', 
+	     {start_date : '@start_date', end_date : '@end_date', country : "@country", start_hour: "00:00:00", end_hour : "23:59:59"},
+	     {});
+}]);
+
 iceServices.factory("Sources", ['$resource', function($resource) {
 	  return $resource('sources/:source:json', {source: '@source'}, {});
+}]);
+
+iceServices.factory("Countries", ['$resource', function($resource) {
+	  return $resource('locations/get_countries:json', {}, {isArray : false});
 }]);
 
 iceServices.factory("Programs", ['$resource', function($resource) {

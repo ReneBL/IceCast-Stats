@@ -6,6 +6,7 @@
     "angular-snap": "latest",
     "angular-resource": "latest",
     "amplitude": "latest",
-    "angular-rangeslider": "latest"
+    "angular-rangeslider": "latest",
+    "iso-3166-country-codes-angular": "latest"
   }
 }

@@ -139,63 +139,63 @@ RSpec.describe LocationsController, type: :controller do
 
     it "should return locations grouped by region" do
       expected_array = [
-        { :_id => { :region => "Cataluña"}, :country_code => 'ES', :count => 3 },
-        { :_id => { :region => "Galicia"}, :country_code => 'ES', :count => 3 }
+        { :_id => { :region => "Cataluña"}, :count => 3 },
+        { :_id => { :region => "Galicia"}, :count => 3 }
       ]
       xhrRequestRegions expected_array, '00:27:04', '03:10:39'
 
       expected_array = [
-        { :_id => { :region => "Cataluña"}, :country_code => 'ES', :count => 1 },
-        { :_id => { :region => "Galicia"}, :country_code => 'ES', :count => 1 }
+        { :_id => { :region => "Cataluña"}, :count => 1 },
+        { :_id => { :region => "Galicia"}, :count => 1 }
       ]
       xhrRequestRegions expected_array, '00:27:04', '03:10:39', 'true'
   
       # Descartamos a Galicia con la fecha de inicio
       expected_array = [
-        { :_id => { :region => "Cataluña"}, :country_code => 'ES', :count => 3 },
-        { :_id => { :region => "Extremadura"}, :country_code => 'ES', :count => 2 },
-        { :_id => { :region => "Madrid"}, :country_code => 'ES', :count => 1 }
+        { :_id => { :region => "Cataluña"}, :count => 3 },
+        { :_id => { :region => "Extremadura"}, :count => 2 },
+        { :_id => { :region => "Madrid"}, :count => 1 }
       ]
       xhrRequestRegions expected_array, '00:27:04', '17:55:42', 'false', '18/07/2014'
 
       # Descartamos a Galicia con la fecha de inicio y agrupamos
       expected_array = [
-        { :_id => { :region => "Cataluña"}, :country_code => 'ES', :count => 1 },
-        { :_id => { :region => "Extremadura"}, :country_code => 'ES', :count => 1 },
-        { :_id => { :region => "Madrid"}, :country_code => 'ES', :count => 1 }
+        { :_id => { :region => "Cataluña"}, :count => 1 },
+        { :_id => { :region => "Extremadura"}, :count => 1 },
+        { :_id => { :region => "Madrid"}, :count => 1 }
       ]
       xhrRequestRegions expected_array, '00:27:04', '17:55:42', 'true', '18/07/2014'
 
       # Descartamos a Madrid con la fecha de fin
       expected_array = [
-        { :_id => { :region => "Cataluña"}, :country_code => 'ES', :count => 3 },
-        { :_id => { :region => "Extremadura"}, :country_code => 'ES', :count => 2 },
-        { :_id => { :region => "Galicia"}, :country_code => 'ES', :count => 3 }
+        { :_id => { :region => "Cataluña"}, :count => 3 },
+        { :_id => { :region => "Extremadura"}, :count => 2 },
+        { :_id => { :region => "Galicia"}, :count => 3 }
       ]
       xhrRequestRegions expected_array, '00:27:04', '17:55:42', 'false', '17/07/2014', '10/02/2015'
 
       # Descartamos a Madrid con la fecha de inicio y agrupamos
       expected_array = [
-        { :_id => { :region => "Cataluña"}, :country_code => 'ES', :count => 1 },
-        { :_id => { :region => "Extremadura"}, :country_code => 'ES', :count => 1 },
-        { :_id => { :region => "Galicia"}, :country_code => 'ES', :count => 1 }
+        { :_id => { :region => "Cataluña"}, :count => 1 },
+        { :_id => { :region => "Extremadura"}, :count => 1 },
+        { :_id => { :region => "Galicia"}, :count => 1 }
       ]
       xhrRequestRegions expected_array, '00:27:04', '17:55:42', 'true', '17/07/2014', '10/02/2015'
 
       # Descartamos todo menos Cataluña mediante las horas
       expected_array = [
-        { :_id => { :region => "Cataluña"}, :country_code => 'ES', :count => 3 }
+        { :_id => { :region => "Cataluña"}, :count => 3 }
       ]
       xhrRequestRegions expected_array, '03:10:39', '03:10:39'
 
       # Descartamos todo menos Cataluña mediante las horas
       expected_array = [
-        { :_id => { :region => "Cataluña"}, :country_code => 'ES', :count => 1 }
+        { :_id => { :region => "Cataluña"}, :count => 1 }
       ]
       xhrRequestRegions expected_array, '03:10:39', '03:10:39', 'true'
 
       expected_array = [
-        { :_id => { :region => "New Jersey"}, :country_code => 'US', :count => 1 }
+        { :_id => { :region => "New Jersey"}, :count => 1 }
       ]
       xhrRequestRegions expected_array, '13:25:41', '13:25:41', 'false', '17/07/2014', '11/02/2015', 'United States'
 

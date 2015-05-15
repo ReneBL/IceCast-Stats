@@ -152,67 +152,67 @@ RSpec.describe LocationsController, type: :controller do
     it "should return total amount of connections per region" do
       # Testeamos un caso sencillo
       expected_array = [
-        { :_id => { :region => "Cataluña"}, :country_code => 'ES', :count => 3 },
-        { :_id => { :region => "Extremadura"}, :country_code => 'ES', :count => 2 },
-        { :_id => { :region => "Galicia"}, :country_code => 'ES', :count => 3 },
-        { :_id => { :region => "Madrid"}, :country_code => 'ES', :count => 1 }
+        { :_id => { :region => "Cataluña"}, :count => 3 },
+        { :_id => { :region => "Extremadura"},  :count => 2 },
+        { :_id => { :region => "Galicia"}, :count => 3 },
+        { :_id => { :region => "Madrid"}, :count => 1 }
       ]
       xhrRequestRegions expected_array
 
       # Agrupamos por visitantes
       expected_array = [
-        { :_id => { :region => "Cataluña"}, :country_code => 'ES', :count => 1 },
-        { :_id => { :region => "Extremadura"}, :country_code => 'ES', :count => 1 },
-        { :_id => { :region => "Galicia"}, :country_code => 'ES', :count => 1 },
-        { :_id => { :region => "Madrid"}, :country_code => 'ES', :count => 1 }
+        { :_id => { :region => "Cataluña"}, :count => 1 },
+        { :_id => { :region => "Extremadura"}, :count => 1 },
+        { :_id => { :region => "Galicia"}, :count => 1 },
+        { :_id => { :region => "Madrid"}, :count => 1 }
       ]
       xhrRequestRegions expected_array, '17/07/2014', '11/02/2015', 'true'
 
       # Descartamos las conexiones de Galicia mediante fecha inicio
       expected_array = [
-        { :_id => { :region => "Cataluña"}, :country_code => 'ES', :count => 3 },
-        { :_id => { :region => "Extremadura"}, :country_code => 'ES', :count => 2 },
-        { :_id => { :region => "Madrid"}, :country_code => 'ES', :count => 1 }
+        { :_id => { :region => "Cataluña"}, :count => 3 },
+        { :_id => { :region => "Extremadura"}, :count => 2 },
+        { :_id => { :region => "Madrid"}, :count => 1 }
       ]
       xhrRequestRegions expected_array, '01/12/2014'
 
       # Descartamos las conexiones de Galicia mediante fecha inicio y agrupamos
       expected_array = [
-        { :_id => { :region => "Cataluña"}, :country_code => 'ES', :count => 1 },
-        { :_id => { :region => "Extremadura"}, :country_code => 'ES', :count => 1 },
-        { :_id => { :region => "Madrid"}, :country_code => 'ES', :count => 1 }
+        { :_id => { :region => "Cataluña"}, :count => 1 },
+        { :_id => { :region => "Extremadura"}, :count => 1 },
+        { :_id => { :region => "Madrid"}, :count => 1 }
       ]
       xhrRequestRegions expected_array, '01/12/2014', '11/02/2015', 'true'
 
       # Descartamos Galicia y Madrid por fecha inicio y fin
       expected_array = [
-        { :_id => { :region => "Cataluña"}, :country_code => 'ES', :count => 3 },
-        { :_id => { :region => "Extremadura"}, :country_code => 'ES', :count => 2 }
+        { :_id => { :region => "Cataluña"}, :count => 3 },
+        { :_id => { :region => "Extremadura"}, :count => 2 }
       ]
       xhrRequestRegions expected_array, '01/12/2014', '10/02/2015'
 
       # Descartamos Galicia y Madrid por fecha inicio y fin y agrupamos
       expected_array = [
-        { :_id => { :region => "Cataluña"}, :country_code => 'ES', :count => 1 },
-        { :_id => { :region => "Extremadura"}, :country_code => 'ES', :count => 1 }
+        { :_id => { :region => "Cataluña"}, :count => 1 },
+        { :_id => { :region => "Extremadura"}, :count => 1 }
       ]
       xhrRequestRegions expected_array, '01/12/2014', '10/02/2015', 'true'
 
       # Cogemos solo las conexiones de Galicia
       expected_array = [
-        { :_id => { :region => "Galicia"}, :country_code => 'ES', :count => 3 }
+        { :_id => { :region => "Galicia"}, :count => 3 }
       ]
       xhrRequestRegions expected_array, '17/07/2014', '17/07/2014'
 
       # Cogemos solo las conexiones de Galicia y agrupamos
       expected_array = [
-        { :_id => { :region => "Galicia"}, :country_code => 'ES', :count => 1 }
+        { :_id => { :region => "Galicia"}, :count => 1 }
       ]
       xhrRequestRegions expected_array, '17/07/2014', '17/07/2014', 'true'
 
       # Cogemos solo las conexiones de Galicia y agrupamos
       expected_array = [
-        { :_id => { :region => "New Jersey"}, :country_code => 'US', :count => 1 }
+        { :_id => { :region => "New Jersey"}, :count => 1 }
       ]
       xhrRequestRegions expected_array, '10/02/2015', '10/02/2015', 'false', 'United States'
 
@@ -243,11 +243,22 @@ RSpec.describe LocationsController, type: :controller do
       xhrRequestRegions expected_array, '17/07/2014', '11/02/2015', 'true', ' '
     end
 
+    it "should return all distinct countries" do
+    	expected_array = ["Spain", "United States"]
+      xhrRequestAllCountries expected_array
+    end
+
     def xhrRequestRegions(expected_array, st_date='17/07/2014', end_date='11/02/2015', unique='', country='Spain')
       expected = expected_array.to_json
       xhr :get, :regions, :start_date => st_date, :end_date => end_date, :unique_visitors => unique,
       	:country => country, :format => :json
       expect(response.body).to eql(expected)
+    end
+
+    def xhrRequestAllCountries expected_array
+    	expected = expected_array.to_json
+    	xhr :get, :get_countries, :format => :json
+    	expect(response.body).to eql(expected)
     end
   end
 

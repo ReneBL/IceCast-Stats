@@ -20,6 +20,7 @@
 //= require angular-resource/angular-resource
 //= require amplitude/js/amplitude
 //= require angular-rangeslider/angular.rangeSlider
+//= require iso-3166-country-codes-angular/src/iso-3166-country-codes-angular
 //= require icecastStats
 //= require bootstrap-sprockets
 //= require_tree .

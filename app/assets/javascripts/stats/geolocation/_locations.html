@@ -19,4 +19,27 @@
 			<div id="countriesChart" chart chart-type="Geo"></div>
 		</span>
 	</div>
+	<div ng-controller="RegionsConnectionsController">
+		<div>
+			<select id="comboCountries" ng-model="country" ng-options="country for country in countries" ng-change="selectedCountry(country)">
+			</select>
+		</div>
+		<div ng-show="dataEmpty">
+  			<div class="panel panel-default">
+  				<div class="panel-body">
+    				No existen datos para estas fechas
+  				</div>
+			</div>
+  		</div>
+		<span ng-if="loaded">
+			<label>Mostrar: </label>
+			<div class="btn-group" role="group">
+  				<button type="button" ng-class="{true:'btn btn-danger', false:'btn btn-default'}[dataType == 'numConnections']" ng-click="show('numConnections')">Número de conexiones
+  				</button>
+  				<button type="button" ng-class="{true:'btn btn-danger', false:'btn btn-default'}[dataType == 'totalTime']" ng-click="show('totalTime')">Tiempo total de escucha
+  				</button>
+			</div>
+			<div id="regionsChart" chart chart-type="Geo"></div>
+		</span>
+	</div>
 </div>
