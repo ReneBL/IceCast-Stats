@@ -327,10 +327,32 @@ RSpec.describe LocationsController, type: :controller do
       xhrRequestRegionsTime expected_array, '15/11/2014', '31/782015'
     end
 
+    it "should return all regions from a country" do
+      expected = ["Cataluña", "Extremadura", "Galicia", "Madrid"]
+      xhrRequestAllRegions expected, 'Spain'
+
+      expected = ["New Jersey"]
+      xhrRequestAllRegions expected, 'United States'
+
+      xhrRequestAllRegions [], 'Dominican Republic'
+
+      expected = {"error" => "Invalid country"}
+      xhrRequestAllRegions expected, ''
+
+      expected = {"error" => "Invalid country"}
+      xhrRequestAllRegions expected, ' '
+    end
+
 
     def xhrRequestRegionsTime(expected_array, st_date='17/07/2014', end_date='11/02/2015', country='Spain')
       expected = expected_array.to_json
       xhr :get, :regions_time, :start_date => st_date, :end_date => end_date, :country => country, :format => :json
+      expect(response.body).to eql(expected)
+    end
+
+    def xhrRequestAllRegions(expected_array, country)
+      expected = expected_array.to_json
+      xhr :get, :get_regions, :country => country, :format => :json
       expect(response.body).to eql(expected)
     end
   end

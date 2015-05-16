@@ -1,32 +1,57 @@
 var app = angular.module("icecastStats");
 
-app.controller("RegionsConnectionsController", function ($scope, RegionsConnections, RegionsTotalTime, Countries,
-	RegionsDataProvider, RegionsOptionsProvider, NotificationService, ISO3166) {
+app.controller("RegionsCitiesConnectionsController", function ($scope, RegionsConnections, RegionsTotalTime, 
+	CitiesConnections, CitiesTotalTime, Countries, Regions, RegionsCitiesDataProvider, RegionsCitiesOptionsProvider, 
+	NotificationService, ISO3166) {
 
 	$scope.dataType = 'numConnections';
+	$scope.citiesCheckedModel = {
+		checked : false
+	}
 
-	var getData = function() {
+	var getDataCountries = function() {
 		Countries.query({}, function(datos) {
 			$scope.countries = datos;
 			$scope.country = datos[0];
 			$scope.doGetData($scope.$parent.doGetParams(), RegionsConnections);
 		});
 	}
-	getData();
+	getDataCountries();
 
-	$scope.selectedCountry = function(country) {
+	var getDataRegions = function() {
+		Regions.query({country: $scope.country}, function(datos) {
+			$scope.regions = datos;
+			$scope.regionsEmpty = ($scope.regions.length == 0);
+			if (!$scope.regionsEmpty) {
+				$scope.region = datos[0];
+				drawTypeOfChart($scope.dataType)
+			}
+		});
+	}
+
+	$scope.selectedCountry = function() {
+		getDataRegions();
+	}
+
+	$scope.selectedCountryRegion = function() {
 		drawTypeOfChart($scope.dataType);
+	}
+
+	$scope.changedCheckBoxCities = function() {
+		$scope.citiesCheckedModel.checked ? getDataRegions() : drawTypeOfChart($scope.dataType);
 	}
 
 	$scope.doGetData = function(params, obj) {
 		var cloneParams = angular.copy(params);
 		cloneParams['country'] = $scope.country;
+		if ($scope.citiesCheckedModel.checked) {
+			cloneParams['region'] = $scope.region;
+		}
 		obj.query(cloneParams, function(datos) {
 	   		$scope.dataEmpty = datos.length == 0;
 	   		if (!$scope.dataEmpty) {
-	   	    	$scope.data = RegionsDataProvider.provide(datos, $scope.dataType);
-	   	    	$scope.options = null;
-	   	     	$scope.options = RegionsOptionsProvider.provide(ISO3166.getCountryCode($scope.country.toUpperCase()));
+	   	    	$scope.data = RegionsCitiesDataProvider.provide(datos, $scope.dataType, $scope.citiesCheckedModel.checked);
+	   	     	$scope.options = RegionsCitiesOptionsProvider.provide(ISO3166.getCountryCode($scope.country.toUpperCase()));
 	    	}
 	        $scope.loaded = !$scope.dataEmpty;
 		});
@@ -50,11 +75,11 @@ app.controller("RegionsConnectionsController", function ($scope, RegionsConnecti
 		$scope.cleanContext();
 		var temp = $scope.$parent.doGetParams();
 		switch (dataType) {
-			case "numConnections" : $scope.doGetData(temp, RegionsConnections);
+			case "numConnections" : $scope.citiesCheckedModel.checked ? $scope.doGetData(temp, CitiesConnections) : $scope.doGetData(temp, RegionsConnections); 
 									break;
 							   // Adaptamos los parámetros del padre a los que recibe CountriesTotalTime (todos menos "unique_visitors")
 			case "totalTime" :  delete temp.unique_visitors;
-								$scope.doGetData(temp, RegionsTotalTime);
+								$scope.citiesCheckedModel.checked ? $scope.doGetData(temp, CitiesTotalTime) : $scope.doGetData(temp, RegionsTotalTime);
 								break;
 		}
 	};

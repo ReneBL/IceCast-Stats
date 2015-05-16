@@ -1,5 +1,6 @@
 <div class="container">
 	<h1>LOCATIONS</h1>
+	<h4>Localizaciones <small>Países</small></h4>
 	<div ng-controller="CountriesConnectionsController">
 		<div ng-show="dataEmpty">
   			<div class="panel panel-default">
@@ -19,11 +20,8 @@
 			<div id="countriesChart" chart chart-type="Geo"></div>
 		</span>
 	</div>
-	<div ng-controller="RegionsConnectionsController">
-		<div>
-			<select class="form-control" id="comboCountries" ng-model="country" ng-options="country for country in countries" ng-change="selectedCountry(country)">
-			</select>
-		</div>
+	<h4>Localizaciones <small>Regiones y ciudades</small></h4>
+	<div ng-controller="RegionsCitiesConnectionsController">
 		<div ng-show="dataEmpty">
   			<div class="panel panel-default">
   				<div class="panel-body">
@@ -31,14 +29,29 @@
   				</div>
 			</div>
   		</div>
+  		<div ng-show="!dataEmpty">
+  			<span>
+				<select class="form-control" id="comboCountries" ng-model="country" ng-options="country for country in 			countries" ng-change="selectedCountry()">
+				</select>
+			</span>
+			<span ng-show="regionsEmpty">No existen regiones para este país</span>
+			<span ng-show="citiesCheckedModel.checked && !regionsEmpty">
+				<select class="form-control" id="comboRegions" ng-model="region" ng-options="region for region in regions" 			ng-change="selectedRegion()">
+				</select>
+			</span>
+		</div>
 		<span ng-if="loaded">
 			<label>Mostrar: </label>
-			<div class="btn-group" role="group">
+			<span class="btn-group" role="group">
   				<button type="button" ng-class="{true:'btn btn-danger', false:'btn btn-default'}[dataType == 'numConnections']" ng-click="show('numConnections')">Número de conexiones
   				</button>
   				<button type="button" ng-class="{true:'btn btn-danger', false:'btn btn-default'}[dataType == 'totalTime']" ng-click="show('totalTime')">Tiempo total de escucha
   				</button>
-			</div>
+			</span>
+			<span>
+				<label>Mostrar regiones: </label>
+				<input id="citiesCB" type="checkbox" ng-model="citiesCheckedModel.checked" ng-change="changedCheckBoxCities()">
+			</span>
 			<div id="regionsChart" chart chart-type="Geo"></div>
 		</span>
 	</div>

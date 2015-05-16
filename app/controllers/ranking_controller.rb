@@ -1,28 +1,35 @@
 class RankingController < StatsController
+	before_action :initialize_common_location_stages, only: [:country_ranking, :region_ranking, :city_ranking]
 	before_action :check_search_indexes
-
-	@@UNKNOWN = "Unknown"
 
 	def country_ranking
 		project = @common_project
-		project["$project"].merge!(@project_countries)
+		project["$project"].merge!(LocationsHelper.project_countries)
 		group_by = {"$group" => {"_id" => "$country"}}
 		common_ranking_process project, group_by
 	end
 
 	def region_ranking
 		project = @common_project
-		project["$project"].merge!(@project_regions).merge!(@project_countries)
+		project["$project"].merge!(LocationsHelper.project_regions).merge!(LocationsHelper.project_countries)
 		group_by = {"$group" => {"_id" => {"region" => "$region", "country" => "$country"}}}
+		common_ranking_process project, group_by
+	end
+
+	def city_ranking
+		project = @common_project
+		project["$project"].merge!(LocationsHelper.project_regions).merge!(LocationsHelper.project_countries).merge!(LocationsHelper.project_cities)
+		group_by = {"$group" => {"_id" => {"city" => "$city", "region" => "$region", "country" => "$country"}}}
 		common_ranking_process project, group_by
 	end
 
 	private
 
-	def check_search_indexes
+	def initialize_common_location_stages
 		@common_project = {"$project" => {"datetime" => 1, "seconds_connected" => 1, "bytes" => 1}}
-		@project_countries = {"country" => {"$cond" => [{"$ne" => ["$country", ""]}, "$country", @@UNKNOWN]}}
-		@project_regions = {"region" => {"$cond" => [{"$ne" => ["$region", ""]}, "$region", @@UNKNOWN]}}
+	end
+
+	def check_search_indexes
 		start_index = params[:start_index]
 		count = params[:count]
 		start_nil = (start_index.nil?)

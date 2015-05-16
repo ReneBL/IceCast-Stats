@@ -17,7 +17,17 @@ app.factory("RankingUtilities", function() {
 		return result;
 	}
 
+	var request = function (idUrl, params, scope, service) {
+		var cloneParams = angular.copy(params);
+		cloneParams["start_index"] = scope.startIndex;
+		cloneParams["count"] = scope.count;
+		cloneParams["idUrl"] = idUrl;
+		delete cloneParams.unique_visitors;
+		return service.query(cloneParams);
+	};
+
 	return {
-		containsHasMore: containsHasMore
+		containsHasMore: containsHasMore,
+		makeRequest: request
 	}
 });

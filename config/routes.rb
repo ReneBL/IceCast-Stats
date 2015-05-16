@@ -19,10 +19,14 @@ Rails.application.routes.draw do
   get 'locations/countries_time/:start_date/:end_date(/:start_hour/:end_hour)' => 'locations#countries_time'
   get 'locations/regions/:start_date/:end_date/:country/:unique_visitors(/:start_hour/:end_hour)' => 'locations#regions'
   get 'locations/regions_time/:start_date/:end_date/:country(/:start_hour/:end_hour)' => 'locations#regions_time'
+  get 'locations/cities/:start_date/:end_date/:country/:region/:unique_visitors(/:start_hour/:end_hour)' => 'locations#cities'
+  get 'locations/cities_time/:start_date/:end_date/:country/:region(/:start_hour/:end_hour)' => 'locations#cities_time'
   get 'locations/get_countries' => 'locations#get_countries'
+  get 'locations/get_regions/:country' => 'locations#get_regions'
 
   get 'ranking/country_ranking/:start_date/:end_date(/:start_index/:count)(/:start_hour/:end_hour)' => 'ranking#country_ranking'
   get 'ranking/region_ranking/:start_date/:end_date(/:start_index/:count)(/:start_hour/:end_hour)' => 'ranking#region_ranking'
+  get 'ranking/city_ranking/:start_date/:end_date(/:start_index/:count)(/:start_hour/:end_hour)' => 'ranking#city_ranking'
 
   get 'sources' => 'sources#get_sources'
   post 'sources/:source' => 'sources#set_source', :constraints => {:source => /([a-zA-Z0-9].*)+\.[a-zA-Z0-9]+|Todos/}

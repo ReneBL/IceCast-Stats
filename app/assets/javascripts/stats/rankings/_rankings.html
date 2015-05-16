@@ -40,4 +40,24 @@
   		</table>
   		<span id="template" ng-include="'_botonera.html'"></span>
 	</div>
+    <div id="rankingCity" class="panel panel-primary" ng-controller="CityRanking">
+        <div class="panel-heading">Ranking de ciudades</div>
+        <table class="table table-striped">
+            <tr>
+                <th>#</th>
+                <th>Ciudad</th>
+                <th>Oyentes totales</th>
+                <th>Bytes consumidos (en GB)</th>
+                <th>Tiempo total de escucha</th>
+            </tr>
+            <tr id="tableRow" ng-repeat="row in data">
+                <td ng-model="startIndex">{{(startIndex + $index) + 1}}</td>
+                <td>{{row._id.city}}, {{row._id.region}}, {{row._id.country}}</td>
+                <td>{{row.listeners}}</td>
+                <td>{{row.bytes / 1000000000}}</td>
+                <td>{{row.time}}</td>
+            </tr>
+        </table>
+        <span id="template" ng-include="'_botonera.html'"></span>
+    </div>
 </div>

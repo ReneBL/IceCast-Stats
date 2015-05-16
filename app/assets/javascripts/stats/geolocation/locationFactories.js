@@ -23,22 +23,22 @@ icecast.factory("CountriesConnectionsOptionsProvider", function() {
      };
 });
 
-icecast.factory("RegionsDataProvider", function() {
+icecast.factory("RegionsCitiesDataProvider", function() {
         return {
-         provide : function(datos, dataType) {
+         provide : function(datos, dataType, citiesChecked) {
             countColumnName = (dataType == 'numConnections') ? 'Conexiones' : 'Segundos totales de escucha'; 
             dataCC = new google.visualization.DataTable();
-            dataCC.addColumn({ type: 'string', label: 'Región' });
+            dataCC.addColumn({ type: 'string', label: (citiesChecked ? 'Ciudad' : 'Región') });
             dataCC.addColumn({ type: 'number', label: countColumnName });
             for(var i=0; i < datos.length; i++) {
-                dataCC.addRow([datos[i]._id.region, datos[i].count]);
+                citiesChecked ? dataCC.addRow([datos[i]._id.city, datos[i].count]) : dataCC.addRow([datos[i]._id.region, datos[i].count]);
             }
             return dataCC;
          }
         };
 });
 
-icecast.factory("RegionsOptionsProvider", function() {
+icecast.factory("RegionsCitiesOptionsProvider", function() {
      return {
          provide : function(region) {
             var options = {
