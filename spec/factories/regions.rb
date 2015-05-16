@@ -22,7 +22,7 @@ FactoryGirl.define do
     datetime '2014-12-01 09:40:01 UTC'
     request 'GET /cuacfm-128k.mp3 HTTP/1.1'
     status 200
-    bytes 870
+    bytes 100
     referrer '-'
     user_agent 'iTunes/9.1.1'
     seconds_connected 15
@@ -38,7 +38,7 @@ FactoryGirl.define do
     datetime '2015-02-01 03:10:39 UTC'
     request 'GET /pepito.ogg HTTP/1.1'
     status 200
-    bytes 2567546
+    bytes 25
     referrer '-'
     user_agent 'iTunes/9.1.1'
     seconds_connected 20
@@ -73,9 +73,25 @@ FactoryGirl.define do
     bytes 23
     referrer '-'
     user_agent 'iTunes/9.1.1'
-    seconds_connected 8
+    seconds_connected 9
     country 'United States'
     region 'New Jersey'
     country_code 'US'
+  end
+
+  factory :connection_from_Nacional, class: Connection do
+    ip '190.110.1.1'
+    identd '-'
+    userid '-'
+    datetime '2015-02-25 22:25:41 UTC'
+    request 'GET /cuacfm.aac HTTP/1.1'
+    status 200
+    bytes 16
+    referrer '-'
+    user_agent 'iTunes/9.1.1'
+    seconds_connected 23
+    country 'Dominican Republic'
+    region 'Nacional'
+    country_code 'DO'
   end
 end

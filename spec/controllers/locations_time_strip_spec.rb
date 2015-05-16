@@ -231,4 +231,91 @@ RSpec.describe LocationsController, type: :controller do
       expect(response.body).to eql(expected)
     end
   end
+
+  describe "when access to locations regions_time by time strip" do
+
+    before(:each) do
+      3.times do
+        FactoryGirl.create(:connection_from_Galicia)
+      end
+      FactoryGirl.create(:connection_from_Madrid)
+
+      2.times do
+        FactoryGirl.create(:connection_from_Extremadura)
+      end
+
+      3.times do
+        FactoryGirl.create(:connection_from_Cataluña)
+      end
+
+      FactoryGirl.create(:connection_from_New_Jersey)
+      
+      admin = FactoryGirl.create(:admin)
+      log_in(admin)
+    end
+
+    it "should return locations grouped by region" do
+      expected_array = [
+        { :_id => { :region => "Cataluña"}, :count => 60 },
+        { :_id => { :region => "Galicia"}, :count => 30 }
+      ]
+      xhrRequestRegionsTime expected_array, '00:27:04', '03:10:39'
+  
+      # Descartamos a Galicia con la fecha de inicio
+      expected_array = [
+        { :_id => { :region => "Cataluña"}, :count => 60 },
+        { :_id => { :region => "Extremadura"}, :count => 30 },
+        { :_id => { :region => "Madrid"}, :count => 8 }
+      ]
+      xhrRequestRegionsTime expected_array, '00:27:04', '17:55:42', '18/07/2014'
+
+      # Descartamos a Madrid con la fecha de fin
+      expected_array = [
+        { :_id => { :region => "Cataluña"}, :count => 60 },
+        { :_id => { :region => "Extremadura"}, :count => 30 },
+        { :_id => { :region => "Galicia"}, :count => 30 }
+      ]
+      xhrRequestRegionsTime expected_array, '00:27:04', '17:55:42', '17/07/2014', '10/02/2015'
+
+      # Descartamos todo menos Cataluña mediante las horas
+      expected_array = [
+        { :_id => { :region => "Cataluña"}, :count => 60 }
+      ]
+      xhrRequestRegionsTime expected_array, '03:10:39', '03:10:39'
+
+      expected_array = [
+        { :_id => { :region => "New Jersey"}, :count => 8 }
+      ]
+      xhrRequestRegionsTime expected_array, '13:25:41', '13:25:41', '17/07/2014', '11/02/2015', 'United States'
+
+      xhrRequestRegionsTime [], '13:25:42', '13:25:45', '17/07/2014', '11/02/2015', 'United States'
+
+      xhrRequestRegionsTime [], '03:10:40', '09:40:00'
+
+      # Añadimos horas incorrectas
+      expected_array = { "error" => "One hour is invalid. Correct format: HH:MM:SS" }
+      xhrRequestRegionsTime expected_array, 'eh:37:09'
+
+      # Añadimos horas incorrectas
+      expected_array = { "error" => "One hour is invalid. Correct format: HH:MM:SS" }
+      xhrRequestRegionsTime expected_array, '05:27:04', '142:344:23'
+
+      # Añadimos horas inconsistentes
+      expected_array = { "error" => "Start time is lesser than end time" }
+      xhrRequestRegionsTime expected_array, '12:37:09', '02:00:00'
+
+      expected_array = { "error" => "Invalid country" }
+      xhrRequestRegionsTime expected_array, '00:30:09', '09:10:00', '17/07/2014', '11/02/2015', ''
+
+      expected_array = { "error" => "Invalid country" }
+      xhrRequestRegionsTime expected_array, '00:30:09', '09:10:00', '17/07/2014', '11/02/2015', ' '
+    
+    end
+    def xhrRequestRegionsTime(expected_array, from='00:00:00', to='23:59:59', st_date='17/07/2014', end_date='11/02/2015', country='Spain')
+
+      expected = expected_array.to_json
+      xhr :get, :regions_time, :start_date => st_date, :end_date => end_date, :start_hour => from, :end_hour => to, :country => country, :format => :json
+      expect(response.body).to eql(expected)
+    end
+  end
 end

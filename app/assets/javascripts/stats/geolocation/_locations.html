@@ -21,7 +21,7 @@
 	</div>
 	<div ng-controller="RegionsConnectionsController">
 		<div>
-			<select id="comboCountries" ng-model="country" ng-options="country for country in countries" ng-change="selectedCountry(country)">
+			<select class="form-control" id="comboCountries" ng-model="country" ng-options="country for country in countries" ng-change="selectedCountry(country)">
 			</select>
 		</div>
 		<div ng-show="dataEmpty">

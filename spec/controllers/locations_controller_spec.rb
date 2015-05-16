@@ -262,4 +262,77 @@ RSpec.describe LocationsController, type: :controller do
     end
   end
 
+  describe "when access to location's regions_time" do
+
+    before(:each) do
+      3.times do
+        FactoryGirl.create(:connection_from_Galicia)
+      end
+      FactoryGirl.create(:connection_from_Madrid)
+
+      2.times do
+        FactoryGirl.create(:connection_from_Extremadura)
+      end
+
+      3.times do
+        FactoryGirl.create(:connection_from_Cataluña)
+      end
+
+      FactoryGirl.create(:connection_from_New_Jersey)
+      
+      admin = FactoryGirl.create(:admin)
+      log_in(admin)
+    end
+
+    it "should return total amount of listening time per region" do
+      # Testeamos un caso sencillo
+      expected_array = [
+        { :_id => { :region => "Cataluña" }, :count => 60 },
+        { :_id => { :region => "Extremadura" }, :count => 30 },
+        { :_id => { :region => "Galicia" }, :count => 30 },
+        { :_id => { :region => "Madrid" }, :count => 8 }
+      ]
+      xhrRequestRegionsTime expected_array
+
+      # Descartamos las conexiones de Galicia mediante start date
+      expected_array = [
+        { :_id => { :region => "Cataluña" }, :count => 60 },
+        { :_id => { :region => "Extremadura" }, :count => 30 },
+        { :_id => { :region => "Madrid" }, :count => 8 }
+      ]
+      xhrRequestRegionsTime expected_array, '01/12/2014'
+
+      # Obtenemos las conexiones descartando a Galicia y Madrid por las fechas inicio y fin
+      expected_array = [
+        { :_id => { :region => "Cataluña" }, :count => 60 },
+        { :_id => { :region => "Extremadura" }, :count => 30 }
+      ]
+      xhrRequestRegionsTime expected_array, '01/12/2014', '01/02/2015'
+
+      expected_array = [
+        { :_id => { :region => "New Jersey" }, :count => 8 }
+      ]
+      xhrRequestRegionsTime expected_array, '10/02/2015', '10/02/2015', 'United States'
+
+      xhrRequestRegionsTime [], '11/07/2014', '16/07/2014'
+
+      xhrRequestRegionsTime [], '11/02/2015', '11/02/2015', 'United States'
+
+      # Añadimos fechas incorrectas
+      expected_array = { "error" => "One date is invalid. Correct format: d/m/Y"  }
+      xhrRequestRegionsTime expected_array, ''
+
+      # Añadimos fechas incorrectas
+      expected_array = { "error" => "One date is invalid. Correct format: d/m/Y"  }
+      xhrRequestRegionsTime expected_array, '15/11/2014', '31/782015'
+    end
+
+
+    def xhrRequestRegionsTime(expected_array, st_date='17/07/2014', end_date='11/02/2015', country='Spain')
+      expected = expected_array.to_json
+      xhr :get, :regions_time, :start_date => st_date, :end_date => end_date, :country => country, :format => :json
+      expect(response.body).to eql(expected)
+    end
+  end
+
 end

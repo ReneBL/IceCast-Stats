@@ -2,19 +2,19 @@
 	<h1>RANKINGS</h1>
 	<div id="rankingPais" class="panel panel-primary" ng-controller="CountryRanking">
 		<div class="panel-heading">Ranking de países</div>
-  		<table class="table">
+  		<table class="table table-striped">
     		<tr>
     			<th>#</th>
     			<th>País</th>
     			<th>Oyentes totales</th>
-    			<th>Bytes consumidos</th>
+    			<th>Bytes consumidos (en GB)</th>
     			<th>Tiempo total de escucha</th>
     		</tr>
     		<tr ng-repeat="row in data">
     			<td ng-model="startIndex">{{(startIndex + $index) + 1}}</td>
     			<td>{{row._id}}</td>
     			<td>{{row.listeners}}</td>
-    			<td>{{row.bytes}}</td>
+    			<td>{{row.bytes / 1000000000}}</td>
     			<td>{{row.time}}</td>
     		</tr>
   		</table>

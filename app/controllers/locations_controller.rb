@@ -1,5 +1,5 @@
 class LocationsController < StatsController
-	before_action :check_country_param, only: [:regions]
+	before_action :check_country_param, only: [:regions, :regions_time]
 	skip_before_action :generate_query_params, only: [:get_countries]
 
 	def countries_time
@@ -38,9 +38,23 @@ class LocationsController < StatsController
     do_request qb
   end
 
+  def regions_time
+  	@match["$match"].merge!({"country" => @country})
+  	project = {"$project" => {"region" => 1, "seconds_connected" => 1}}
+    group_by = {"$group" => {"_id" => {"region" => "$region"}}}
+    qb = QueryBuilder.new
+    qb.add_project project
+    qb.add_match @match
+    qb.add_group_by group_by
+    qb.add_group_decorator CountGroupDecorator.new "count", "$seconds_connected"
+    do_request qb
+  end
+
   def get_countries
-  	result = Connection.all.order_by(:country.asc).distinct(:country)
-  	render :json => result
+  	temp = Connection.all.distinct(:country)
+  	# Borramos ĺas cadenas vacías
+  	result = temp.delete_if {|country| country.empty?}
+  	render :json => result.sort
   end
 
 	private
