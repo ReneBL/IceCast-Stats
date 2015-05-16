@@ -284,7 +284,7 @@ RSpec.describe LocationsController, type: :controller do
       xhrRequestRegionsTime expected_array, '03:10:39', '03:10:39'
 
       expected_array = [
-        { :_id => { :region => "New Jersey"}, :count => 8 }
+        { :_id => { :region => "New Jersey"}, :count => 9 }
       ]
       xhrRequestRegionsTime expected_array, '13:25:41', '13:25:41', '17/07/2014', '11/02/2015', 'United States'
 

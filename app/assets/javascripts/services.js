@@ -1,10 +1,24 @@
 var iceServices = angular.module("iceServices", ['ngResource']);
 
-iceServices.factory("CountriesRanking", ['$resource', function($resource) {
+// ----------- RANKING SERVICES ------------- //
+iceServices.constant('START_INDEX', 0).
+    constant('COUNT', 5);
+
+iceServices.factory("CountriesRanking", ['$resource', function($resource, START_INDEX, COUNT) {
   return $resource('ranking/country_ranking/:start_date/:end_date/:start_index/:count/:start_hour/:end_hour:json', 
-	     {start_date : '@start_date', end_date : '@end_date', start_index : '0', count : '10', start_hour: "00:00:00", end_hour : "23:59:59"},
+	     {start_date : '@start_date', end_date : '@end_date', start_index : START_INDEX, count : COUNT, 
+	     	start_hour: "00:00:00", end_hour : "23:59:59"},
 	     {isArray : false})	;
 }]);
+
+iceServices.factory("RegionsRanking", ['$resource', function($resource, START_INDEX, COUNT) {
+  return $resource('ranking/region_ranking/:start_date/:end_date/:start_index/:count/:start_hour/:end_hour:json', 
+	     {start_date : '@start_date', end_date : '@end_date', start_index : START_INDEX, count : COUNT, 
+	     	start_hour: "00:00:00", end_hour : "23:59:59"},
+	     {isArray : false})	;
+}]);
+
+// ----------- END: RANKING SERVICES ------- //
 
 iceServices.factory("Ranges", ['$resource', function($resource) {
   return $resource('connections/ranges/:start_date/:end_date/:unique_visitors/:max/:min/:start_hour/:end_hour:json', 
@@ -38,6 +52,14 @@ iceServices.factory("GroupedTotalSeconds", ['$resource', function($resource) {
 	     {isArray : false});
 }]);
 
+iceServices.factory("Programs", ['$resource', function($resource) {
+  return $resource('connections/programs/:start_date/:end_date/:unique_visitors/:start_hour/:end_hour:json', 
+  			{start_date : '@start_date', end_date : '@end_date', unique_visitors : '@unique_visitors', 
+	     		start_hour: "00:00:00", end_hour : "23:59:59"}, 
+	     	{isArray : false});
+}]);
+
+// ----------- GEOLOCATION SERVICES ------------- //
 iceServices.factory("CountriesConnections", ['$resource', function($resource) {
 	  return $resource('locations/countries/:start_date/:end_date/:unique_visitors/:start_hour/:end_hour:json', 
 	     {start_date : '@start_date', end_date : '@end_date', unique_visitors : '@unique_visitors', start_hour: "00:00:00", end_hour : "23:59:59"},
@@ -63,19 +85,14 @@ iceServices.factory("RegionsTotalTime", ['$resource', function($resource) {
 	     {});
 }]);
 
-iceServices.factory("Sources", ['$resource', function($resource) {
-	  return $resource('sources/:source:json', {source: '@source'}, {});
-}]);
-
 iceServices.factory("Countries", ['$resource', function($resource) {
 	  return $resource('locations/get_countries:json', {}, {isArray : false});
 }]);
 
-iceServices.factory("Programs", ['$resource', function($resource) {
-  return $resource('connections/programs/:start_date/:end_date/:unique_visitors/:start_hour/:end_hour:json', 
-  			{start_date : '@start_date', end_date : '@end_date', unique_visitors : '@unique_visitors', 
-	     		start_hour: "00:00:00", end_hour : "23:59:59"}, 
-	     	{isArray : false});
+// ----------- END: GEOLOCATION SERVICES -------- //
+
+iceServices.factory("Sources", ['$resource', function($resource) {
+	  return $resource('sources/:source:json', {source: '@source'}, {});
 }]);
 
 iceServices.factory("IceCastServer", ['$resource', function($resource) {

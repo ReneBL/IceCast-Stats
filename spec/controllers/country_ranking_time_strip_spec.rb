@@ -16,6 +16,7 @@ RSpec.describe RankingController, type: :controller do
     FactoryGirl.create(:connection_from_China)
     FactoryGirl.create(:connection_from_Germany)
     FactoryGirl.create(:connection_from_United_States)
+    FactoryGirl.create(:connection_from_Unknown)
 
     admin = FactoryGirl.create(:admin)
     log_in(admin)
@@ -90,6 +91,12 @@ RSpec.describe RankingController, type: :controller do
         {:hasMore => false}
   		]
   		xhrRequestCountryRanking expected_array, '03:10:40', '23:59:59', 2, 2, '14/11/2014', '24/03/2015'
+
+      expected_array = [
+        {:_id => "Unknown", :listeners => 1, :bytes => 11356, :time => 6},
+        {:hasMore => false}
+      ]
+      xhrRequestCountryRanking expected_array, '05:27:04', '13:19:13', 0, 2, '25/03/2015', '26/11/2015'
 
       error = {"error" => "Not valid indexes"}
       xhrRequestCountryRanking error, '03:10:40', '23:59:59', -1, 5

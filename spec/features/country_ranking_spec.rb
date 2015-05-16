@@ -184,8 +184,10 @@ feature "country ranking" do
 
     fill_in 'fechaFin', :with => Date.new(2015,3,25)
 
-    click_button 'botonSiguiente'
-    page.should have_content('China')
+    within "#rankingPais" do
+      click_button 'botonSiguiente'
+      page.should have_content('China')
+    end
 
     check 'showHourRange'
     fill_in 'horaInicio', :with => "10:55:41"

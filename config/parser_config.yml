@@ -1,6 +1,6 @@
 ---
 log_format: '%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-agent}i\" (%{ratio}n)'
 log_path: "/Users/Rene/Desktop/TFG/stats-icecast/access.log"
-seek_pos: 185744
-last_line: 83.165.63.87 - - [14/Apr/2015:23:03:27 +0200] "GET /cuacfm.aac HTTP/1.1"
-  200 12207817 "-" "Lavf52.111.0" 759
+seek_pos: 186063
+last_line: 84.232.79.250 - - [14/Apr/2015:23:22:22 +0200] "GET /cuacfm-128k.mp3 HTTP/1.1"
+  200 1924158 "-" "Lavf53.32.100" 117

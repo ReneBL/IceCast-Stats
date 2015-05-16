@@ -94,4 +94,36 @@ FactoryGirl.define do
     region 'Nacional'
     country_code 'DO'
   end
+
+  factory :connection_from_Unknown_Region, class: Connection do
+    ip '178.60.40.160'
+    identd '-'
+    userid '-'
+    datetime '2015-07-17 14:27:34 UTC'
+    request 'GET /cuacfm.mp3 HTTP/1.1'
+    status 200
+    bytes 40
+    referrer '-'
+    user_agent 'iTunes/9.1.1'
+    seconds_connected 14
+    country 'Spain'
+    region ''
+    country_code 'ES'
+  end
+
+  factory :connection_from_Unknown_Country, class: Connection do
+    ip '178.60.40.160'
+    identd '-'
+    userid '-'
+    datetime '2015-07-18 10:39:07 UTC'
+    request 'GET /cuacfm.mp3 HTTP/1.1'
+    status 200
+    bytes 80
+    referrer '-'
+    user_agent 'iTunes/9.1.1'
+    seconds_connected 25
+    country ''
+    region 'BlaBla'
+    country_code 'ES'
+  end
 end

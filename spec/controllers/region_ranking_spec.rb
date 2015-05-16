@@ -20,6 +20,8 @@ RSpec.describe RankingController, type: :controller do
       FactoryGirl.create(:connection_from_New_Jersey)
 
       FactoryGirl.create(:connection_from_Nacional)
+      FactoryGirl.create(:connection_from_Unknown_Region)
+      FactoryGirl.create(:connection_from_Unknown_Country)
       
       admin = FactoryGirl.create(:admin)
       log_in(admin)
@@ -47,13 +49,13 @@ RSpec.describe RankingController, type: :controller do
         {:_id => {:region => "Cataluña", :country => "Spain"}, :listeners => 3, :bytes => 75, :time => 60},
         {:_id => {:region => "Extremadura", :country => "Spain"}, :listeners => 2, :bytes => 200, :time => 30},
         {:_id => {:region => "New Jersey", :country => "United States"}, :listeners => 1, :bytes => 23, :time => 9},
-        {:_id => {:region => "Madrid", :country => "Spain"}, :listeners => 1, :bytes => 23, :time => 8}
+        {:_id => {:region => "Madrid", :country => "Spain"}, :listeners => 1, :bytes => 23, :time => 8},
         {:hasMore => true}
       ]
       xhrRequestRegionRanking expected_array
 
       expected_array = [
-        {:_id => {:region => "Nacional", :country => "Dominican Republic"}, :listeners => 1, :bytes => 16, :time => 23}
+        {:_id => {:region => "Nacional", :country => "Dominican Republic"}, :listeners => 1, :bytes => 16, :time => 23},
         {:hasMore => false}
       ]
       xhrRequestRegionRanking expected_array, '17/07/2014', '25/02/2015', 5, 5
@@ -75,16 +77,24 @@ RSpec.describe RankingController, type: :controller do
 
   		expected_array = [
   			{:_id => {:region => "Cataluña", :country => "Spain"}, :listeners => 3, :bytes => 75, :time => 60},
-  			{:_id => {:region => "Madrid", :country => "Spain"}, :listeners => 1, :bytes => 23, :time => 8},
+  			{:_id => {:region => "New Jersey", :country => "United States"}, :listeners => 1, :bytes => 23, :time => 9},
         {:hasMore => true}
   		]
   		xhrRequestRegionRanking expected_array, '01/02/2015', '25/02/2015', 0, 2
 
   		expected_array = [
+        {:_id => {:region => "Madrid", :country => "Spain"}, :listeners => 1, :bytes => 23, :time => 8},
   			{:_id => {:region => "Nacional", :country => "Dominican Republic"}, :listeners => 1, :bytes => 16, :time => 23},
         {:hasMore => false}
   		]
   		xhrRequestRegionRanking expected_array, '01/02/2015', '25/03/2015', 2, 2
+
+      expected_array = [
+        {:_id => {:region => "BlaBla", :country => "Unknown"}, :listeners => 1, :bytes => 80, :time => 25},
+        {:_id => {:region => "Unknown", :country => "Spain"}, :listeners => 1, :bytes => 40, :time => 14},
+        {:hasMore => false}
+      ]
+      xhrRequestRegionRanking expected_array, '17/07/2015', '18/07/2015', 0, 2
 
   		xhrRequestRegionRanking [], '14/11/2014', '25/03/2015', 6, 5
 
@@ -98,6 +108,12 @@ RSpec.describe RankingController, type: :controller do
 
       error = {"error" => "Not valid indexes"}
       xhrRequestRegionRanking error, '14/11/2014', '25/03/2015', 1, 0
+
+      error = {"error" => "Not valid indexes"}
+      xhrRequestRegionRanking error, '14/11/2014', '25/03/2015', 1, nil
+
+      error = {"error" => "Not valid indexes"}
+      xhrRequestRegionRanking error, '14/11/2014', '25/03/2015', nil, 1
   	end
 
   end

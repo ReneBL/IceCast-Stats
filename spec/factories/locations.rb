@@ -82,5 +82,19 @@ FactoryGirl.define do
     seconds_connected 73
     country 'Italy'
   end
+
+  factory :connection_from_Unknown, class: Connection do
+    ip '84.20.10.5'
+    identd '-'
+    userid '-'
+    datetime '2015-11-26 05:27:04 UTC'
+    request 'GET /cuacfm.mp3 HTTP/1.1'
+    status 200
+    bytes 11356
+    referrer '-'
+    user_agent 'iTunes/9.1.1'
+    seconds_connected 6
+    country ''
+  end
   
 end
