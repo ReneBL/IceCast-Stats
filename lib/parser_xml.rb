@@ -8,24 +8,31 @@ module ParserXML
 		f.close
 	end
 
-	# Recibe un datetime y un source que servirá para obtener el día en el que buscar y el source por el que filtrar
-	def self.get_programs datetime, source
-		day = date_to_wday datetime
-		program_list = []
-		if ((contains_source? source) && (at_date_range? datetime))
-			res = @@doc.xpath("//schedule//day[@weekday=\"#{day}\"]")
-			res.children.select(&:element?).each { |node|
-				program_list << {"start_time" => node.values[0], "end_time" => node.values[1], "program" => node.values[4]}
+	# Recibe un datetime, un source y los segundos escuchados que servirán para obtener la programación del/los días 
+	# que ha escuchado el oyente
+	def self.get_programs datetime, source, seconds
+		program_list = {}
+		unless (!contains_source? source)
+			begin_listening = datetime.to_time - seconds.to_i
+			days = [] 
+			days << (ParserHelper.date_to_wday begin_listening) if (at_date_range? begin_listening)
+			# Puede ser que haya estado conectado más de 1 día, por lo tanto, obtenemos la fecha inicio, su día
+			# y vamos sumandole 1 hasta llegar al día de desconexión
+			begin_listening = begin_listening.to_time.to_date + 1
+			while (begin_listening.to_time.to_date <= datetime.to_time.to_date)
+				# Si está fuera de horario de programación, no lo contamos
+				days << (ParserHelper.date_to_wday begin_listening) if (at_date_range? begin_listening)
+				begin_listening = begin_listening.to_time.to_date + 1
+			end
+			days.each { |day|
+				program_list[day] = []
+				res = @@doc.xpath("//schedule//day[@weekday=\"#{day}\"]")
+				res.children.select(&:element?).each { |node|
+					program_list[day] << {"start_time" => node.values[0], "end_time" => node.values[1], "program" => node.values[4]}
+				}
 			}
 		end
 		program_list
-	end
-
-	def self.date_to_wday datetime
-		days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-		# Tenemos que hacer to_time.to_date para tener en cuenta el offset de las zonas horarias
-		day_int = datetime.to_time.to_date.cwday
-		days[day_int-1]
 	end
 
 	def self.contains_source? source
@@ -35,6 +42,18 @@ module ParserXML
 	def self.at_date_range? date
 		from = DateTime.strptime(@@doc.xpath("//schedule/@valid_from").first.content, '%Y-%m-%d')
 		to = DateTime.strptime(@@doc.xpath("//schedule/@valid_until").first.content, '%Y-%m-%d')
-		((date.to_date >= from.to_date) && (date.to_date <= to.to_date))
+		((date.to_time.to_date >= from.to_time.to_date) && (date.to_time.to_date <= to.to_time.to_date))
+	end
+
+	def self.reset_start datetime
+		from = DateTime.strptime(@@doc.xpath("//schedule/@valid_from").first.content, '%Y-%m-%d')
+		datetime = from.to_time.to_date
+		datetime
+	end
+
+	def self.reset_end datetime
+		to = DateTime.strptime(@@doc.xpath("//schedule/@valid_until").first.content, '%Y-%m-%d')
+		datetime = to.to_time.to_date + 1
+		datetime
 	end
 end

@@ -1,31 +1,56 @@
 class RankingController < StatsController
-	before_action :initialize_common_location_stages, only: [:country_ranking, :region_ranking, :city_ranking]
-	before_action :check_search_indexes
+	before_action :initialize_common_project_stage
+	before_action :check_search_indexes, except: [:top10_links_ranking]
 
 	def country_ranking
 		project = @common_project
 		project["$project"].merge!(LocationsHelper.project_countries)
 		group_by = {"$group" => {"_id" => "$country"}}
-		common_ranking_process project, group_by
+		qb = common_ranking_process project, group_by
+		render :json => (pagination qb)
 	end
 
 	def region_ranking
 		project = @common_project
 		project["$project"].merge!(LocationsHelper.project_regions).merge!(LocationsHelper.project_countries)
 		group_by = {"$group" => {"_id" => {"region" => "$region", "country" => "$country"}}}
-		common_ranking_process project, group_by
+		qb = common_ranking_process project, group_by
+		render :json => (pagination qb)
 	end
 
 	def city_ranking
 		project = @common_project
 		project["$project"].merge!(LocationsHelper.project_regions).merge!(LocationsHelper.project_countries).merge!(LocationsHelper.project_cities)
 		group_by = {"$group" => {"_id" => {"city" => "$city", "region" => "$region", "country" => "$country"}}}
-		common_ranking_process project, group_by
+		qb = common_ranking_process project, group_by
+		render :json => (pagination qb)
+	end
+
+	def user_agent_ranking
+		project = @common_project
+		project["$project"].merge!({"user_agent" => 1})
+		group_by = {"$group" => {"_id" => "$user_agent"}}
+		@match["$match"].merge!({"user_agent" => {"$ne" => "-"}})
+		qb = common_ranking_process project, group_by
+		render :json => (pagination qb)
+	end
+
+	def top_links_ranking
+		project = @common_project
+		project["$project"].merge!({"referrer" => 1})
+		group_by = {"$group" => {"_id" => "$referrer"}}
+		@match["$match"].merge!({"referrer" => {"$ne" => "-"}})
+		qb = common_ranking_process project, group_by
+		qb.add_pagination START_INDEX, LINKS_RANKING_COUNT
+    	filters = qb.construct
+    	result = Connection.collection.aggregate(filters)
+    	result.delete_if {|link| link["_id"].eql? "-"}
+    	render :json => result
 	end
 
 	private
 
-	def initialize_common_location_stages
+	def initialize_common_project_stage
 		@common_project = {"$project" => {"datetime" => 1, "seconds_connected" => 1, "bytes" => 1}}
 	end
 
@@ -66,11 +91,15 @@ class RankingController < StatsController
     	sort.add "_id", SortDecorator::ASC
     	# Lo añadimos al Builder
     	qb.add_sort sort
-    	qb.add_pagination @start_index, (@count + 1) if (!@start_index.nil? && !@count.nil?)
+    	qb
+	end
+
+	def pagination qb
+		qb.add_pagination @start_index, (@count + 1) if (!@start_index.nil? && !@count.nil?)
     	filters = qb.construct
     	result = Connection.collection.aggregate(filters)
     	adapt_paginate! result if (!@start_index.nil? && !@count.nil? && result.count > 0)
-    	render :json => result
+    	result
 	end
 
 	def adapt_paginate! result

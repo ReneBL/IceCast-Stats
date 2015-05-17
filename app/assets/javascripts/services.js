@@ -4,10 +4,16 @@ var iceServices = angular.module("iceServices", ['ngResource']);
 iceServices.constant('START_INDEX', 0).
     constant('COUNT', 5);
 
-iceServices.factory("GenericRanking", ['$resource', function($resource, START_INDEX, COUNT, idUrl) {
+iceServices.factory("GenericPaginatedRanking", ['$resource', function($resource, START_INDEX, COUNT) {
   return $resource('ranking/:idUrl/:start_date/:end_date/:start_index/:count/:start_hour/:end_hour:json', 
 	     {start_date : '@start_date', end_date : '@end_date', start_index : START_INDEX, count : COUNT, 
 	     	start_hour: "00:00:00", end_hour : "23:59:59", idUrl : "@idUrl"},
+	     {isArray : false})	;
+}]);
+
+iceServices.factory("LinksRanking", ['$resource', function($resource) {
+  return $resource('ranking/top_links_ranking/:start_date/:end_date/:start_hour/:end_hour:json', 
+	     {start_date : '@start_date', end_date : '@end_date', start_hour: "00:00:00", end_hour : "23:59:59"},
 	     {isArray : false})	;
 }]);
 

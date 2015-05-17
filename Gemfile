@@ -35,6 +35,7 @@ gem 'angular-rails-templates'
 gem 'bcrypt', '~> 3.1.7'
 gem 'jsonschema'
 gem 'whenever', :require => false
+gem 'license_finder', :group => :development
 
 # Use Unicorn as the app server
 # gem 'unicorn'

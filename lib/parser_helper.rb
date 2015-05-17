@@ -30,4 +30,15 @@ module ParserHelper
   		temp
   	end
 
+    def self.date_to_wday datetime
+    	days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+    	# Tenemos que hacer to_time.to_date para tener en cuenta el offset de las zonas horarias
+    	day_int = datetime.to_time.to_date.cwday
+    	days[day_int-1]
+  	end
+
+  	def self.format_if_end_day hour
+  		(hour == "00:00:00") ? "24:00:00" : hour
+  	end
+
 end

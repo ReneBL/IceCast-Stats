@@ -27,6 +27,8 @@ Rails.application.routes.draw do
   get 'ranking/country_ranking/:start_date/:end_date(/:start_index/:count)(/:start_hour/:end_hour)' => 'ranking#country_ranking'
   get 'ranking/region_ranking/:start_date/:end_date(/:start_index/:count)(/:start_hour/:end_hour)' => 'ranking#region_ranking'
   get 'ranking/city_ranking/:start_date/:end_date(/:start_index/:count)(/:start_hour/:end_hour)' => 'ranking#city_ranking'
+  get 'ranking/user_agent_ranking/:start_date/:end_date(/:start_index/:count)(/:start_hour/:end_hour)' => 'ranking#user_agent_ranking'
+  get 'ranking/top_links_ranking/:start_date/:end_date(/:start_hour/:end_hour)' => 'ranking#top_links_ranking'
 
   get 'sources' => 'sources#get_sources'
   post 'sources/:source' => 'sources#set_source', :constraints => {:source => /([a-zA-Z0-9].*)+\.[a-zA-Z0-9]+|Todos/}

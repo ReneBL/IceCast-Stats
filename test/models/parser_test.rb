@@ -14,7 +14,9 @@ class ParserTest < ActiveSupport::TestCase
   @@not_scheduled_source = "78.46.19.144 - - [20/Apr/2015:23:10:00 UTC] \"GET /filispin.mp3 HTTP/1.1\" 200 115396 \"-\" \"iTunes/9.1.1\" 600\n"
   @@tuesday_listening_Spoiler = "78.46.19.144 - - [21/Apr/2015:20:40:00 UTC] \"GET /cuacfm.mp3 HTTP/1.1\" 200 115396 \"-\" \"iTunes/9.1.1\" 2400\n"
   @@friday_listening_Informativos_Radiocassette_Sin_Etiq = "78.46.19.144 - - [15/May/2015:07:40:00 UTC] \"GET /cuacfm.aac HTTP/1.1\" 200 115396 \"-\" \"iTunes/9.1.1\" 9000\n"
-  
+  @@listening_before = "78.46.19.144 - - [31/Mar/2015:23:10:00 UTC] \"GET /cuacfm.mp3 HTTP/1.1\" 200 11111 \"-\" \"iTunes/9.1.1\" 5400\n"
+  @@listening_after = "78.46.19.144 - - [01/Jun/2015:22:05:00 UTC] \"GET /cuacfm.mp3 HTTP/1.1\" 200 1000 \"-\" \"iTunes/9.1.1\" 4200\n"
+
   @@bad_format_connection = "78.46.19.144 - - [18/Jan/2015:06:27:04 +0100] \"GET /cuacfm-128k.mp3 HTTP/1.1\" 200 115396\n"
   # Inicializa el entorno
   def setup
@@ -156,14 +158,18 @@ class ParserTest < ActiveSupport::TestCase
   end
 
   test "parse programs info" do
-    writeToFile @@connection_out_of_schedule, @@monday_listening_FolkInTrio_ElRinconcito, @@not_scheduled_source, @@tuesday_listening_Spoiler, @@friday_listening_Informativos_Radiocassette_Sin_Etiq
+    writeToFile @@connection_out_of_schedule, @@monday_listening_FolkInTrio_ElRinconcito, @@not_scheduled_source, 
+      @@tuesday_listening_Spoiler, @@friday_listening_Informativos_Radiocassette_Sin_Etiq, @@listening_before, 
+      @@listening_after
     Parser.parse 'logTest'
     connections = [build(:connection_out_of_schedule), build(:monday_listening_FolkInTrio_ElRinconcito), 
-      build(:not_scheduled_source), build(:tuesday_listening_Spoiler), build(:friday_listening_Informativos_Radiocassette_Sin_Etiq)]
-
+      build(:not_scheduled_source), build(:tuesday_listening_Spoiler), 
+      build(:friday_listening_Informativos_Radiocassette_Sin_Etiq), build(:listening_from_before_schedule),
+      build(:listening_until_after)
+    ]
     collection = Database.getConnectionCollection
     result = collection.find.to_a
-    assert_equal result.count, 5
+    assert_equal result.count, 7
     assert comparator result, connections
   end
 

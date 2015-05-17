@@ -40,11 +40,11 @@ module Parser
           end
         end
       else
-        Parser.write_log "Parser couldn't find file: #{path}"
+        Rails.logger.error "Parser couldn't find file: #{path}"
         raise ParserException, "File not found"
       end 
     rescue ApacheLogRegex::ParseError => e
-      Parser.write_log "Parser format exception #{e.message}"
+      Rails.logger.error "Parser format exception #{e.message}"
       raise ParserException, "Formato incorrecto"
     ensure
       unless f == nil
@@ -66,7 +66,7 @@ module Parser
         date = ParserHelper.string_to_datetime line["%t"]
         # Obtenemos los programas para esta fecha y source
         #debugger
-        programs = ParserXML.get_programs date, source
+        programs = ParserXML.get_programs date, source, seconds
         # Una vez los tenemos, los procesamos para saber qué programas ha escuchado el oyente en base a la fecha de fin de conexion
         # y los segundos que ha escuchado, lo que nos permitira extraer la hora de inicio
         listened = (programs.empty?) ? [] : (programs_listened programs, date, seconds)
@@ -79,10 +79,13 @@ module Parser
       end
     rescue Mongoid::Errors::Validations => e
       Parser.write_log e
-      raise ParserException, "Datos inválidos"
+      raise ParserException, "Datos inválidos: [line: #{line}]"
     rescue NoMethodError => e
       Parser.write_log e
-      raise ParserException, "Linea nula"
+      raise ParserException, "Linea nula: [connection: #{connection}, ip: #{line["%h"]}, identd: #{line["%l"]}, 
+        userid: #{line["%u"]}, mongo_date: #{mongo_date}, status: , request: #{request}, source: #{source}, 
+        date: #{date}, programs: #{programs}, listened: #{listened}, country: #{cnt}, 
+        region: #{reg}, city: #{ct}, ct_code: #{ct_code}]"
     rescue ArgumentError => e
       Parser.write_log e
       raise ParserException, "Formato de fecha incorrecto"
@@ -113,9 +116,6 @@ module Parser
   
   def Parser.write_log exception
     Rails.logger.warn exception.class.to_s
-    Rails.logger.warn exception.to_s
-    Rails.logger.warn exception.backtrace.join("\n")
-    Rails.logger.warn exception.message
   end
   
   def Parser.get_geo_info ip
@@ -124,65 +124,85 @@ module Parser
       solvedIp = Geocoder.search ip
       Rails.cache.write(ip, solvedIp, expires_in: 12.hours) if (!solvedIp.empty?)
     end
-    # info = Rails.cache.fetch ip do
-    #   solvedIp = Geocoder.search ip
-    #   solvedIp
-    # end
-    if (geoinfo == nil)
+    if (geoinfo == nil || geoinfo.empty?)
       Parser.write_log "Problema en la resolución de localización para la ip ~> #{ip}"
-      ["", "", ""]
+      ["", "", "", ""]
     else
       data = geoinfo[0].data
       [data["country_name"], data["region_name"], data["city"], data["country_code"]]
     end
   end
 
-  def Parser.programs_listened programs, end_of_connection, seconds
+  def Parser.programs_listened schedule, end_of_connection, seconds
   	result = []
   	#debugger
-  	start_of_connection = end_of_connection.to_time - seconds.to_i.seconds
+    start_of_connection = (!ParserXML.at_date_range? (end_of_connection.to_time - seconds.to_i.seconds)) ? 
+        (ParserXML.reset_start start_of_connection) : (end_of_connection.to_time - seconds.to_i.seconds)
+    end_of_connection = (!ParserXML.at_date_range? end_of_connection) ? (ParserXML.reset_end end_of_connection) : 
+        end_of_connection
+    while (start_of_connection.to_time < end_of_connection.to_time) do
+      unless (!ParserXML.at_date_range? start_of_connection)
+        begin
+          day_schedule = schedule.fetch(ParserHelper.date_to_wday start_of_connection)
+          program = day_schedule.find { |program|
+            end_day = ParserHelper.format_if_end_day program["end_time"]
+            (program["start_time"] <= start_of_connection.to_time.strftime("%H:%M:%S")) and 
+            (start_of_connection.to_time.strftime("%H:%M:%S") < end_day)
+          }
+          end_broadcast_time = ParserHelper.str_to_date_reference start_of_connection, program["end_time"]
+          total = (end_broadcast_time - start_of_connection.to_time).abs.round
+          seconds_listened = ((start_of_connection.to_time + total) > end_of_connection.to_time) ? 
+            (end_of_connection.to_time - start_of_connection.to_time).abs.round : total
+          result << (ParserHelper.create_program_element program["program"], seconds_listened)
+          start_of_connection = start_of_connection.to_time + seconds_listened
+        rescue KeyError => e
+          Parser.write_log e
+        end
+      end
+    end
   	# CASO BASE: Buscamos si existe algun programa que cubra toda la conexion
-  	program = programs.find { |program|
-  		#debugger
-  		(program["start_time"] <= start_of_connection.to_time.strftime("%H:%M:%S")) and 
-  		(start_of_connection.to_time.strftime("%H:%M:%S") <= program["end_time"]) and
-  		(program["end_time"] >= end_of_connection.to_time.strftime("%H:%M:%S")) and 
-  		(end_of_connection.to_time.strftime("%H:%M:%S") >= program["start_time"])
-  	}
-  	if (program != nil)
-  		# Si entramos aqui, lo hemos encontrado de primeras, lo insertamos en el resultado
-  		result << (ParserHelper.create_program_element program["program"], seconds.to_i)
-  	else
-  		# Si no, quiere decir que el oyente ha escuchado mas de un programa, por lo tanto comenzamos a procesar
-  		# a partir del indice del array que contenga la información correspondiente a cuando el oyente comenzó a escuchar
-  		#debugger
-  		start_index = programs.find_index { |program| 
-  			(program["start_time"] <= start_of_connection.to_time.strftime("%H:%M:%S")) and
-  			(program["end_time"] >= start_of_connection.to_time.strftime("%H:%M:%S"))
-  		}
-  		# Antes de comenzar con el procesado, tenemos que añadir al resultado el programa que estaba sonando cuando se conecto
-  		# más los segundos, que será la resta de la hora de finalización del programa menos la hora de inicio de la conexión
-  		# IMPORTANTE => todas las restas deben hacerse con valor absoluto (.abs), ya que si queremos restar 00:00:00 - 23:50:01, por ejemplo, daría
-  		# un numero negativo
-  		program = programs.at(start_index)["program"]
-  		end_broadcast_time = ParserHelper.str_to_date_reference start_of_connection, programs.at(start_index)["end_time"]
-  		result << (ParserHelper.create_program_element program, (end_broadcast_time - start_of_connection.to_time).abs.round)
-  		#Comienza el procesado desde posicion actual has el tamaño del array
-  		(start_index + 1).upto(programs.size) { |i|
-  			program_i_program = programs.at(i)["program"]
-  			program_i_start_time = ParserHelper.str_to_date_reference end_of_connection, programs.at(i)["start_time"]
-  			program_i_end_time = ParserHelper.str_to_date_reference end_of_connection, programs.at(i)["end_time"]
-  			if (end_of_connection.to_time <= program_i_end_time)
-  				# Si la hora de fin de conexión es menor que la de fin de programa, hemos terminado el procesado, salimos del bucle
-  				#debugger
-  				result << (ParserHelper.create_program_element program_i_program, (end_of_connection.to_time - program_i_start_time).abs.round)
-  				break
-  			else
-  				# Si no, añadimos los datos al result y seguimos
-  				result << (ParserHelper.create_program_element program_i_program, (program_i_end_time - program_i_start_time).abs.round)
-  			end
-  		}
-  	end
+  	# program = programs.find { |program|
+  	# 	#debugger
+  	# 	(program["start_time"] <= start_of_connection.to_time.strftime("%H:%M:%S")) and 
+  	# 	(start_of_connection.to_time.strftime("%H:%M:%S") <= program["end_time"]) and
+  	# 	(program["end_time"] >= end_of_connection.to_time.strftime("%H:%M:%S")) and 
+  	# 	(end_of_connection.to_time.strftime("%H:%M:%S") >= program["start_time"])
+  	# }
+  	# if (program != nil)
+  	# 	# Si entramos aqui, lo hemos encontrado de primeras, lo insertamos en el resultado
+  	# 	result << (ParserHelper.create_program_element program["program"], seconds.to_i)
+  	# else
+  	# 	# Si no, quiere decir que el oyente ha escuchado mas de un programa, por lo tanto comenzamos a procesar
+  	# 	# a partir del indice del array que contenga la información correspondiente a cuando el oyente comenzó a escuchar
+  	# 	#debugger
+  	# 	start_index = programs.find_index { |program| 
+  	# 		(program["start_time"] <= start_of_connection.to_time.strftime("%H:%M:%S")) and
+  	# 		(program["end_time"] >= start_of_connection.to_time.strftime("%H:%M:%S"))
+  	# 	}
+  	# 	start_index = start_index ||= -1
+  	# 	# Antes de comenzar con el procesado, tenemos que añadir al resultado el programa que estaba sonando cuando se conecto
+  	# 	# más los segundos, que será la resta de la hora de finalización del programa menos la hora de inicio de la conexión
+  	# 	# IMPORTANTE => todas las restas deben hacerse con valor absoluto (.abs), ya que si queremos restar 00:00:00 - 23:50:01, por ejemplo, daría
+  	# 	# un numero negativo
+  	# 	program = programs.at(start_index)["program"]
+  	# 	end_broadcast_time = ParserHelper.str_to_date_reference start_of_connection, programs.at(start_index)["end_time"]
+  	# 	result << (ParserHelper.create_program_element program, (end_broadcast_time - start_of_connection.to_time).abs.round)
+  	# 	#Comienza el procesado desde posicion actual hasta el tamaño del array
+  	# 	(start_index + 1).upto(programs.size - 1) { |i|
+  	# 		program_i_program = programs.at(i)["program"]
+  	# 		program_i_start_time = ParserHelper.str_to_date_reference end_of_connection, programs.at(i)["start_time"]
+  	# 		program_i_end_time = ParserHelper.str_to_date_reference end_of_connection, programs.at(i)["end_time"]
+  	# 		if (end_of_connection.to_time <= program_i_end_time)
+  	# 			# Si la hora de fin de conexión es menor que la de fin de programa, hemos terminado el procesado, salimos del bucle
+  	# 			#debugger
+  	# 			result << (ParserHelper.create_program_element program_i_program, (end_of_connection.to_time - program_i_start_time).abs.round)
+  	# 			break
+  	# 		else
+  	# 			# Si no, añadimos los datos al result y seguimos
+  	# 			result << (ParserHelper.create_program_element program_i_program, (program_i_end_time - program_i_start_time).abs.round)
+  	# 		end
+  	# 	}
+  	# end
   	result
   end
 
