@@ -23,7 +23,7 @@ class StatsController < ApplicationController
     unless ((st == nil) && (fn == nil))  
       error_format = parse_date_time st, fn, "%H:%M:%S", "One hour is invalid. Correct format: HH:MM:SS"
       if (!error_format) 
-        error_time = start_minor_end? st, fn, "Start time is lesser than end time"
+        error_time = start_minor_end? st, fn, "Start time is greater than end time"
         if (error_time)
           return
         end

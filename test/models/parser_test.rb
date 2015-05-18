@@ -190,12 +190,12 @@ class ParserTest < ActiveSupport::TestCase
     line = {"%h" =>  "78.46.19.144", "%l" => "-" , "%u" => "-", "%t" => "[18/Jan/2015:06:27:04 +0100]", "%>s" => 800,
       "%b" => -1, "%r" => "", "%{Referer}i" => "", "%{User-agent}i" => "", "(%{ratio}n)" => 100 }
     err = assert_raises(ParserException) {Parser.persist_line line}
-    assert_equal "Datos inválidos", err.message
+    assert_equal "Datos inválidos: [line: {\"%h\"=>\"78.46.19.144\", \"%l\"=>\"-\", \"%u\"=>\"-\", \"%t\"=>\"[18/Jan/2015:06:27:04 +0100]\", \"%>s\"=>800, \"%b\"=>-1, \"%r\"=>\"\", \"%{Referer}i\"=>\"\", \"%{User-agent}i\"=>\"\", \"(%{ratio}n)\"=>100}]", err.message
   end
 
   test "parse nil line" do
     err = assert_raises(ParserException) {Parser.persist_line nil}
-    assert_equal "Linea nula", err.message
+    assert_equal "Linea nula: []", err.message
   end
   
   test "parse non existent file" do

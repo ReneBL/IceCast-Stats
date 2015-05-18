@@ -357,4 +357,97 @@ RSpec.describe LocationsController, type: :controller do
     end
   end
 
+  describe "when access to location's connections per cities of regions" do
+
+    before(:each) do
+      3.times do
+        FactoryGirl.create(:connection_from_Coruña)
+      end
+      FactoryGirl.create(:connection_from_Laracha)
+      FactoryGirl.create(:connection_from_Barcelona)
+
+      2.times do
+        FactoryGirl.create(:connection_from_Valencia)
+      end
+
+      3.times do
+        FactoryGirl.create(:connection_from_Bilbao)
+      end
+
+      FactoryGirl.create(:connection_from_Unknown_all)
+      FactoryGirl.create(:connection_from_Unknown_city_region)
+      FactoryGirl.create(:connection_from_Unknown_country_region)
+      
+      admin = FactoryGirl.create(:admin)
+      log_in(admin)
+    end
+
+    it "should return total amount of connections per city" do
+      # Testeamos un caso sencillo
+      expected_array = [
+        { :_id => { :city => "A Coruña"}, :count => 3 },
+        { :_id => { :city => "Laracha"},  :count => 1 }
+      ]
+      xhrRequestCities expected_array, 'Galicia'
+
+      expected_array = [
+        { :_id => { :city => "A Coruña"}, :count => 1 },
+        { :_id => { :city => "Laracha"},  :count => 1 }
+      ]
+      xhrRequestCities expected_array, 'Galicia', 'Spain', '14/11/2014', '11/02/2015', 'true'
+
+      expected_array = [
+        { :_id => { :city => "Laracha"},  :count => 1 }
+      ]
+      xhrRequestCities expected_array, 'Galicia', 'Spain', '15/11/2014', '16/11/2014'
+
+      xhrRequestCities [], 'Cataluña', 'Spain', '02/12/2014', '11/02/2015'
+
+      expected_array = [
+        { :_id => { :city => "Barcelona"}, :count => 1 }
+      ]
+      xhrRequestCities expected_array, 'Cataluña', 'Spain', '01/12/2014', '11/02/2015'
+
+      expected_array = [
+        { :_id => { :city => "Bilbao"}, :count => 3 }
+      ]
+      xhrRequestCities expected_array, 'País Vasco', 'Spain', '11/02/2015', '28/11/2015'
+
+      expected_array = [
+        { :_id => { :city => "Bilbao"}, :count => 1 }
+      ]
+      xhrRequestCities expected_array, 'País Vasco', 'Spain', '11/02/2015', '28/11/2015', 'true'
+
+      xhrRequestCities [], 'Andalucía', 'Spain', '02/12/2014', '11/02/2015'
+
+      xhrRequestCities [], 'Galicia', 'NonValidCountry', '02/12/2014', '11/02/2015'
+
+      expected = {"error" => "Invalid region"}
+      xhrRequestCities expected, ''
+
+      expected = {"error" => "Invalid region"}
+      xhrRequestCities expected, ' '
+
+      # Añadimos fechas incorrectas
+      expected_array = { "error" => "One date is invalid. Correct format: d/m/Y"  }
+      xhrRequestCities expected_array, 'Galicia', 'Spain', ''
+
+      # Añadimos fechas incorrectas
+      expected_array = { "error" => "One date is invalid. Correct format: d/m/Y"  }
+      xhrRequestCities expected_array, 'Galicia', 'Spain', '', '15/11/2014', '31/782015'
+
+      expected_array = { "error" => "Invalid country"  }
+      xhrRequestCities expected_array, 'Galicia', '', '17/07/2014', '11/02/2015', 'false'
+
+      expected_array = { "error" => "Invalid country"  }
+      xhrRequestCities expected_array, 'Galicia', ' ', '17/07/2014', '11/02/2015', 'true'
+    end
+
+    def xhrRequestCities(expected_array, region, country='Spain', st_date='14/11/2014', end_date='11/02/2015', unique='')
+      expected = expected_array.to_json
+      xhr :get, :cities, :start_date => st_date, :end_date => end_date, :unique_visitors => unique,
+        :country => country, :region => region, :format => :json
+      expect(response.body).to eql(expected)
+    end
+  end
 end

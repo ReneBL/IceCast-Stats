@@ -59,7 +59,7 @@ RSpec.describe ConnectionsController, type: :controller do
       ]
       xhrRequestTotalTime total_time_array, '27/03/2014', '01/01/2015', 'year', '06:30:05', '12:47:03'
 
-      total_time_array = { "error" =>  "Start time is lesser than end time" }
+      total_time_array = { "error" =>  "Start time is greater than end time" }
       xhrRequestTotalTime total_time_array, '01/01/2013', '01/01/2014', 'year', '08:45:33', '05:27:04'
 
       total_time_array = { "error" =>  "One hour is invalid. Correct format: HH:MM:SS" }
@@ -98,23 +98,22 @@ RSpec.describe ConnectionsController, type: :controller do
 
       # Filtro de 2 meses, usuarios unicos y franja en rango
       total_time_array = [
-        { :_id => { :year => 2013, :month => 3}, :count => 10},
-        { :_id => { :year => 2013, :month => 4}, :count => 50},
-        { :_id => { :year => 2013, :month => 10}, :count => 60}
+        { :_id => { :year => 2014, :month => 4}, :count => 50},
+        { :_id => { :year => 2014, :month => 10}, :count => 60}
       ]
       xhrRequestTotalTime total_time_array, '28/03/2014', '01/01/2015', 'month', '06:27:04', '12:47:02'
 
       # Filtro que coja todos los meses, pero la franja este fuera
       xhrRequestTotalTime [], '01/01/2014', '01/01/2015', 'month', '00:00:00', '04:50:03'
 
-      total_time_array = { "error" =>  "Start time is lesser than end time" }
+      total_time_array = { "error" =>  "Start time is greater than end time" }
       xhrRequestTotalTime total_time_array, '01/01/2014', '01/01/2015', 'month', '08:45:33', '05:27:04'
 
       total_time_array = { "error" =>  "One hour is invalid. Correct format: HH:MM:SS" }
       xhrRequestTotalTime total_time_array, '01/01/2014', '01/01/2015', 'month', '088:5:33', '05:27004'
 
       # Filtro que coja un mes, pero la franja este fuera
-      xhrRequestTotalTime [], '27/03/2014', '14/12/2014', 'month', 'false', '07:19:01', '08:45:31'
+      xhrRequestTotalTime [], '27/03/2014', '14/12/2014', 'month', '07:19:01', '08:45:31'
 
     end
 
@@ -123,9 +122,9 @@ RSpec.describe ConnectionsController, type: :controller do
       # Filtro que coja todas las conexiones
       total_time_array = [
         { :_id => { :year => 2014, :month => 3, :day => 27}, :count => 10},
-        { :_id => { :year => 2014, :month => 4, :day => 05}, :count => 20},
+        { :_id => { :year => 2014, :month => 4, :day => 5}, :count => 20},
         { :_id => { :year => 2014, :month => 4, :day => 15}, :count => 30},
-        { :_id => { :year => 2014, :month => 10, :day => 09}, :count => 60}
+        { :_id => { :year => 2014, :month => 10, :day => 9}, :count => 60}
       ]
       xhrRequestTotalTime total_time_array, 
           '27/03/2014', '01/01/2015', 'day', '06:27:04', '11:17:04'
@@ -144,7 +143,7 @@ RSpec.describe ConnectionsController, type: :controller do
       xhrRequestTotalTime total_time_array, 
           '27/03/2014', '01/01/2015', 'day', '04:50:04', '06:27:04'
 
-      total_time_array = { "error" =>  "Start time is lesser than end time" }
+      total_time_array = { "error" =>  "Start time is greater than end time" }
       xhrRequestTotalTime total_time_array, '14/11/2013', '14/11/2013', 'day', '10:58:00', '05:27:03'
 
       total_time_array = { "error" =>  "One hour is invalid. Correct format: HH:MM:SS" }

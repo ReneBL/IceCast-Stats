@@ -17,7 +17,7 @@ RSpec.describe LocationsController, type: :controller do
       log_in(admin)
     end
 
-  	it "should return connections grouped by contry" do
+  	it "should return connections grouped by country" do
     	# Descartamos las conexiones de EEUU con las horas
     	expected_array = [
     	  { :_id => { :country => "France" }, :count => 1 },
@@ -50,7 +50,7 @@ RSpec.describe LocationsController, type: :controller do
     	xhrRequestLocations expected_array, '05:27:04', '142:344:23'
 
     	# Añadimos horas inconsistentes
-    	expected_array = { "error" => "Start time is lesser than end time"  }
+    	expected_array = { "error" => "Start time is greater than end time"  }
     	xhrRequestLocations expected_array, '12:37:09', '02:00:00'
   	end
 
@@ -105,7 +105,7 @@ RSpec.describe LocationsController, type: :controller do
     	xhrRequestLocationsTime expected_array, '05:27:04', '142:344:23'
 
     	# Añadimos horas inconsistentes
-    	expected_array = { "error" => "Start time is lesser than end time"  }
+    	expected_array = { "error" => "Start time is greater than end time"  }
     	xhrRequestLocationsTime expected_array, '12:37:09', '02:00:00'
   	end
   	def xhrRequestLocationsTime(expected_array, from='00:00:00', to='23:59:59', st_date='14/11/2014', end_date='01/02/2015')
@@ -212,7 +212,7 @@ RSpec.describe LocationsController, type: :controller do
       xhrRequestRegions expected_array, '05:27:04', '142:344:23'
 
       # Añadimos horas inconsistentes
-      expected_array = { "error" => "Start time is lesser than end time" }
+      expected_array = { "error" => "Start time is greater than end time" }
       xhrRequestRegions expected_array, '12:37:09', '02:00:00'
 
       expected_array = { "error" => "Invalid country" }
@@ -301,7 +301,7 @@ RSpec.describe LocationsController, type: :controller do
       xhrRequestRegionsTime expected_array, '05:27:04', '142:344:23'
 
       # Añadimos horas inconsistentes
-      expected_array = { "error" => "Start time is lesser than end time" }
+      expected_array = { "error" => "Start time is greater than end time" }
       xhrRequestRegionsTime expected_array, '12:37:09', '02:00:00'
 
       expected_array = { "error" => "Invalid country" }
@@ -315,6 +315,72 @@ RSpec.describe LocationsController, type: :controller do
 
       expected = expected_array.to_json
       xhr :get, :regions_time, :start_date => st_date, :end_date => end_date, :start_hour => from, :end_hour => to, :country => country, :format => :json
+      expect(response.body).to eql(expected)
+    end
+  end
+
+  describe "when access to location's cities_time" do
+
+    before(:each) do
+      3.times do
+        FactoryGirl.create(:connection_from_Coruña)
+      end
+      FactoryGirl.create(:connection_from_Laracha)
+      FactoryGirl.create(:connection_from_Barcelona)
+
+      2.times do
+        FactoryGirl.create(:connection_from_Valencia)
+      end
+
+      3.times do
+        FactoryGirl.create(:connection_from_Bilbao)
+      end
+
+      FactoryGirl.create(:connection_from_Unknown_all)
+      FactoryGirl.create(:connection_from_Unknown_city_region)
+      FactoryGirl.create(:connection_from_Unknown_country_region)
+      
+      admin = FactoryGirl.create(:admin)
+      log_in(admin)
+    end
+
+    it "should return total amount of listening time per city" do
+      expected_array = [
+        { :_id => { :city => "A Coruña"}, :count => 60 },
+        { :_id => { :city => "Laracha"},  :count => 10 }
+      ]
+      xhrRequestCitiesTime expected_array, 'Galicia', 'Spain'
+
+      expected_array = [
+        { :_id => { :city => "Laracha"}, :count => 10 }
+      ]
+      xhrRequestCitiesTime expected_array, 'Galicia', 'Spain', '00:00:00', '04:57:09'
+
+      xhrRequestCitiesTime [], 'Comunidad Valenciana', 'Spain', '00:00:00', '00:00:00'
+
+      xhrRequestCitiesTime [], 'BlaBla'
+
+      expected_array = {"error" => "Invalid region"}
+      xhrRequestCitiesTime expected_array, ''
+
+      xhrRequestCitiesTime [], 'Galicia', 'BlaBla'
+
+      expected_array = { "error" => "Start time is greater than end time"  }
+      xhrRequestCitiesTime expected_array, 'Cataluña', 'Spain', '13:34:10', '10:20:19'
+
+      expected_array = { "error" => "One date is invalid. Correct format: d/m/Y"  }
+      xhrRequestCitiesTime expected_array, 'Cataluña', 'Spain', '10:34:10', '12:20:19', '/02/2010'
+
+      expected_array = { "error" => "One date is invalid. Correct format: d/m/Y"  }
+      xhrRequestCitiesTime expected_array, 'Cataluña', 'Spain', '10:34:10', '12:20:19', '10/02/2010', '34/29//10'
+    end
+
+    def xhrRequestCitiesTime(expected_array, region, country='Spain', st_hour="00:00:00", end_hour="23:59:59", 
+      st_date='14/11/2014', end_date='11/02/2015')
+      
+      expected = expected_array.to_json
+      xhr :get, :cities_time, :start_date => st_date, :end_date => end_date, :start_hour => st_hour, 
+        :end_hour => end_hour, :country => country, :region => region, :format => :json
       expect(response.body).to eql(expected)
     end
   end

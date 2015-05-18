@@ -57,3 +57,5 @@ Bowerfile~
 Gemfile~
 
 *.css.scss~
+
+coverage

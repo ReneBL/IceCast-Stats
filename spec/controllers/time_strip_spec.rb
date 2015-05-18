@@ -64,7 +64,7 @@ RSpec.describe ConnectionsController, type: :controller do
       ]
       xhrRequestConnBetweenDatesAndHours connections_between_dates_hours_array, '14/11/2013', '02/01/2014', 'year', 'true', '05:27:04', '07:19:00'
 
-      connections_between_dates_array = { "error" =>  "Start time is lesser than end time" }
+      connections_between_dates_array = { "error" =>  "Start time is greater than end time" }
       xhrRequestConnBetweenDatesAndHours connections_between_dates_array, '01/01/2013', '01/01/2014', 'year', 'false', '08:45:33', '05:27:04'
 
       connections_between_dates_array = { "error" =>  "One hour is invalid. Correct format: HH:MM:SS" }
@@ -108,7 +108,7 @@ RSpec.describe ConnectionsController, type: :controller do
       # Filtro que coja todos los meses, pero la franja este fuera
       xhrRequestConnBetweenDatesAndHours [], '01/01/2013', '01/01/2014', 'month', 'false', '08:45:33', '15:27:03'
 
-      connections_between_dates_month_array = { "error" =>  "Start time is lesser than end time" }
+      connections_between_dates_month_array = { "error" =>  "Start time is greater than end time" }
       xhrRequestConnBetweenDatesAndHours connections_between_dates_month_array, '01/01/2013', '01/01/2014', 'month', 'false', '08:45:33', '05:27:04'
 
       connections_between_dates_array = { "error" =>  "One hour is invalid. Correct format: HH:MM:SS" }
@@ -152,7 +152,7 @@ RSpec.describe ConnectionsController, type: :controller do
       xhrRequestConnBetweenDatesAndHours connections_between_dates_day_array, 
           '14/11/2013', '14/11/2013', 'day', 'false', '05:27:04', '10:07:58'
 
-      connections_between_dates_array = { "error" =>  "Start time is lesser than end time" }
+      connections_between_dates_array = { "error" =>  "Start time is greater than end time" }
       xhrRequestConnBetweenDatesAndHours connections_between_dates_array, '14/11/2013', '14/11/2013', 'day', 'true', '10:58:00', '05:27:03'
 
       connections_between_dates_array = { "error" =>  "One hour is invalid. Correct format: HH:MM:SS" }
