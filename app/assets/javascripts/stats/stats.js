@@ -77,7 +77,7 @@ app.controller("FilterController", function($scope, $filter, NotificationService
 	   	$scope.startNotLesserEnd = ($scope.horaInicio > $scope.horaFin); 
 	   	// Tenemos que comprobar si todo el formulario de filtros es válido antes de hacer ninguna petición
 	   	$scope.validFormWhenHoursActived = validForm;
-	   	if ($scope.validFormWhenHoursActived && !$scope.startNotLesserEnd) {
+	   	if ($scope.validFormWhenHoursActived && !$scope.startNotLesserEnd && !$scope.invalid) {
 	   		sendBroadcast();
 		}
 	};

@@ -50,6 +50,7 @@ feature "total seconds in a period" do
       page.should have_content "0 horas 7 minutos 20 segundos"
     end
 
+    click_button "dropDownMenu"
     check 'uniqueVisitors'
     within '#totalTime' do
       page.should have_content "Tiempo total de escucha"
@@ -57,6 +58,7 @@ feature "total seconds in a period" do
       page.should have_content "0 horas 7 minutos 20 segundos"
     end
 
+    click_button "dropDownMenu"
     uncheck 'uniqueVisitors'
 
     fill_in 'fechaFin', :with => Date.new(2014,11,10)    
@@ -76,6 +78,7 @@ feature "total seconds in a period" do
 
     fill_in 'fechaIni', :with => Date.new(2014,3,27)
 
+    click_button "dropDownMenu"
     check 'showHourRange'
     fill_in 'horaInicio', :with => "06:27:05"
 
@@ -93,6 +96,7 @@ feature "total seconds in a period" do
       page.should have_content "0 horas 1 minutos 50 segundos"
     end
 
+    click_button "dropDownMenu"
     uncheck 'showHourRange'
 
     within '#totalTime' do

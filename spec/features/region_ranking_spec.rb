@@ -152,6 +152,7 @@ feature "region ranking" do
 
     page.should have_content("Siguiente >")
 
+    click_button "dropDownMenu"
     check 'showHourRange'
     fill_in 'horaInicio', :with => "00:27:05"
 
@@ -177,6 +178,7 @@ feature "region ranking" do
       page.should have_content('New Jersey, United States')
     end
 
+    click_button "dropDownMenu"
     uncheck 'showHourRange'
     within '#rankingRegion' do
       page.should have_content('Galicia, Spain')
@@ -195,6 +197,7 @@ feature "region ranking" do
   	fill_in 'fechaIni', :with => Date.new(2014,7,17)
   	fill_in 'fechaFin', :with => Date.new(2015,3,25)
 
+    click_button "dropDownMenu"
   	check 'showHourRange'
     fill_in 'horaInicio', :with => "00:27:05"
     fill_in 'horaFin', :with => "03:10:39"

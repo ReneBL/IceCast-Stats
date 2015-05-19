@@ -35,115 +35,118 @@ feature "connections between dates" do
       initial_state
   end
 
-  # scenario "check errors in input max-min", :js => true do
-  #   within "#pieTimeConnections" do
-  #     page.should have_content("No existen datos para estas fechas")
-  #     fill_in 'min', :with => ''
-  #     page.should have_content("No existen datos para estas fechas")
-  #     page.should have_content("El valor mínimo no puede ser vacío")
+  scenario "check errors in input max-min", :js => true do
+    within "#pieTimeConnections" do
+      page.should have_content("No existen datos para estas fechas")
+      fill_in 'min', :with => ''
+      page.should have_content("No existen datos para estas fechas")
+      page.should have_content("El valor mínimo no puede ser vacío")
 
-  #     fill_in 'max', :with => ''
-  #     page.should have_content("No existen datos para estas fechas")
-  #     page.should have_content("El valor mínimo no puede ser vacío")
-  #     page.should have_content("El valor máximo no puede ser vacío")
+      fill_in 'max', :with => ''
+      page.should have_content("No existen datos para estas fechas")
+      page.should have_content("El valor mínimo no puede ser vacío")
+      page.should have_content("El valor máximo no puede ser vacío")
 
-  #     fill_in 'min', :with => '-1'
-  #     page.should have_content("No existen datos para estas fechas")
-  #     page.should_not have_content("El valor mínimo no puede ser vacío")
-  #     page.should have_content("El valor mínimo no es válido (5..120)")
-  #     page.should have_content("El valor máximo no puede ser vacío")
+      fill_in 'min', :with => '-1'
+      page.should have_content("No existen datos para estas fechas")
+      page.should_not have_content("El valor mínimo no puede ser vacío")
+      page.should have_content("El valor mínimo no es válido (5..120)")
+      page.should have_content("El valor máximo no puede ser vacío")
 
-  #     fill_in 'max', :with => '250'
-  #     page.should have_content("No existen datos para estas fechas")
-  #     page.should_not have_content("El valor mínimo no puede ser vacío")
-  #     page.should_not have_content("El valor máximo no puede ser vacío")
-  #     page.should have_content("El valor mínimo no es válido (5..120)")
-  #     page.should have_content("El valor máximo no es válido (5..120)")
-  #   end
-  # end
+      fill_in 'max', :with => '250'
+      page.should have_content("No existen datos para estas fechas")
+      page.should_not have_content("El valor mínimo no puede ser vacío")
+      page.should_not have_content("El valor máximo no puede ser vacío")
+      page.should have_content("El valor mínimo no es válido (5..120)")
+      page.should have_content("El valor máximo no es válido (5..120)")
+    end
+  end
 
-  # scenario "range covering all connections", :js => true do
-  #   within "#pieTimeConnections" do
-  #     page.should have_content("No existen datos para estas fechas")
-  #   end
-  #   fill_in 'fechaIni', :with => Date.new(2014,3,27)
-  #   within "#pieTimeConnections" do
-  #     page.should have_content("<= 5")
-  #     page.should have_content("5-120")
-  #     page.should have_content("> 120")
-  #     page.should have_content("33.3%")
-  #     page.should have_content("50%")
-  #     page.should have_content("16.7%")     
-  #   end
-  # end
+  scenario "range covering all connections", :js => true do
+    within "#pieTimeConnections" do
+      page.should have_content("No existen datos para estas fechas")
+    end
+    fill_in 'fechaIni', :with => Date.new(2014,3,27)
+    within "#pieTimeConnections" do
+      page.should have_content("<= 5")
+      page.should have_content("5-120")
+      page.should have_content("> 120")
+      page.should have_content("33.3%")
+      page.should have_content("50%")
+      page.should have_content("16.7%")     
+    end
+  end
 
-  # scenario "changing ranges", :js => true do
-  #   fill_in 'fechaIni', :with => Date.new(2014,3,27)
-  #   within "#pieTimeConnections" do
-  #     fill_in 'min', :with => '20'
-  #     page.should have_content("<= 20")
-  #     page.should have_content("20-120")
-  #     page.should have_content("> 120")
-  #     page.should have_content("50%")
-  #     page.should have_content("33.3%")
-  #     page.should have_content("16.7%")
-  #   end
+  scenario "changing ranges", :js => true do
+    fill_in 'fechaIni', :with => Date.new(2014,3,27)
+    within "#pieTimeConnections" do
+      fill_in 'min', :with => '20'
+      page.should have_content("<= 20")
+      page.should have_content("20-120")
+      page.should have_content("> 120")
+      page.should have_content("50%")
+      page.should have_content("33.3%")
+      page.should have_content("16.7%")
+    end
     
-  #   check 'uniqueVisitors'
-  #   within "#pieTimeConnections" do
-  #     page.should have_content("40%")
-  #     page.should have_content("40%")
-  #     page.should have_content("20%")
-  #   end
+    click_button "dropDownMenu"
+    check 'uniqueVisitors'
+    within "#pieTimeConnections" do
+      page.should have_content("40%")
+      page.should have_content("40%")
+      page.should have_content("20%")
+    end
 
-  #   uncheck 'uniqueVisitors'
-  #   within "#pieTimeConnections" do
-  #     fill_in 'max', :with => '60'
-  #     page.should have_content("<= 20")
-  #     page.should have_content("20-60")
-  #     page.should have_content("> 60")
-  #     page.should have_content("50%")
-  #     page.should have_content("16.7%")
-  #     page.should have_content("33.3%")
-  #   end
-  #   within "#pieTimeConnections" do
-  #     fill_in 'min', :with => '50'
-  #     page.should have_content("<= 60")
-  #     page.should have_content("> 60")
-  #     page.should have_content("66.6%")
-  #     page.should have_content("33.3%")            
-  #   end
-  # end
+    click_button "dropDownMenu"
+    uncheck 'uniqueVisitors'
+    within "#pieTimeConnections" do
+      fill_in 'max', :with => '60'
+      page.should have_content("<= 20")
+      page.should have_content("20-60")
+      page.should have_content("> 60")
+      page.should have_content("50%")
+      page.should have_content("16.7%")
+      page.should have_content("33.3%")
+    end
+    within "#pieTimeConnections" do
+      fill_in 'min', :with => '50'
+      page.should have_content("<= 60")
+      page.should have_content("> 60")
+      page.should have_content("66.6%")
+      page.should have_content("33.3%")            
+    end
+  end
 
-  # scenario "changing hours, dates and ranges", :js => true do
-  #   fill_in 'fechaIni', :with => Date.new(2014,3,27)
-  #   check 'showHourRange'
+  scenario "changing hours, dates and ranges", :js => true do
+    fill_in 'fechaIni', :with => Date.new(2014,3,27)
+    click_button "dropDownMenu"
+    check 'showHourRange'
 
-  #   fill_in 'horaInicio', :with => '06:30:04'
+    fill_in 'horaInicio', :with => '06:30:04'
 
-  #   within "#pieTimeConnections" do
-  #     page.should_not have_content("<= 5")
-  #     page.should have_content("5-120")
-  #     page.should have_content("> 120")
-  #     page.should have_content("66.7%")
-  #     page.should have_content("33.3%")
-  #   end
+    within "#pieTimeConnections" do
+      page.should_not have_content("<= 5")
+      page.should have_content("5-120")
+      page.should have_content("> 120")
+      page.should have_content("66.7%")
+      page.should have_content("33.3%")
+    end
     
-  #   fill_in 'fechaFin', :with => Date.new(2014,12,31)
+    fill_in 'fechaFin', :with => Date.new(2014,12,31)
     
-  #   within "#pieTimeConnections" do
-  #     page.should_not have_content("<= 5")
-  #     page.should have_content("5-120")
-  #     page.should_not have_content("> 120")
-  #     page.should have_content("100%")
+    within "#pieTimeConnections" do
+      page.should_not have_content("<= 5")
+      page.should have_content("5-120")
+      page.should_not have_content("> 120")
+      page.should have_content("100%")
 
-  #     fill_in 'max', :with => '60'
-  #     page.should_not have_content("<= 20")
-  #     page.should have_content("5-50")
-  #     page.should have_content("> 60")
-  #     page.should have_content("50%")
-  #     page.should have_content("50%")         
-  #   end
-  # end
+      fill_in 'max', :with => '60'
+      page.should_not have_content("<= 20")
+      page.should have_content("5-50")
+      page.should have_content("> 60")
+      page.should have_content("50%")
+      page.should have_content("50%")         
+    end
+  end
   
 end

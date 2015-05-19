@@ -47,26 +47,32 @@ feature "country ranking" do
 
     within '#rankingPais' do
       page.should have_content('Ranking de países')
+
       page.should have_content('France')
       page.should have_content('3')
-      page.should have_content('30')
-      page.should have_content('26298')
+      page.should have_content('0h : 0m : 30s')
+      page.should have_content('26.3 KB')
+
       page.should have_content('Spain')
       page.should have_content('2')
-      page.should have_content('6')
-      page.should have_content('22712')
+      page.should have_content('0h : 0m : 6s')
+      page.should have_content('22.7 KB')
+
       page.should have_content('Italy')
       page.should have_content('2')
-      page.should have_content('146')
-      page.should have_content('9074')
+      page.should have_content('0h : 2m : 26s')
+      page.should have_content('9.07 KB')
+
       page.should have_content('United States')
       page.should have_content('1')
-      page.should have_content('2567546')
-      page.should have_content('20')
+      page.should have_content('0h : 0m : 20s')
+      page.should have_content('2.57 MB')
+
       page.should have_content('Germany')
       page.should have_content('1')
-      page.should have_content('42890')
-      page.should have_content('18')
+      page.should have_content('0h : 0m : 18s')
+      page.should have_content('42.9 KB')
+
       page.should_not have_content('China')
 
       page.should have_content('Siguiente >')
@@ -79,8 +85,8 @@ feature "country ranking" do
 
       page.should have_content('China')
       page.should have_content('1')
-      page.should have_content('6')
-      page.should have_content('23978')
+      page.should have_content('0h : 0m : 6s')
+      page.should have_content('24.0 KB')
 
       click_button 'botonAnterior'
       page.should_not have_content('China')
@@ -101,27 +107,32 @@ feature "country ranking" do
       page.should have_content('Ranking de países')
       page.should have_content('France')
       page.should have_content('3')
-      page.should have_content('30')
-      page.should have_content('26298')
+      page.should have_content('0h : 0m : 30s')
+      page.should have_content('26.3 KB')
+
       page.should have_content('Spain')
       page.should have_content('2')
-      page.should have_content('6')
-      page.should have_content('22712')
+      page.should have_content('0h : 0m : 6s')
+      page.should have_content('22.7 KB')
+
       page.should_not have_content('Italy')
-      page.should_not have_content('146')
-      page.should_not have_content('9074')
+      page.should_not have_content('0h : 2m : 26s')
+      page.should_not have_content('9.07 KB')
+
       page.should have_content('United States')
       page.should have_content('1')
-      page.should have_content('2567546')
-      page.should have_content('20')
+      page.should have_content('0h : 0m : 20s')
+      page.should have_content('2.57 MB')
+
       page.should have_content('Germany')
       page.should have_content('1')
-      page.should have_content('42890')
-      page.should have_content('18')
+      page.should have_content('0h : 0m : 18s')
+      page.should have_content('42.9 KB')
+
       page.should have_content('China')
       page.should have_content('1')
-      page.should have_content('6')
-      page.should have_content('23978') 
+      page.should have_content('0h : 0m : 6s')
+      page.should have_content('24.0 KB') 
 
       page.should_not have_content('Siguiente >')
       page.should_not have_content('Anterior >')
@@ -144,6 +155,7 @@ feature "country ranking" do
 
     page.should have_content("Siguiente >")
 
+    click_button "dropDownMenu"
     check 'showHourRange'
     fill_in 'horaInicio', :with => "09:40:02"
 
@@ -169,6 +181,7 @@ feature "country ranking" do
       page.should_not have_content('Germany')
     end
 
+    click_button "dropDownMenu"
     uncheck 'showHourRange'
     within '#rankingPais' do
       page.should_not have_content('Italy')
@@ -189,6 +202,7 @@ feature "country ranking" do
       page.should have_content('China')
     end
 
+    click_button "dropDownMenu"
     check 'showHourRange'
     fill_in 'horaInicio', :with => "10:55:41"
 

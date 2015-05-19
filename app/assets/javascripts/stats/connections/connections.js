@@ -142,6 +142,7 @@ app.controller('GroupedTotalSecondsChartController', function ($scope, GroupedTo
 	$scope.doGetData = function(params) {
 		var cloneParams = angular.copy(params);
 		cloneParams["group_by"] = $scope.groupBy;
+		delete cloneParams.unique_visitors;
 		GroupedTotalSeconds.query(cloneParams, function(datos) {
 	   		$scope.dataEmpty = datos.length == 0;
 	   		if (!$scope.dataEmpty) {

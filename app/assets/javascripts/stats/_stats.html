@@ -1,14 +1,14 @@
 <div ng-controller="StatsController">
 	<nav id="cssmenu" class="col-xs-12 col-md-12">
-  	<ul class="col-xs-12">
-  		<li ng-class="{'active': selectedOption == 'conexiones' }"><a ng-click="clickConexiones()" id="Conexiones">Conexiones</a></li>
-	   	<li ng-class="{'active': selectedOption == 'localizaciones' }"><a ng-click="clickLocalizaciones()" id="Localizacion">Localización</a></li>
+		<ul class="col-xs-12">
+			<li ng-class="{'active': selectedOption == 'conexiones' }"><a ng-click="clickConexiones()" id="Conexiones">Conexiones</a></li>
+			<li ng-class="{'active': selectedOption == 'localizaciones' }"><a ng-click="clickLocalizaciones()" id="Localizacion">Localización</a></li>
 			<li ng-class="{'active': selectedOption == 'rankings' }"><a ng-click="clickRankings()" id="Ranking">Rankings</a></li>
-  	</ul>
+		</ul>
 	</nav>
-  <div id="source">
-    <span ng-model="source" class="label label-primary">Filtrando estadísticas por...{{source}}</span>
-  </div>
+	<div id="source">
+		<span ng-model="source" class="label label-primary">Filtrando estadísticas por...{{source}}</span>
+	</div>
 	<div id="datePickers" ng-controller="FilterController">
 		<div ng-show="invalid">
 			<div class="alert alert-danger alert-dismissible">
@@ -16,61 +16,52 @@
 			</div>
 		</div>
 		<form name="filterForm">
-			<span>
-				<label>Fecha Inicio: </label>
-				<input type="date" id="fechaIni" name="inputFechaIni" min="2010-01-01" ng-model = "fechaInicio" ng-change="changedDate(filterForm.$valid)" required/>
-			</span>
-			<span>
-				<label>Fecha Fin: </label>
-				<input type="date" id="fechaFin" name="inputFechaFin" min="2010-01-01" ng-model = "fechaFin" ng-change="changedDate(filterForm.$valid)" required/>
-			</span>
-  			<span class="error" ng-show="filterForm.inputFechaIni.$error.required">
-      			La fecha inicio no puede ser vacía!
-      		</span>
-    		<span class="error" ng-show="filterForm.inputFechaFin.$error.required">
-      			La fecha fin no puede ser vacía!
-      		</span>
-      		<span class="error" ng-show="!filterForm.inputFechaIni.$valid">
-      			Fecha de inicio no válida
-      		</span>
-    		<span class="error" ng-show="!filterForm.inputFechaFin.$valid">
-      			Fecha de fin no válida
-      		</span>
-  			<br/>
-  				<label>Visitantes únicos:
-    				<input id="uniqueVisitors" type="checkbox" ng-model="unique" ng-change="changedCheckBoxUniqueVisitors(filterForm.$valid, filterForm.inputFechaIni.$valid && filterForm.inputFechaFin.$valid)">
-  				</label>
-  				<label>Franja horaria:
-    				<input id="showHourRange" type="checkbox" ng-model="showHourRange" ng-change="changedCheckBoxHourRange(filterForm.inputFechaIni.$valid, filterForm.inputFechaFin.$valid, filterForm.inputHoraInicio.$valid, filterForm.inputHoraFin.$valid)">
-  				</label>
-  				<div ng-show="showHourRange">
-  					<span>
-						<label>Desde las </label>
-						<input type="time" id="horaInicio" name="inputHoraInicio" ng-model="horaInicio"
-       						placeholder="HH:mm:ss" min="00:00:00" max="23:59:59" ng-change="changedHour(filterForm.$valid)" required />
-					</span>
-					<span>
-						<label>hasta las </label>
+			<div id="buttonActions" class="btn-group">
+  			<button type="button" class="btn btn-default">Acciones</button>
+  			<button type="button" id="dropDownMenu" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+    			<span class="caret"></span>
+    			<span class="sr-only">Toggle Dropdown</span>
+  			</button>
+  			<ul class="dropdown-menu" role="menu">
+    			<li>
+    				<span>
+							<input id="uniqueVisitors" type="checkbox" ng-model="unique" ng-change="changedCheckBoxUniqueVisitors(filterForm.$valid, filterForm.inputFechaIni.$valid && filterForm.inputFechaFin.$valid)">
+							Visitantes únicos
+						</span>
+					</li>
+    			<li>
+    				<span>
+							<input id="showHourRange" type="checkbox" ng-model="showHourRange" ng-change="changedCheckBoxHourRange(filterForm.inputFechaIni.$valid, filterForm.inputFechaFin.$valid, filterForm.inputHoraInicio.$valid, filterForm.inputHoraFin.$valid)">
+							Franja horaria
+						</span>
+					</li>
+  			</ul>
+			</div>
+			<div id="fechas">
+				<span>
+					<label ng-class="{true: 'hint--top hint--error hint--always hint--bounce', false: undefined}[filterForm.inputFechaIni.$error.required || !filterForm.inputFechaIni.$valid]" ng-attr-data-hint="{{(filterForm.inputFechaIni.$error.required || !filterForm.inputFechaIni.$valid) ? 'Fecha inicio no válida' : undefined}}">Fecha Inicio: 
+					</label>
+					<input type="date" id="fechaIni" name="inputFechaIni" min="2010-01-01" ng-model = "fechaInicio" ng-change="	changedDate(filterForm.$valid)" required/>	
+				</span>
+				<span>
+					<label ng-class="{true: 'hint--top hint--error hint--always hint--bounce', false: undefined}[filterForm.inputFechaFin.	$error.required || !filterForm.inputFechaFin.$valid]" ng-attr-data-hint="{{(filterForm.inputFechaFin.$error.required || !filterForm.inputFechaFin.$valid) ? 'Fecha fin no válida' : undefined}}">Fecha Fin: 
+					</label>
+					<input type="date" id="fechaFin" name="inputFechaFin" min="2010-01-01" ng-model = "fechaFin" ng-change="changedDate(filterForm.$valid)" required/>
+				</span>
+			</div>
+			<div id="horas" ng-show="showHourRange">
+				<span>
+					<label ng-class="{true: 'hint--top hint--error hint--always hint--bounce', false: undefined}[filterForm.inputHoraInicio.$error.required || !filterForm.inputHoraInicio.$valid]" ng-attr-data-hint="{{(filterForm.inputHoraInicio.$error.required || !filterForm.inputHoraInicio.$valid) ? 'Hora inicio no válida' : undefined}}">Desde las </label>
+					<input type="time" id="horaInicio" name="inputHoraInicio" ng-model="horaInicio"
+						placeholder="HH:mm:ss" min="00:00:00" max="23:59:59" ng-change="changedHour(filterForm.$valid)" required />
+				</span>
+				<span>
+					<label ng-class="{true: 'hint--top hint--error hint--always hint--bounce', false: undefined}[filterForm.inputHoraFin.$error.required || !filterForm.inputHoraFin.$valid]" ng-attr-data-hint="{{(filterForm.inputHoraFin.$error.required || !filterForm.inputHoraFin.$valid) ? 'Hora fin no válida' : undefined}}">hasta las </label>
 						<input type="time" id="horaFin" name="inputHoraFin" ng-model="horaFin"
-       						placeholder="HH:mm:ss" min="00:00:00" max="23:59:59" ng-change="changedHour(filterForm.$valid)" required />
-					</span>
-					<span class="error" ng-show="filterForm.inputHoraInicio.$error.required">
-      					La hora inicio no puede ser vacía!
-      				</span>
-    				<span class="error" ng-show="filterForm.inputHoraFin.$error.required">
-      					La hora fin no puede ser vacía!
-      				</span>
-      				<span class="error" ng-show="!filterForm.inputHoraInicio.$valid">
-      					Hora de inicio no válida
-      				</span>
-    				<span class="error" ng-show="!filterForm.inputHoraFin.$valid">
-      					Hora de fin no válida
-      				</span>
-      				<span class="error" ng-show="startNotLesserEnd">
-      					La hora de inicio es mayor que la hora de fin
-      				</span>
-  				</div>
-  		</form>
-  		<div ng-include='page' id="template"></div>
+							placeholder="HH:mm:ss" min="00:00:00" max="23:59:59" ng-change="changedHour(filterForm.$valid)" required />
+				</span>
+			</div>
+		</form>
+		<div ng-include='page' id="template"></div>
 	</div>
 </div>

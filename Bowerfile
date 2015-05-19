@@ -2,7 +2,6 @@ asset 'angular'
 asset 'angular-route'
 asset 'angular-snap'
 asset 'angular-resource'
-asset 'amplitude'
-asset 'angular-rangeslider'
+asset 'hint.css'
 asset 'iso-3166-country-codes-angular'
 # vim: ft=ruby

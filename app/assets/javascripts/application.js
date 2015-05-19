@@ -12,14 +12,12 @@
 //
 //= require jquery
 //= require jquery-ui
-//= require angular/angular
-//= require angular-route/angular-route
-//= require angular-snap/angular-snap
-//= require snapjs/snap
+//= require angular/angular.min
+//= require angular-route/angular-route.min
+//= require angular-snap/angular-snap.min
+//= require snapjs/snap.min
 //= require angular-rails-templates
-//= require angular-resource/angular-resource
-//= require amplitude/js/amplitude
-//= require angular-rangeslider/angular.rangeSlider
+//= require angular-resource/angular-resource.min
 //= require iso-3166-country-codes-angular/src/iso-3166-country-codes-angular
 //= require icecastStats
 //= require bootstrap-sprockets

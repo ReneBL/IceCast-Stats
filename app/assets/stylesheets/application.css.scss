@@ -10,10 +10,10 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
  * 
- *= require jquery-ui/datepicker
- *= require angular-snap/angular-snap
+ *= require angular-snap/angular-snap.min
  *= require snapjs/snap
- *= require angular-rangeslider/angular.rangeSlider
+ *= require angular/angular-csp
+ *= require hint.css/hint.min
  *= require_tree .
  *= require_self 
  */

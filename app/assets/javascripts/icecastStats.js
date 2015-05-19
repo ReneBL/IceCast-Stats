@@ -17,7 +17,7 @@ app.config(['$routeProvider',
       otherwise({
         redirectTo: '/'
       });
-  }]);
+}]);
 
 app.constant('START_INDEX', 0).
     constant('COUNT', 5).
