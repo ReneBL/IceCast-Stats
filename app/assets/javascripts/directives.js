@@ -20,7 +20,9 @@ app.directive("chart", function() {
 	  	   	  				 break;
 	  	   	  default: console.log('Gráfica no disponible');
 	  	   }
-	  	   chart != null? chart.draw($scope.data, $scope.options) : console.log("Error interno");
+	  	   $scope.$watch('data', function(n, o) {
+	  	   	chart != null? chart.draw($scope.data, $scope.options) : console.log("Error interno");
+	  	   });
 	  };
 });
 app.directive("jqdatepicker", function() {

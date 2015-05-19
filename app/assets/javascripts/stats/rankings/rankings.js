@@ -29,7 +29,6 @@ app.controller("CountryRanking" , function ($scope, GenericPaginatedRanking, STA
 	};
 
 	NotificationService.onChangeScope($scope, function(message) {
-		$scope.data = [];
 		$scope.startIndex = START_INDEX;
 		doGetData($scope.$parent.doGetParams());
 	});
@@ -64,7 +63,6 @@ app.controller("RegionRanking" , function ($scope, GenericPaginatedRanking, STAR
 	};
 
 	NotificationService.onChangeScope($scope, function(message) {
-		$scope.data = [];
 		$scope.startIndex = START_INDEX;
 		doGetData($scope.$parent.doGetParams());
 	});
@@ -99,7 +97,6 @@ app.controller("CityRanking" , function ($scope, GenericPaginatedRanking, START_
 	};
 
 	NotificationService.onChangeScope($scope, function(message) {
-		$scope.data = [];
 		$scope.startIndex = START_INDEX;
 		doGetData($scope.$parent.doGetParams());
 	});
@@ -134,7 +131,6 @@ app.controller("UserAgentRanking" , function ($scope, GenericPaginatedRanking, S
 	};
 
 	NotificationService.onChangeScope($scope, function(message) {
-		$scope.data = [];
 		$scope.startIndex = START_INDEX;
 		doGetData($scope.$parent.doGetParams());
 	});
@@ -153,7 +149,6 @@ app.controller("LinksRanking" , function ($scope, LinksRanking, RankingUtilities
 	doGetData($scope.$parent.doGetParams());
 
 	NotificationService.onChangeScope($scope, function(message) {
-		$scope.data = [];
 		doGetData($scope.$parent.doGetParams());
 	});
 });

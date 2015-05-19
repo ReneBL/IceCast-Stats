@@ -1,5 +1,4 @@
 <div class="container">	
-	<h1>RANKINGS</h1>
 	<div id="rankingPais" class="panel panel-primary" ng-controller="CountryRanking">
 		<div class="panel-heading">Ranking de países</div>
   		<table class="table table-striped">
@@ -7,15 +6,15 @@
     			<th>#</th>
     			<th>País</th>
     			<th>Oyentes totales</th>
-    			<th>Bytes consumidos (en GB)</th>
+    			<th>Bytes consumidos</th>
     			<th>Tiempo total de escucha</th>
     		</tr>
     		<tr id="tableRow" ng-repeat="row in data">
     			<td ng-model="startIndex">{{(startIndex + $index) + 1}}</td>
     			<td>{{row._id}}</td>
     			<td>{{row.listeners}}</td>
-    			<td>{{row.bytes / 1000000000}}</td>
-    			<td>{{row.time}}</td>
+    			<td>{{row.bytes | bytesFilter:2}}</td>
+    			<td>{{row.time | secondsFilter}}</td>
     		</tr>
   		</table>
   		<span id="template" ng-include="'_botonera.html'"></span>
@@ -27,15 +26,15 @@
     			<th>#</th>
     			<th>Región</th>
     			<th>Oyentes totales</th>
-    			<th>Bytes consumidos (en GB)</th>
+    			<th>Bytes consumidos</th>
     			<th>Tiempo total de escucha</th>
     		</tr>
     		<tr id="tableRow" ng-repeat="row in data">
     			<td ng-model="startIndex">{{(startIndex + $index) + 1}}</td>
     			<td>{{row._id.region}}, {{row._id.country}}</td>
     			<td>{{row.listeners}}</td>
-    			<td>{{row.bytes / 1000000000}}</td>
-    			<td>{{row.time}}</td>
+    			<td>{{row.bytes | bytesFilter:2}}</td>
+    			<td>{{row.time | secondsFilter}}</td>
     		</tr>
   		</table>
   		<span id="template" ng-include="'_botonera.html'"></span>
@@ -47,15 +46,15 @@
                 <th>#</th>
                 <th>Ciudad</th>
                 <th>Oyentes totales</th>
-                <th>Bytes consumidos (en GB)</th>
+                <th>Bytes consumidos</th>
                 <th>Tiempo total de escucha</th>
             </tr>
             <tr id="tableRow" ng-repeat="row in data">
                 <td ng-model="startIndex">{{(startIndex + $index) + 1}}</td>
                 <td>{{row._id.city}}, {{row._id.region}}, {{row._id.country}}</td>
                 <td>{{row.listeners}}</td>
-                <td>{{row.bytes / 1000000000}}</td>
-                <td>{{row.time}}</td>
+                <td>{{row.bytes | bytesFilter:2}}</td>
+                <td>{{row.time | secondsFilter}}</td>
             </tr>
         </table>
         <span id="template" ng-include="'_botonera.html'"></span>
@@ -67,15 +66,15 @@
                 <th>#</th>
                 <th>Agente</th>
                 <th>Veces usado</th>
-                <th>Bytes consumidos (en GB)</th>
+                <th>Bytes consumidos</th>
                 <th>Tiempo total de escucha</th>
             </tr>
             <tr id="tableRow" ng-repeat="row in data">
                 <td ng-model="startIndex">{{(startIndex + $index) + 1}}</td>
                 <td>{{row._id}}</td>
                 <td>{{row.listeners}}</td>
-                <td>{{row.bytes / 1000000000}}</td>
-                <td>{{row.time}}</td>
+                <td>{{row.bytes | bytesFilter:2}}</td>
+                <td>{{row.time | secondsFilter}}</td>
             </tr>
         </table>
         <span id="template" ng-include="'_botonera.html'"></span>
@@ -87,15 +86,15 @@
                 <th>#</th>
                 <th>Link</th>
                 <th>Veces usado</th>
-                <th>Bytes consumidos (en GB)</th>
+                <th>Bytes consumidos</th>
                 <th>Tiempo total de escucha</th>
             </tr>
             <tr id="tableRow" ng-repeat="row in data">
                 <td ng-model="startIndex">{{(startIndex + $index) + 1}}</td>
                 <td>{{row._id}}</td>
                 <td>{{row.listeners}}</td>
-                <td>{{row.bytes / 1000000000}}</td>
-                <td>{{row.time}}</td>
+                <td>{{row.bytes | bytesFilter:2}}</td>
+                <td>{{row.time | secondsFilter}}</td>
             </tr>
         </table>
     </div>

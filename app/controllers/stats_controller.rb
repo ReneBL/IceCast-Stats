@@ -45,7 +45,6 @@ class StatsController < ApplicationController
   end
 
   def start_end_date_params
-    #debugger
     st_date = params[:start_date]
     end_date = params[:end_date]
     error = parse_date_time st_date, end_date, "%d/%m/%Y", "One date is invalid. Correct format: d/m/Y"  

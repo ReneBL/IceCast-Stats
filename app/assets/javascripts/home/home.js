@@ -35,33 +35,12 @@ app.controller("HomeController", function($scope, $interval, StateFactory,
     	$scope.programa = content.playing;
     	$scope.genero = content.genre;
     	$scope.serverUrl = content.url;
-    	obj = createSongObject();
-    	initializePlayer(obj);
     };
 
     var validateDatos = function(datos) {
     	$scope.invalidData = datos.hasOwnProperty("error");
     	$scope.message = (datos.error == undefined) ? "" : datos.error;
     	return (!$scope.invalidData);
-    };
-
-    var createSongObject = function() {
-    	var obj = {
-    	"volume": .35,
-        "songs": [
-            {
-                "name": $scope.programa,
-                "artist": $scope.genero,
-                "url": $scope.serverUrl
-            }
-        ],
-        "default_album_art": "/assets/cuac.jpg"
-    	};
-    	return obj;
-    };
-
-    var initializePlayer = function(obj) {
-    	Amplitude.init(obj);
     };
 
 });

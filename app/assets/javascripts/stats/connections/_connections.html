@@ -25,11 +25,7 @@
 	</div>
 
 	<div id="gtsController" ng-controller="GroupedTotalSecondsChartController">
-		<div class="btn-group" role="group">
-  			<button type="button" ng-class="{true:'btn btn-danger', false:'btn btn-default'}[groupBy == 'year']" ng-click="group('year')">Año</button>
-  			<button type="button" ng-class="{true:'btn btn-danger', false:'btn btn-default'}[groupBy == 'month']" ng-click="group('month')">Mes</button>
-  			<button type="button" ng-class="{true:'btn btn-danger', false:'btn btn-default'}[groupBy == 'day']" ng-click="group('day')">Día</button>
-		</div>
+		<span id="template" ng-include="'_botoneraGroup.html'"></span>
 		<div ng-show="dataEmpty">
   			<span id="template" ng-include="'_noData.html'"></span>
   		</div>
@@ -47,11 +43,7 @@
 	</div>
 	
 	<div id="cgcController" ng-controller="ConnectionsGroupedChartController">
-		<div class="btn-group" role="group">
-  			<button type="button" ng-class="{true:'btn btn-danger', false:'btn btn-default'}[groupBy == 'year']" ng-click="group('year')">Año</button>
-  			<button type="button" ng-class="{true:'btn btn-danger', false:'btn btn-default'}[groupBy == 'month']" ng-click="group('month')">Mes</button>
-  			<button type="button" ng-class="{true:'btn btn-danger', false:'btn btn-default'}[groupBy == 'day']" ng-click="group('day')">Día</button>
-		</div>
+		<span id="template" ng-include="'_botoneraGroup.html'"></span>
 		<div ng-show="dataEmpty">
   			<span id="template" ng-include="'_noData.html'"></span>
   		</div>

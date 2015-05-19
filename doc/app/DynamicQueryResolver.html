@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8">
+
+<title>module DynamicQueryResolver - Rails Application Documentation</title>
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "./";
+</script>
+
+<script src="./js/jquery.js"></script>
+<script src="./js/darkfish.js"></script>
+
+<link href="./css/fonts.css" rel="stylesheet">
+<link href="./css/rdoc.css" rel="stylesheet">
+
+
+
+<body id="top" role="document" class="module">
+<nav role="navigation">
+  <div id="project-navigation">
+    <div id="home-section" role="region" title="Quick navigation" class="nav-section">
+  <h2>
+    <a href="./index.html" rel="home">Home</a>
+  </h2>
+
+  <div id="table-of-contents-navigation">
+    <a href="./table_of_contents.html#pages">Pages</a>
+    <a href="./table_of_contents.html#classes">Classes</a>
+    <a href="./table_of_contents.html#methods">Methods</a>
+  </div>
+</div>
+
+    <div id="search-section" role="search" class="project-section initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <div id="search-field-wrapper">
+      <input id="search-field" role="combobox" aria-label="Search"
+             aria-autocomplete="list" aria-controls="search-results"
+             type="text" name="search" placeholder="Search" spellcheck="false"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </div>
+
+    <ul id="search-results" aria-label="Search Results"
+        aria-busy="false" aria-expanded="false"
+        aria-atomic="false" class="initially-hidden"></ul>
+  </form>
+</div>
+
+  </div>
+
+  
+
+  <div id="class-metadata">
+    
+    
+    
+    
+    <!-- Method Quickref -->
+<div id="method-list-section" class="nav-section">
+  <h3>Methods</h3>
+
+  <ul class="link-list" role="directory">
+    
+    <li ><a href="#method-c-distinct_visitors_count">::distinct_visitors_count</a>
+    
+    <li ><a href="#method-c-group_by_distinct_visitors_decorator">::group_by_distinct_visitors_decorator</a>
+    
+    <li ><a href="#method-c-group_by_program_parts">::group_by_program_parts</a>
+    
+    <li ><a href="#method-c-hours_filter">::hours_filter</a>
+    
+    <li ><a href="#method-c-initialize">::initialize</a>
+    
+    <li ><a href="#method-c-is_unique">::is_unique</a>
+    
+    <li ><a href="#method-c-limit_part">::limit_part</a>
+    
+    <li ><a href="#method-c-match_part">::match_part</a>
+    
+    <li ><a href="#method-c-project_group_parts">::project_group_parts</a>
+    
+    <li ><a href="#method-c-project_ip_decorator">::project_ip_decorator</a>
+    
+    <li ><a href="#method-c-project_totalSeconds_decorator">::project_totalSeconds_decorator</a>
+    
+    <li ><a href="#method-c-set_unique_if_exists">::set_unique_if_exists</a>
+    
+    <li ><a href="#method-c-skip_part">::skip_part</a>
+    
+    <li ><a href="#method-c-sort_part">::sort_part</a>
+    
+  </ul>
+</div>
+
+  </div>
+</nav>
+
+<main role="main" aria-labelledby="module-DynamicQueryResolver">
+  <h1 id="module-DynamicQueryResolver" class="module">
+    module DynamicQueryResolver
+  </h1>
+
+  <section class="description">
+    
+  </section>
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+
+    
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section">
+       <header>
+         <h3>Public Class Methods</h3>
+       </header>
+
+    
+      <div id="method-c-distinct_visitors_count" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">distinct_visitors_count</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="distinct_visitors_count-source">
+            <pre><span class="ruby-comment"># File app/helpers/dynamic_query_resolver.rb, line 39</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">distinct_visitors_count</span>        
+  <span class="ruby-identifier">unwind</span> = {<span class="ruby-string">&quot;$unwind&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;$ips&quot;</span>}
+  <span class="ruby-identifier">group</span> = {<span class="ruby-string">&quot;$group&quot;</span> =<span class="ruby-operator">&gt;</span> {<span class="ruby-string">&quot;_id&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;$_id&quot;</span>}}
+  [<span class="ruby-identifier">unwind</span>, <span class="ruby-identifier">group</span>]
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-c-group_by_distinct_visitors_decorator" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">group_by_distinct_visitors_decorator</span><span
+            class="method-args">(group)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="group_by_distinct_visitors_decorator-source">
+            <pre><span class="ruby-comment"># File app/helpers/dynamic_query_resolver.rb, line 35</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">group_by_distinct_visitors_decorator</span> <span class="ruby-identifier">group</span>
+  <span class="ruby-identifier">group</span>[<span class="ruby-string">&quot;$group&quot;</span>].<span class="ruby-identifier">merge!</span>({<span class="ruby-string">&quot;ips&quot;</span> =<span class="ruby-operator">&gt;</span> {<span class="ruby-string">&quot;$addToSet&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;$ip&quot;</span>}})
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-c-group_by_program_parts" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">group_by_program_parts</span><span
+            class="method-args">(name, group_by)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="group_by_program_parts-source">
+            <pre><span class="ruby-comment"># File app/helpers/dynamic_query_resolver.rb, line 89</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">group_by_program_parts</span> <span class="ruby-identifier">name</span>, <span class="ruby-identifier">group_by</span>
+  <span class="ruby-identifier">unwind</span> = {<span class="ruby-string">&quot;$unwind&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">name</span>}
+  <span class="ruby-identifier">group</span> = {<span class="ruby-string">&quot;$group&quot;</span> =<span class="ruby-operator">&gt;</span> {<span class="ruby-string">&quot;_id&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">name</span>}}
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-c-hours_filter" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">hours_filter</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="hours_filter-source">
+            <pre><span class="ruby-comment"># File app/helpers/dynamic_query_resolver.rb, line 75</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">hours_filter</span>
+  <span class="ruby-identifier">hours_matcher</span> = {<span class="ruby-string">&quot;$match&quot;</span> =<span class="ruby-operator">&gt;</span> {}}
+  <span class="ruby-keyword">if</span> (<span class="ruby-ivar">@qp</span>.<span class="ruby-identifier">has_hour_filters?</span>)
+    <span class="ruby-keyword">if</span> (<span class="ruby-ivar">@qp</span>.<span class="ruby-identifier">max_hour_seconds</span> <span class="ruby-operator">&lt;</span> <span class="ruby-ivar">@qp</span>.<span class="ruby-identifier">min_hour_seconds</span>)
+      <span class="ruby-comment"># Si se da el caso de que start hour es anterior a end hour en cuanto a segundos, tenemos que ponerlo como primer parametro</span>
+      <span class="ruby-comment"># en el match, por que no tendria sentido comparar =&gt; value &gt; MAX &amp;&amp; value &lt; MIN </span>
+      <span class="ruby-identifier">hours_matcher</span>[<span class="ruby-string">&quot;$match&quot;</span>].<span class="ruby-identifier">merge!</span>({<span class="ruby-string">&quot;totalSeconds&quot;</span> =<span class="ruby-operator">&gt;</span> {<span class="ruby-string">&quot;$gte&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@qp</span>.<span class="ruby-identifier">max_hour_seconds</span>, <span class="ruby-string">&quot;$lte&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@qp</span>.<span class="ruby-identifier">min_hour_seconds</span>}})
+    <span class="ruby-keyword">else</span> 
+      <span class="ruby-identifier">hours_matcher</span>[<span class="ruby-string">&quot;$match&quot;</span>].<span class="ruby-identifier">merge!</span>({<span class="ruby-string">&quot;totalSeconds&quot;</span> =<span class="ruby-operator">&gt;</span> {<span class="ruby-string">&quot;$gte&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@qp</span>.<span class="ruby-identifier">min_hour_seconds</span>, <span class="ruby-string">&quot;$lte&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@qp</span>.<span class="ruby-identifier">max_hour_seconds</span>}})
+    <span class="ruby-keyword">end</span> 
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">hours_matcher</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-c-initialize" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">initialize</span><span
+            class="method-args">(query_params)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="initialize-source">
+            <pre><span class="ruby-comment"># File app/helpers/dynamic_query_resolver.rb, line 3</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">initialize</span> <span class="ruby-identifier">query_params</span>
+  <span class="ruby-ivar">@qp</span> = <span class="ruby-identifier">query_params</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-c-is_unique" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">is_unique</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="is_unique-source">
+            <pre><span class="ruby-comment"># File app/helpers/dynamic_query_resolver.rb, line 94</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">is_unique</span>
+  <span class="ruby-ivar">@qp</span>.<span class="ruby-identifier">unique</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-c-limit_part" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">limit_part</span><span
+            class="method-args">(limit)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="limit_part-source">
+            <pre><span class="ruby-comment"># File app/helpers/dynamic_query_resolver.rb, line 102</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">limit_part</span> <span class="ruby-identifier">limit</span>
+  {<span class="ruby-string">&quot;$limit&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">limit</span>}
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-c-match_part" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">match_part</span><span
+            class="method-args">(match)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="match_part-source">
+            <pre><span class="ruby-comment"># File app/helpers/dynamic_query_resolver.rb, line 45</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">match_part</span> <span class="ruby-identifier">match</span>
+  <span class="ruby-comment"># El filtro match ya estará inicializado, bien a vacio o bien al filtro correspondiente si la request llega</span>
+    <span class="ruby-comment"># con un source metido en la session</span>
+  <span class="ruby-identifier">match</span>[<span class="ruby-string">&quot;$match&quot;</span>].<span class="ruby-identifier">merge!</span>({<span class="ruby-string">&quot;datetime&quot;</span> =<span class="ruby-operator">&gt;</span> {<span class="ruby-string">&quot;$gte&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@qp</span>.<span class="ruby-identifier">start_date</span>, <span class="ruby-string">&quot;$lte&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@qp</span>.<span class="ruby-identifier">end_date</span>}})
+  <span class="ruby-identifier">match</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-c-project_group_parts" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">project_group_parts</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="project_group_parts-source">
+            <pre><span class="ruby-comment"># File app/helpers/dynamic_query_resolver.rb, line 7</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">project_group_parts</span>
+  <span class="ruby-identifier">error</span> = <span class="ruby-keyword">nil</span>
+  <span class="ruby-keyword">case</span> <span class="ruby-ivar">@qp</span>.<span class="ruby-identifier">group_by</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-string">&quot;year&quot;</span>
+    <span class="ruby-identifier">project</span> = {<span class="ruby-string">&quot;$project&quot;</span> =<span class="ruby-operator">&gt;</span> {<span class="ruby-string">&quot;year&quot;</span> =<span class="ruby-operator">&gt;</span> {<span class="ruby-string">&quot;$year&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;$datetime&quot;</span>}, <span class="ruby-string">&quot;datetime&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">1</span>}}
+    <span class="ruby-identifier">group</span> = {<span class="ruby-string">&quot;$group&quot;</span> =<span class="ruby-operator">&gt;</span> { <span class="ruby-string">&quot;_id&quot;</span> =<span class="ruby-operator">&gt;</span> {<span class="ruby-string">&quot;year&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;$year&quot;</span>}}}
+  <span class="ruby-keyword">when</span> <span class="ruby-string">&quot;month&quot;</span>
+    <span class="ruby-identifier">project</span> = {<span class="ruby-string">&quot;$project&quot;</span> =<span class="ruby-operator">&gt;</span> {<span class="ruby-string">&quot;year&quot;</span> =<span class="ruby-operator">&gt;</span> {<span class="ruby-string">&quot;$year&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;$datetime&quot;</span>}, <span class="ruby-string">&quot;month&quot;</span> =<span class="ruby-operator">&gt;</span> {<span class="ruby-string">&quot;$month&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;$datetime&quot;</span>}, <span class="ruby-string">&quot;datetime&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">1</span>}}
+    <span class="ruby-identifier">group</span> = {<span class="ruby-string">&quot;$group&quot;</span> =<span class="ruby-operator">&gt;</span> {<span class="ruby-string">&quot;_id&quot;</span> =<span class="ruby-operator">&gt;</span> {<span class="ruby-string">&quot;year&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;$year&quot;</span>, <span class="ruby-string">&quot;month&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;$month&quot;</span>}}}
+  <span class="ruby-keyword">when</span> <span class="ruby-string">&quot;day&quot;</span>
+    <span class="ruby-identifier">project</span> = {<span class="ruby-string">&quot;$project&quot;</span> =<span class="ruby-operator">&gt;</span> {<span class="ruby-string">&quot;datetime&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">1</span>}}
+    <span class="ruby-identifier">group</span> = {<span class="ruby-string">&quot;$group&quot;</span> =<span class="ruby-operator">&gt;</span> { <span class="ruby-string">&quot;_id&quot;</span> =<span class="ruby-operator">&gt;</span> {<span class="ruby-string">&quot;year&quot;</span> =<span class="ruby-operator">&gt;</span> {<span class="ruby-string">&quot;$year&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;$datetime&quot;</span>}, <span class="ruby-string">&quot;month&quot;</span> =<span class="ruby-operator">&gt;</span> {<span class="ruby-string">&quot;$month&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;$datetime&quot;</span>},
+      <span class="ruby-string">&quot;day&quot;</span> =<span class="ruby-operator">&gt;</span> {<span class="ruby-string">&quot;$dayOfMonth&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;$datetime&quot;</span>}}}}
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">error</span> = {<span class="ruby-string">&quot;error&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;Invalid group by option: try year, month or day&quot;</span>}
+  <span class="ruby-keyword">end</span>
+  [<span class="ruby-identifier">project</span>, <span class="ruby-identifier">group</span>, <span class="ruby-identifier">error</span>]
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-c-project_ip_decorator" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">project_ip_decorator</span><span
+            class="method-args">(project)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="project_ip_decorator-source">
+            <pre><span class="ruby-comment"># File app/helpers/dynamic_query_resolver.rb, line 26</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">project_ip_decorator</span> <span class="ruby-identifier">project</span>
+  <span class="ruby-identifier">project</span>[<span class="ruby-string">&quot;$project&quot;</span>].<span class="ruby-identifier">merge!</span>({<span class="ruby-string">&quot;ip&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">1</span>})
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-c-project_totalSeconds_decorator" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">project_totalSeconds_decorator</span><span
+            class="method-args">(project)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="project_totalSeconds_decorator-source">
+            <pre><span class="ruby-comment"># File app/helpers/dynamic_query_resolver.rb, line 30</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">project_totalSeconds_decorator</span> <span class="ruby-identifier">project</span>
+  <span class="ruby-identifier">project</span>[<span class="ruby-string">&quot;$project&quot;</span>].<span class="ruby-identifier">merge!</span>({<span class="ruby-string">&quot;totalSeconds&quot;</span> =<span class="ruby-operator">&gt;</span> {<span class="ruby-string">&quot;$add&quot;</span> =<span class="ruby-operator">&gt;</span> [{<span class="ruby-string">&quot;$multiply&quot;</span> =<span class="ruby-operator">&gt;</span> [{<span class="ruby-string">&quot;$hour&quot;</span> =<span class="ruby-operator">&gt;</span><span class="ruby-string">&quot;$datetime&quot;</span>}, <span class="ruby-value">3600</span>]}, {<span class="ruby-string">&quot;$multiply&quot;</span> =<span class="ruby-operator">&gt;</span> [{<span class="ruby-string">&quot;$minute&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;$datetime&quot;</span>}, <span class="ruby-value">60</span>]},
+         {<span class="ruby-string">&quot;$second&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;$datetime&quot;</span>}]}})
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-c-set_unique_if_exists" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">set_unique_if_exists</span><span
+            class="method-args">(project, group_by, group_decorator)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="set_unique_if_exists-source">
+            <pre><span class="ruby-comment"># File app/helpers/dynamic_query_resolver.rb, line 57</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">set_unique_if_exists</span> <span class="ruby-identifier">project</span>, <span class="ruby-identifier">group_by</span>, <span class="ruby-identifier">group_decorator</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">is_unique</span>
+      <span class="ruby-comment"># Si es así, decoramos project y group by para que agrupe por IP&#39;s y haga count gracias a unwind y un segundo group</span>
+    <span class="ruby-identifier">project_ip_decorator</span> <span class="ruby-identifier">project</span>
+    <span class="ruby-identifier">group_by_distinct_visitors_decorator</span> <span class="ruby-identifier">group_by</span>
+    <span class="ruby-identifier">unwind</span>, <span class="ruby-identifier">group</span> = <span class="ruby-identifier">distinct_visitors_count</span>
+    <span class="ruby-comment"># Si buscamos por visitantes únicos, necesitamos decorar la parte group que genera el distinct_visitors_count</span>
+    <span class="ruby-identifier">gd</span> = <span class="ruby-constant">GroupDecorator</span>.<span class="ruby-identifier">new</span> <span class="ruby-identifier">group</span>, <span class="ruby-identifier">group_decorator</span>
+    <span class="ruby-identifier">gd</span>.<span class="ruby-identifier">decorate</span>
+    <span class="ruby-keyword">return</span> [<span class="ruby-identifier">unwind</span>, <span class="ruby-identifier">group</span>]
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-comment"># Si no es por visitantes únicos, decoraremos la parte group_by que ha venido dada como parámetro</span>
+      <span class="ruby-identifier">gd</span> = <span class="ruby-constant">GroupDecorator</span>.<span class="ruby-identifier">new</span> <span class="ruby-identifier">group_by</span>, <span class="ruby-identifier">group_decorator</span>
+    <span class="ruby-identifier">gd</span>.<span class="ruby-identifier">decorate</span>
+    <span class="ruby-keyword">return</span> [<span class="ruby-keyword">nil</span>, <span class="ruby-keyword">nil</span>]
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-c-skip_part" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">skip_part</span><span
+            class="method-args">(skip)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="skip_part-source">
+            <pre><span class="ruby-comment"># File app/helpers/dynamic_query_resolver.rb, line 98</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">skip_part</span> <span class="ruby-identifier">skip</span>
+  {<span class="ruby-string">&quot;$skip&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">skip</span>}
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-c-sort_part" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">sort_part</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="sort_part-source">
+            <pre><span class="ruby-comment"># File app/helpers/dynamic_query_resolver.rb, line 52</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">sort_part</span>
+  <span class="ruby-identifier">sort</span> = {<span class="ruby-string">&quot;$sort&quot;</span> =<span class="ruby-operator">&gt;</span> {<span class="ruby-string">&quot;_id&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">1</span>}}
+  <span class="ruby-identifier">sort</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+    </section>
+  
+  </section>
+</main>
+
+
+<footer id="validator-badges" role="contentinfo">
+  <p><a href="http://validator.w3.org/check/referer">Validate</a>
+  <p>Generated by <a href="http://docs.seattlerb.org/rdoc/">RDoc</a> 4.2.0.
+  <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
+</footer>
+

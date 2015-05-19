@@ -4,7 +4,44 @@
   padding-top : 5%;
 }
 
-#cssmenu,
+#cssmenu ul,
+#cssmenu ul li {
+  margin: 0;
+  padding: 0;
+}
+
+#cssmenu {
+  list-style-type: none;
+  background-color: #727272;
+  display: block;
+  text-decoration: none;
+}
+
+#cssmenu ul li {
+  display: inline;
+}
+
+#cssmenu ul li a:hover {
+  border-bottom-color: #B6B6B6;
+  border-bottom-width: 5px;
+  border-bottom-style: solid;
+}
+
+#cssmenu ul li a,
+#cssmenu ul li a:visited,
+#cssmenu ul li a:link {
+  font-size: 14px;
+  float: left;  
+  padding: 20px;
+  color: #FFFFFF;
+  text-decoration: none;
+}
+
+#source {
+  clear: both;
+}
+
+/*#cssmenu,
 #cssmenu ul,
 #cssmenu ul li,
 #cssmenu ul li a {
@@ -113,7 +150,7 @@
 #cssmenu ul li a:hover,
 #cssmenu ul li.active > a {
   color: #ffffff;
-}
+}*/
 
 #regionsChart {
   width: 900px;

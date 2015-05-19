@@ -14,7 +14,13 @@ app.factory("SecondsConverter", function () {
     	return obj; 
 	};
 
+	var toString = function(seconds) {
+		var hms = toHoursMinutesSeconds(seconds);
+		return hms.hours + 'h : ' + hms.minutes + 'm : ' + hms.seconds + 's'
+	}
+
 	return {
-		toHoursMinutesSeconds: toHoursMinutesSeconds
+		toHoursMinutesSeconds: toHoursMinutesSeconds,
+		toStringSeconds: toString
 	}
 });

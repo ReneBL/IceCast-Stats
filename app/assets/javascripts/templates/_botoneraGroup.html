@@ -1,0 +1,6 @@
+<label>Agrupar por: </label>
+<div class="btn-group" role="group">
+  	<button type="button" ng-class="{true:'btn btn-danger', false:'btn btn-default'}[groupBy == 'year']" ng-click="group('year')">Año</button>
+  	<button type="button" ng-class="{true:'btn btn-danger', false:'btn btn-default'}[groupBy == 'month']" ng-click="group('month')">Mes</button>
+  	<button type="button" ng-class="{true:'btn btn-danger', false:'btn btn-default'}[groupBy == 'day']" ng-click="group('day')">Día</button>
+</div>

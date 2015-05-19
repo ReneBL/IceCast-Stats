@@ -1,14 +1,23 @@
-var icecast = angular.module("locationFactories", []);
+var icecast = angular.module("locationFactories", ['timeFactory']);
 
-icecast.factory("CountriesConnectionsDataProvider", function() {
+icecast.factory("CountriesConnectionsDataProvider", function (SecondsConverter, CONNECTIONS) {
      	return {
          provide : function(datos, dataType) {
-            countColumnName = (dataType == 'numConnections') ? 'Conexiones' : 'Segundos totales de escucha'; 
+            var numConnections = (dataType == CONNECTIONS.TOTAL_LISTENERS);
+            var countColumnName = numConnections ? CONNECTIONS.TOTAL_LISTENERS : CONNECTIONS.TOTAL_SECONDS; 
          	dataCC = new google.visualization.DataTable();
             dataCC.addColumn({ type: 'string', label: 'Pais' });
             dataCC.addColumn({ type: 'number', label: countColumnName });
+            if (!numConnections) {
+                dataCC.addColumn({type: 'string', role: 'tooltip'});
+            }
        		for(var i=0; i < datos.length; i++) {
-          		dataCC.addRow([datos[i]._id.country, datos[i].count]);
+          		if (numConnections) { 
+                    dataCC.addRow([datos[i]._id.country, datos[i].count])
+                } else {
+                    str = SecondsConverter.toStringSeconds(datos[i].count);
+                    dataCC.addRow([datos[i]._id.country, datos[i].count, countColumnName + ': ' + str]);
+                }
        		}
         	return dataCC;
          }
@@ -23,17 +32,29 @@ icecast.factory("CountriesConnectionsOptionsProvider", function() {
      };
 });
 
-icecast.factory("RegionsCitiesDataProvider", function() {
+icecast.factory("RegionsCitiesDataProvider", function (SecondsConverter, CONNECTIONS) {
         return {
          provide : function(datos, dataType, citiesChecked) {
-            countColumnName = (dataType == 'numConnections') ? 'Conexiones' : 'Segundos totales de escucha'; 
-            dataCC = new google.visualization.DataTable();
-            dataCC.addColumn({ type: 'string', label: (citiesChecked ? 'Ciudad' : 'Región') });
-            dataCC.addColumn({ type: 'number', label: countColumnName });
-            for(var i=0; i < datos.length; i++) {
-                citiesChecked ? dataCC.addRow([datos[i]._id.city, datos[i].count]) : dataCC.addRow([datos[i]._id.region, datos[i].count]);
+            var numConnections = (dataType == CONNECTIONS.TOTAL_LISTENERS);
+            var countColumnName = numConnections ? CONNECTIONS.TOTAL_LISTENERS : CONNECTIONS.TOTAL_SECONDS;
+            var titleName = citiesChecked ? 'Ciudad' : 'Región';
+            dataRC = new google.visualization.DataTable();
+            dataRC.addColumn({ type: 'string', label: titleName });
+            dataRC.addColumn({ type: 'number', label: countColumnName });
+            if (!numConnections) {
+                dataRC.addColumn({type: 'string', role: 'tooltip'});
             }
-            return dataCC;
+            for(var i=0; i < datos.length; i++) {
+                if (numConnections) { 
+                    citiesChecked ? dataRC.addRow([datos[i]._id.city, datos[i].count]) : 
+                        dataRC.addRow([datos[i]._id.region, datos[i].count]);
+                } else {
+                    hms = SecondsConverter.toStringSeconds(datos[i].count);
+                    citiesChecked ? dataRC.addRow([datos[i]._id.city, datos[i].count, countColumnName + ': ' + hms]) : 
+                        dataRC.addRow([datos[i]._id.region, datos[i].count, countColumnName + ': ' + hms]);
+                }
+            }
+            return dataRC;
          }
         };
 });

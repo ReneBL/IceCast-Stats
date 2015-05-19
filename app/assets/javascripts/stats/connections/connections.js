@@ -14,31 +14,21 @@ app.controller("ProgramsController", function ($scope, Programs, NotificationSer
 		Programs.query(cloneParams, function(datos) {
 	   		$scope.dataEmpty = datos.length == 0;
 	   		if (!$scope.dataEmpty) {
-	   	    	$scope.data = ProgramsDataProvider.provide(datos, $scope.uniqueVisitors);
 	   	     	$scope.options = ProgramsOptionsProvider.provide($scope.uniqueVisitors);
+	   	    	$scope.data = ProgramsDataProvider.provide(datos, $scope.uniqueVisitors);
 	    	}
 	        $scope.loaded = !$scope.dataEmpty;
 		});
 	};
 	$scope.doGetData($scope.$parent.doGetParams());
-	$scope.cleanContext = function() {
-		$scope.data = null;
-	   	$scope.options = null;
-	   	$scope.loaded = false;
-	};
-
-	var refreshDataOnBroadCast = function(params) {
-		$scope.cleanContext();
-		$scope.doGetData(params);
-	};
 
 	NotificationService.onChangeScope($scope, function(message) {
-		refreshDataOnBroadCast(message.params);
+		$scope.doGetData(message.params);
 	});
 
 	NotificationService.onUniqueChanged($scope, function(message) {
 		$scope.uniqueVisitors = refreshUniqueParam();
-		refreshDataOnBroadCast(message.params);
+		$scope.doGetData(message.params);
 	});
 
 });
@@ -103,8 +93,8 @@ app.controller('RangesController', function ($scope, Ranges, RangesDataProvider,
 		Ranges.query(cloneParams, function(datos) {
 	   		$scope.dataEmpty = datos.length == 0;
 	   		if (!$scope.dataEmpty) {
-	   	    	$scope.data = RangesDataProvider.provide(datos);
 	   	     	$scope.options = RangesOptionsProvider.provide();
+	   	    	$scope.data = RangesDataProvider.provide(datos);
 	    	}
 	        $scope.loaded = !$scope.dataEmpty;
 		});
@@ -113,13 +103,7 @@ app.controller('RangesController', function ($scope, Ranges, RangesDataProvider,
 	// inicializar los datos mediante un broadcast del controlador padre, ya que lo recibirían TODOS los controladores que estén suscritos
 	// al broadcast, y por lo tanto se harían peticiones innecesarias, reduciendo el rendimiento considerablemente.
 	$scope.doGetData($scope.$parent.doGetParams());
-	$scope.cleanContext = function() {
-		$scope.data = null;
-	   	$scope.options = null;
-	   	$scope.loaded = false;
-	};
 	var doRequest = function() {
-		$scope.cleanContext();
 		$scope.doGetData($scope.$parent.doGetParams());
 	};
 
@@ -141,24 +125,19 @@ app.controller('RangesController', function ($scope, Ranges, RangesDataProvider,
 		}
 	};
 
-	var refreshDataOnBroadCast = function(params) {
-		$scope.cleanContext();
-		$scope.doGetData(params);
-	};
-
 	NotificationService.onChangeScope($scope, function(message) {
-		refreshDataOnBroadCast(message.params);
+		$scope.doGetData(message.params);
 	});
 
 	NotificationService.onUniqueChanged($scope, function(message) {
-		refreshDataOnBroadCast(message.params);
+		$scope.doGetData(message.params);
 	});
 });
 
 app.controller('GroupedTotalSecondsChartController', function ($scope, GroupedTotalSeconds, NotificationService,
-	GroupedChartDataProvider, GroupedTotalSecondsOptionsProvider) {
+	GroupedChartDataProvider, GroupedTotalSecondsOptionsProvider, CONNECTIONS, GROUP_BY) {
 
-	$scope.groupBy = 'year';
+	$scope.groupBy = GROUP_BY.YEAR;
 
 	$scope.doGetData = function(params) {
 		var cloneParams = angular.copy(params);
@@ -166,8 +145,8 @@ app.controller('GroupedTotalSecondsChartController', function ($scope, GroupedTo
 		GroupedTotalSeconds.query(cloneParams, function(datos) {
 	   		$scope.dataEmpty = datos.length == 0;
 	   		if (!$scope.dataEmpty) {
-	   	    	$scope.data = GroupedChartDataProvider.provide($scope.groupBy, datos, "Segundos totales");
 	   	     	$scope.options = GroupedTotalSecondsOptionsProvider.provide($scope.groupBy);
+	   	    	$scope.data = GroupedChartDataProvider.provide($scope.groupBy, datos, CONNECTIONS.TOTAL_SECONDS);
 	    	}
 	        $scope.loaded = !$scope.dataEmpty;
 		});
@@ -180,32 +159,20 @@ app.controller('GroupedTotalSecondsChartController', function ($scope, GroupedTo
 
 	$scope.group = function(value) {
 		if($scope.groupBy != value) { 	 
-			$scope.cleanContext(); 
 	   		$scope.groupBy = value;
 	   	    $scope.doGetData($scope.$parent.doGetParams());
 	   	}
 	};
-	   
-	$scope.cleanContext = function() {
-		$scope.data = null;
-	   	$scope.options = null;
-	   	$scope.loaded = false;
-	};
-
-	var refreshDataOnBroadCast = function(params) {
-		$scope.cleanContext();
-		$scope.doGetData(params);
-	};
 
 	NotificationService.onChangeScope($scope, function(message) {
-		refreshDataOnBroadCast(message.params);
+		$scope.doGetData(message.params);
 	});
 });
 
 app.controller('ConnectionsGroupedChartController', function ($scope, ConnectionsBetweenDates, GroupedChartDataProvider,
-	  ConnBetDatesOptionsProvider, NotificationService) {
+	  ConnBetDatesOptionsProvider, NotificationService, CONNECTIONS, GROUP_BY) {
 
-	$scope.groupBy = 'year';
+	$scope.groupBy = GROUP_BY.YEAR;
 
 	$scope.doGetData = function(params) {
 		var cloneParams = angular.copy(params);
@@ -213,8 +180,8 @@ app.controller('ConnectionsGroupedChartController', function ($scope, Connection
 		ConnectionsBetweenDates.query(cloneParams, function(datos) {
 	   		$scope.dataEmpty = datos.length == 0;
 	   		if (!$scope.dataEmpty) {
-	   	    	$scope.data = GroupedChartDataProvider.provide($scope.groupBy, datos, "Oyentes totales");
 	   	     	$scope.options = ConnBetDatesOptionsProvider.provide($scope.groupBy);
+	   	    	$scope.data = GroupedChartDataProvider.provide($scope.groupBy, datos, CONNECTIONS.TOTAL_LISTENERS);
 	    	}
 	        $scope.loaded = !$scope.dataEmpty;
 		});
@@ -227,28 +194,16 @@ app.controller('ConnectionsGroupedChartController', function ($scope, Connection
    
 	$scope.group = function(value) {
 		if($scope.groupBy != value) { 	 
-			$scope.cleanContext(); 
 	   		$scope.groupBy = value;
 	   	    $scope.doGetData($scope.$parent.doGetParams());
 	   	}
 	};
-	   
-	$scope.cleanContext = function() {
-		$scope.data = null;
-	   	$scope.options = null;
-	   	$scope.loaded = false;
-	};
-
-	var refreshDataOnBroadCast = function(params) {
-		$scope.cleanContext();
-		$scope.doGetData(params);
-	};
 
 	NotificationService.onChangeScope($scope, function(message) {
-		refreshDataOnBroadCast(message.params);
+		$scope.doGetData(message.params);
 	});
 
 	NotificationService.onUniqueChanged($scope, function(message) {
-		refreshDataOnBroadCast(message.params);
+		$scope.doGetData(message.params);
 	});
 });

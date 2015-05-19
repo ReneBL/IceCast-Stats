@@ -1,16 +1,14 @@
 <div ng-controller="StatsController">
-	<div id="menuContainer">
-		<nav id="cssmenu">
-  			<ul>
-  				<li ng-class="{'active': selectedOption == 'conexiones' }"><a ng-click="clickConexiones()" id="Conexiones">Conexiones</a></li>
-				<li ng-class="{'active': selectedOption == 'localizaciones' }"><a ng-click="clickLocalizaciones()" id="Localizacion">Localización</a></li>
-				<li ng-class="{'active': selectedOption == 'rankings' }"><a ng-click="clickRankings()" id="Ranking">Rankings</a></li>
-  			</ul>
-		</nav>
-	</div>
-	<div>
-		<span ng-model="source" class="label label-primary">Filtrando estadísticas por...{{source}}</span>
-	</div>
+	<nav id="cssmenu" class="col-xs-12 col-md-12">
+  	<ul class="col-xs-12">
+  		<li ng-class="{'active': selectedOption == 'conexiones' }"><a ng-click="clickConexiones()" id="Conexiones">Conexiones</a></li>
+	   	<li ng-class="{'active': selectedOption == 'localizaciones' }"><a ng-click="clickLocalizaciones()" id="Localizacion">Localización</a></li>
+			<li ng-class="{'active': selectedOption == 'rankings' }"><a ng-click="clickRankings()" id="Ranking">Rankings</a></li>
+  	</ul>
+	</nav>
+  <div id="source">
+    <span ng-model="source" class="label label-primary">Filtrando estadísticas por...{{source}}</span>
+  </div>
 	<div id="datePickers" ng-controller="FilterController">
 		<div ng-show="invalid">
 			<div class="alert alert-danger alert-dismissible">
