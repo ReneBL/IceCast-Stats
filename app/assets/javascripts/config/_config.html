@@ -1,32 +1,36 @@
 <div class="container" ng-controller="ConfigurationController">
-	<h1>CONFIGURATION PAGE</h1>
-	<div ng-show="changedSource">
-		<div ng-model="source">
-			Seleccionado filtro: {{source}}
-		</div>
-	</div>
-	<div>
-		<label>
-			Filtrar en base a 
-			<select id="comboSources" ng-model="source" ng-options="source for source in sources">
-			</select>
-		</label>
-	</div>
-	<form name="params">
-		<div>
-			<label>Actualizar estadísticas en tiempo real cada <input type="number" name="input" ng-model="refreshSeconds"
-           			min="1" max="60" required> segundos 
-           	</label>
-		</div>
-		<div>
-			<label>Dirección del servidor IceCast: <input type="text" name="input" ng-model="server" ng-minlength="3" ng-change="setServer()" required>
-				<span class="error" ng-show="params.input.$error.required">
-      				La dirección no puede ser vacía!
-      			</span>
-    			<span class="error" ng-show="params.input.$error.minlength">
-      				La dirección debe tener al menos 3 caracteres!
-      			</span>
+	<h1 class="text-center">Configuración del sistema</h1>
+	<div class="panel panel-default">
+  		<div class="panel-heading">
+    		<h3 class="panel-title">Parámetros</h3>
+  		</div>
+  		<span class="list-group-item">
+  			<label>
+				Filtrar en base a 
+				<select id="comboSources" ng-model="source" ng-options="source for source in sources">
+				</select>
 			</label>
-		</div>
-	</form>
+  		</span>
+  		<span class="list-group-item">
+  			<form name="refreshForm">
+				<div id="configRefresh">
+					<label ng-class="{true: 'hint--top hint--error hint--always hint--bounce', false: undefined}[refreshForm.inputRefreshSeconds.$error.required || !refreshForm.inputRefreshSeconds.$valid]" ng-attr-data-hint="{{(refreshForm.inputRefreshSeconds.$error.required || !refreshForm.inputRefreshSeconds.$valid) ? 'Tasa de refresco no válida (1..60)' : undefined}}">
+					Tiempo de refresco de estadísticas en tiempo real (en segundos): 
+					</label>
+					<input class="form-control" type="number" name="inputRefreshSeconds" ng-model="refreshSeconds" 
+					ng-change="setRefreshSeconds(refreshForm.$valid)" min="1" max="60" required>
+				</div>
+			</form>
+  		</span>
+  		<span class="list-group-item">
+  			<form name="serverForm">
+				<div id="configServer">
+					<label ng-class="{true: 'hint--top hint--error hint--always hint--bounce', false: undefined}[serverForm.inputServer.$error.required || !serverForm.inputServer.$valid]" ng-attr-data-hint="{{(serverForm.inputServer.$error.required || !serverForm.inputServer.$valid) ? 'Dirección URL no válida' : undefined}}">
+					Dirección del servidor IceCast: 
+					</label>
+					<input class="form-control" type="url" name="inputServer" ng-model="server" ng-change="setServer(serverForm.$valid)" required>
+				</div>
+			</form>
+  		</span>
+	</div>
 </div>

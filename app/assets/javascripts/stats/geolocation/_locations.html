@@ -21,6 +21,24 @@
 	</div>
 	<h4>Localizaciones <small>Regiones y ciudades</small></h4>
 	<div ng-controller="RegionsCitiesConnectionsController">
+		<div id="divCombosCitiesRegions">
+			<div>
+  				<label ng-class="{true: 'hint--top hint--info hint--always hint--bounce', false: undefined}[citiesCheckedModel.checked && regionsEmpty]" ng-attr-data-hint="{{citiesCheckedModel.checked && regionsEmpty ? 'No existen regiones para este país' : undefined}}">
+  					Seleccione un país: 
+  				</label>
+				<select class="form-control" id="comboCountries" ng-model="country" ng-options="country for country in 			countries" ng-change="selectedCountry()">
+				</select>
+			</div>
+			<div ng-show="citiesCheckedModel.checked && !regionsEmpty">
+				<label>Seleccione una región: </label>
+				<select class="form-control" id="comboRegions" ng-model="region" ng-options="region for region in 		regions" ng-change="selectedRegion()">
+				</select>
+			</div>
+			<span>
+				<label>Mostrar regiones: </label>
+				<input id="citiesCB" type="checkbox" ng-model="citiesCheckedModel.checked" ng-change="changedCheckBoxCities()">
+			</span>
+		</div>
 		<div ng-show="dataEmpty">
   			<div class="panel panel-default">
   				<div class="panel-body">
@@ -28,19 +46,6 @@
   				</div>
 			</div>
   		</div>
-  		<span>
-			<select class="form-control" id="comboCountries" ng-model="country" ng-options="country for country in 			countries" ng-change="selectedCountry()">
-			</select>
-		</span>
-		<span ng-show="regionsEmpty">No existen regiones para este país</span>
-		<span ng-show="citiesCheckedModel.checked">
-			<select class="form-control" id="comboRegions" ng-model="region" ng-options="region for region in regions" ng-change="selectedRegion()">
-			</select>
-		</span>
-		<span>
-			<label>Mostrar regiones: </label>
-			<input id="citiesCB" type="checkbox" ng-model="citiesCheckedModel.checked" ng-change="changedCheckBoxCities()">
-		</span>
 		<span ng-if="loaded">
 			<label>Mostrar: </label>
 			<span class="btn-group" role="group">

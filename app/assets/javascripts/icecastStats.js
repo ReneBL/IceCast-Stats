@@ -28,6 +28,9 @@ app.constant('START_INDEX', 0).
       'YEAR': "year",
       'MONTH': "month",
       "DAY": "day"
+    }).constant('CONFIGURATION', {
+      'DEFAULT_SOURCE': 'Todos',
+      'DEFAULT_POLL_URL': 'http://streaming.cuacfm.org/status-json.xsl'
     });
 
 app.config(function(snapRemoteProvider) {

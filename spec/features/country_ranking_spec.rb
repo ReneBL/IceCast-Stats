@@ -204,15 +204,15 @@ feature "country ranking" do
 
     click_button "dropDownMenu"
     check 'showHourRange'
-    fill_in 'horaInicio', :with => "10:55:41"
+    fill_in 'horaFin', :with => "10:55:41"
 
     within '#rankingPais' do
-      page.should have_content('Italy')
+      page.should_not have_content('Italy')
       page.should_not have_content('China')
-      page.should have_content('France')
-      page.should have_content('Spain')
-      page.should have_content('United States')
-      page.should have_content('Germany')
+      page.should_not have_content('France')
+      page.should_not have_content('Spain')
+      page.should_not have_content('United States')
+      page.should_not have_content('Germany')
     end
 
   end

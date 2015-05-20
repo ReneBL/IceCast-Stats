@@ -1,6 +1,6 @@
 var module = angular.module("configState", []);
 
-module.factory("StateFactory", function() {
+module.factory("StateFactory", function (CONFIGURATION) {
 	var getSource = function() {
 		return this.source;
 	}
@@ -34,9 +34,9 @@ module.factory("StateFactory", function() {
 	}
 
 	return {
-		source: 'Todos',
+		source: CONFIGURATION.DEFAULT_SOURCE,
 		refreshSeconds: 5000,
-		server: 'http://streaming.cuacfm.org/status-json.xsl',
+		server: CONFIGURATION.DEFAULT_POLL_URL,
 		listeners: 0,
 		getSelectedSource: getSource,
 		setSelectedSource: setSource,

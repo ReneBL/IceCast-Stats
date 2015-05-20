@@ -107,22 +107,13 @@ app.controller('RangesController', function ($scope, Ranges, RangesDataProvider,
 		$scope.doGetData($scope.$parent.doGetParams());
 	};
 
-	$scope.validateMin = function(validForm) {
+	$scope.validateMaxMin = function(validForm) {
 		if (validForm) {
 			$scope.minGreaterThanMax = ($scope.range.min > $scope.range.max);
 			if (!$scope.minGreaterThanMax) {
 				doRequest();
 			}
 		};
-	};
-
-	$scope.validateMax = function(validForm) {
-		if (validForm) {
-			$scope.maxGreaterThanMin = ($scope.range.max < $scope.range.min);
-			if (!$scope.maxGreaterThanMin) {
-				doRequest();
-			}
-		}
 	};
 
 	NotificationService.onChangeScope($scope, function(message) {

@@ -31,13 +31,13 @@
   		</div>
 		<div ng-if="loaded">
 			<div ng-if="groupBy == 'year'">
-				<div id="cbdYear" chart chart-type="Line"></div>
+				<div id="gtsYear" chart chart-type="Line"></div>
 			</div>
 			<div ng-if="groupBy == 'month'">
-				<div id="cbdMonth" chart chart-type="Column"></div>
+				<div id="gtsMonth" chart chart-type="Column"></div>
 			</div>
 			<div ng-if="groupBy == 'day'">
-				<div id="cbdDay" chart chart-type="Calendar"></div>
+				<div id="gtsDay" chart chart-type="Calendar"></div>
 			</div>
 		</div>
 	</div>
@@ -62,30 +62,20 @@
 	
 	<div id="pieTimeConnections" ng-controller="RangesController">
 		<div>
-			<!-- <span range-slider min="5" max="120" model-min="range.min" model-max="range.max"></span> -->
 			<form name="rangesForm">
-				<label>Min </label><input type="number" id="min" name="min" ng-model="range.min" min="5" max="120" 
-					ng-change="validateMin(rangesForm.$valid)" required>
-				<label>Max </label><input type="number" id="max" name="max" ng-model="range.max" min="5" max="120" 
-					ng-change="validateMax(rangesForm.$valid)" required>
-				<span class="error" ng-show="maxGreaterThanMin">
-      				Max no puede ser menor que Min
-      			</span>
-    			<span class="error" ng-show="minGreaterThanMax">
-      				Min no puede ser mayor que Max
-      			</span>
-				<span class="error" ng-show="rangesForm.min.$error.required">
-      				El valor mínimo no puede ser vacío
-      			</span>
-    			<span class="error" ng-show="rangesForm.max.$error.required">
-      				El valor máximo no puede ser vacío
-      			</span>
-      			<span class="error" ng-show="!rangesForm.max.$valid">
-      				El valor máximo no es válido (5..120)
-      			</span>
-      			<span class="error" ng-show="!rangesForm.min.$valid">
-      				El valor mínimo no es válido (5..120)
-      			</span>
+				<label ng-class="{true: 'hint--top hint--error hint--always hint--bounce', false: undefined}[rangesForm.min.$error.required || !rangesForm.min.$valid]" ng-attr-data-hint="{{(rangesForm.min.$error.required || !rangesForm.min.$valid) ? 'Valor mínimo no válido (5..120)' : undefined}}">
+					Min
+				</label>
+				<input type="number" id="min" name="min" ng-model="range.min" min="5" max="120" 
+					ng-change="validateMaxMin(rangesForm.$valid)" required>
+				<label ng-class="{true: 'hint--bottom hint--error hint--always hint--bounce', false: undefined}[rangesForm.max.$error.required || !rangesForm.max.$valid]" ng-attr-data-hint="{{(rangesForm.max.$error.required || !rangesForm.max.$valid) ? 'Valor máximo no válido (5..120)' : undefined}}">
+					Max 
+				</label>
+				<input type="number" id="max" name="max" ng-model="range.max" min="5" max="120" 
+					ng-change="validateMaxMin(rangesForm.$valid)" required>
+				<span class="minMaxError" ng-show="minGreaterThanMax && !((rangesForm.max.$error.required || !rangesForm.max.$valid) || (rangesForm.min.$error.required || !rangesForm.min.$valid))">
+      		Min no puede ser mayor que Max
+      	</span>
 			</form>
 		</div>
 		<span ng-if="loaded">

@@ -41,36 +41,36 @@ feature 'filter data by time' do
     page.should have_content("hasta las")
 
     fill_in 'horaInicio', :with => "010:30:189"
-    page.should have_content("Hora de inicio no válida")
+    page.should have_content("Hora inicio no válida")
 
     fill_in 'horaFin', :with => "25:30:18"
-    page.should have_content("Hora de inicio no válida")
-    page.should have_content("Hora de fin no válida")
+    page.should have_content("Hora inicio no válida")
+    page.should have_content("Hora fin no válida")
 
     fill_in 'horaInicio', :with => "10:30:18"
-    page.should_not have_content("Hora de inicio no válida")
-    page.should have_content("Hora de fin no válida")
+    page.should_not have_content("Hora inicio no válida")
+    page.should have_content("Hora fin no válida")
 
     fill_in 'horaFin', :with => "15:45:09"
-    page.should_not have_content("Hora de inicio no válida")
-    page.should_not have_content("Hora de fin no válida")
+    page.should_not have_content("Hora inicio no válida")
+    page.should_not have_content("Hora fin no válida")
 
     fill_in 'horaInicio', :with => "13:30:18"
-    page.should_not have_content("Hora de inicio no válida")
-    page.should_not have_content("Hora de fin no válida")
+    page.should_not have_content("Hora inicio no válida")
+    page.should_not have_content("Hora fin no válida")
 
     fill_in 'horaFin', :with => "12:45:09"
-    page.should_not have_content("Hora de inicio no válida")
-    page.should_not have_content("Hora de fin no válida")
+    page.should_not have_content("Hora inicio no válida")
+    page.should_not have_content("Hora fin no válida")
     page.should have_content("La hora de inicio es mayor que la hora de fin")
 
     fill_in 'horaInicio', :with => ""
-    page.should have_content("La hora inicio no puede ser vacía!")
+    page.should have_content("Hora inicio no válida")
     page.should_not have_content("La hora de inicio es mayor que la hora de fin")
 
     fill_in 'horaFin', :with => ""
-    page.should have_content("La hora inicio no puede ser vacía!")
-    page.should have_content("La hora fin no puede ser vacía!")
+    page.should have_content("Hora inicio no válida")
+    page.should have_content("Hora fin no válida")
 
     # Por defecto la opción de agrupamiento es por año, así que comprobamos que no se ha pintado ninguna gráfica
     within '#cgcController' do

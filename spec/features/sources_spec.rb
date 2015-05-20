@@ -34,7 +34,7 @@ feature "connections stats filtered out" do
     page.should have_content("2013")
     page.should have_content("2")
 
-    click_button 'Month'
+    click_button 'Mes'
     page.should have_content("11/2013")
     page.should have_content("12/2013")
 

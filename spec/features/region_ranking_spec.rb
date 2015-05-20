@@ -53,28 +53,28 @@ feature "region ranking" do
 
       page.should have_content('Galicia, Spain')
       page.should have_content('3')
-      page.should have_content('30')
-      page.should have_content('330')
+      page.should have_content('330 Bytes')
+      page.should have_content('0h : 0m : 30s')
 
       page.should have_content('Cataluña, Spain')
       page.should have_content('3')
-      page.should have_content('60')
-      page.should have_content('75')
+      page.should have_content('75.0 Bytes')
+      page.should have_content('0h : 1m : 0s')
       
       page.should have_content('Extremadura, Spain')
       page.should have_content('2')
-      page.should have_content('30')
-      page.should have_content('200')
+      page.should have_content('200 Bytes')
+      page.should have_content('0h : 0m : 30s')
 
       page.should have_content('Madrid, Spain')
       page.should have_content('1')
-      page.should have_content('2567546')
-      page.should have_content('20')
+      page.should have_content('23.0 Bytes')
+      page.should have_content('0h : 0m : 8s')
 
       page.should have_content('New Jersey, United States')
       page.should have_content('1')
-      page.should have_content('9')
-      page.should have_content('23')
+      page.should have_content('23.0 Bytes')
+      page.should have_content('0h : 0m : 9s')
       
       page.should_not have_content('Nacional, Dominican Republic')
 
@@ -111,28 +111,28 @@ feature "region ranking" do
 
       page.should have_content('Galicia, Spain')
       page.should have_content('3')
-      page.should have_content('30')
-      page.should have_content('330')
+      page.should have_content('330 Bytes')
+      page.should have_content('0h : 0m : 30s')
 
       page.should have_content('Cataluña, Spain')
       page.should have_content('3')
-      page.should have_content('60')
-      page.should have_content('75')
+      page.should have_content('75.0 Bytes')
+      page.should have_content('0h : 1m : 0s')
       
       page.should have_content('Extremadura, Spain')
       page.should have_content('2')
-      page.should have_content('30')
-      page.should have_content('200')
+      page.should have_content('200 Bytes')
+      page.should have_content('0h : 0m : 30s')
       
       page.should have_content('Madrid, Spain')
       page.should have_content('1')
-      page.should have_content('2567546')
-      page.should have_content('20')
+      page.should have_content('23.0 Bytes')
+      page.should have_content('0h : 0m : 8s')
       
       page.should have_content('New Jersey, United States')
       page.should have_content('1')
-      page.should have_content('9')
-      page.should have_content('23')
+      page.should have_content('23.0 Bytes')
+      page.should have_content('0h : 0m : 9s')
 
       page.should_not have_content('Siguiente >')
       page.should_not have_content('Anterior >')
@@ -154,7 +154,7 @@ feature "region ranking" do
 
     click_button "dropDownMenu"
     check 'showHourRange'
-    fill_in 'horaInicio', :with => "00:27:05"
+    fill_in 'horaInicio', :with => "02:27:05"
 
     within '#rankingRegion' do
     	page.should_not have_content('Galicia, Spain')
@@ -186,7 +186,7 @@ feature "region ranking" do
       page.should have_content('Extremadura, Spain')
       page.should have_content('Madrid, Spain')
       page.should have_content('New Jersey, United States')
-      page.should have_content('Nacional, Dominican Republic')
+      page.should_not have_content('Nacional, Dominican Republic')
 
       page.should_not have_content('Siguiente >')
       page.should_not have_content('< Anterior')

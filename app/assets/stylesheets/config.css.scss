@@ -1,0 +1,10 @@
+#configServer, #configRefresh {
+	display: inline-flex;
+	width: 100%;
+	align-items: center;
+}
+
+#configServer > label,
+#configRefresh > label {
+	width: 70%;
+}

@@ -110,9 +110,11 @@ feature "connections between dates" do
     end
     within "#pieTimeConnections" do
       fill_in 'min', :with => '50'
-      page.should have_content("<= 60")
+      page.should have_content("<= 50")
+      page.should have_content("50-60")
       page.should have_content("> 60")
-      page.should have_content("66.6%")
+      page.should have_content("33.3%")
+      page.should have_content("33.3%")
       page.should have_content("33.3%")            
     end
   end
@@ -141,11 +143,9 @@ feature "connections between dates" do
       page.should have_content("100%")
 
       fill_in 'max', :with => '60'
-      page.should_not have_content("<= 20")
-      page.should have_content("5-50")
-      page.should have_content("> 60")
-      page.should have_content("50%")
-      page.should have_content("50%")         
+      page.should_not have_content("5-120")
+      page.should have_content("5-60")
+      page.should have_content("100%")        
     end
   end
   
