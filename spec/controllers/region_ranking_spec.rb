@@ -30,12 +30,12 @@ RSpec.describe RankingController, type: :controller do
   describe "when access to ranking of regions" do
   	it "should return all ranking without pagination" do
   		expected_array = [
-  			{:_id => {:region => "Galicia", :country => "Spain"}, :listeners => 3, :bytes => 330, :time => 30},
-        {:_id => {:region => "Cataluña", :country => "Spain"}, :listeners => 3, :bytes => 75, :time => 60},
-  			{:_id => {:region => "Extremadura", :country => "Spain"}, :listeners => 2, :bytes => 200, :time => 30},
-        {:_id => {:region => "New Jersey", :country => "United States"}, :listeners => 1, :bytes => 23, :time => 9},
-        {:_id => {:region => "Madrid", :country => "Spain"}, :listeners => 1, :bytes => 23, :time => 8},
-        {:_id => {:region => "Nacional", :country => "Dominican Republic"}, :listeners => 1, :bytes => 16, :time => 23}
+        {:_id => {:region => "Cataluña", :country => "Spain"}, :time => 60, :bytes => 75, :listeners => 3},
+        {:_id => {:region => "Galicia", :country => "Spain"}, :time => 30, :bytes => 330, :listeners => 3},
+  			{:_id => {:region => "Extremadura", :country => "Spain"}, :time => 30, :bytes => 200, :listeners => 2},
+        {:_id => {:region => "Nacional", :country => "Dominican Republic"}, :time => 23, :bytes => 16, :listeners => 1},
+        {:_id => {:region => "New Jersey", :country => "United States"}, :time => 9, :bytes => 23, :listeners => 1},
+        {:_id => {:region => "Madrid", :country => "Spain"}, :time => 8, :bytes => 23, :listeners => 1}
   		]
   		expected = expected_array.to_json
     	xhr :get, :region_ranking, :start_date => '17/07/2014', :end_date => '25/02/2015', :format => :json
@@ -45,27 +45,27 @@ RSpec.describe RankingController, type: :controller do
   	it "should return ranking of regions paginated" do
 
       expected_array = [
-        {:_id => {:region => "Galicia", :country => "Spain"}, :listeners => 3, :bytes => 330, :time => 30},
-        {:_id => {:region => "Cataluña", :country => "Spain"}, :listeners => 3, :bytes => 75, :time => 60},
-        {:_id => {:region => "Extremadura", :country => "Spain"}, :listeners => 2, :bytes => 200, :time => 30},
-        {:_id => {:region => "New Jersey", :country => "United States"}, :listeners => 1, :bytes => 23, :time => 9},
-        {:_id => {:region => "Madrid", :country => "Spain"}, :listeners => 1, :bytes => 23, :time => 8},
+        {:_id => {:region => "Cataluña", :country => "Spain"}, :time => 60, :bytes => 75, :listeners => 3},
+        {:_id => {:region => "Galicia", :country => "Spain"}, :time => 30, :bytes => 330, :listeners => 3},
+        {:_id => {:region => "Extremadura", :country => "Spain"}, :time => 30, :bytes => 200, :listeners => 2},
+        {:_id => {:region => "Nacional", :country => "Dominican Republic"}, :time => 23, :bytes => 16, :listeners => 1},
+        {:_id => {:region => "New Jersey", :country => "United States"}, :time => 9, :bytes => 23, :listeners => 1},
         {:hasMore => true}
       ]
       xhrRequestRegionRanking expected_array
 
       expected_array = [
-        {:_id => {:region => "Nacional", :country => "Dominican Republic"}, :listeners => 1, :bytes => 16, :time => 23},
+        {:_id => {:region => "Madrid", :country => "Spain"}, :time => 8, :bytes => 23, :listeners => 1},
         {:hasMore => false}
       ]
       xhrRequestRegionRanking expected_array, '17/07/2014', '25/02/2015', 5, 5
 
   		expected_array = [
-  			{:_id => {:region => "Cataluña", :country => "Spain"}, :listeners => 3, :bytes => 75, :time => 60},
-        {:_id => {:region => "Extremadura", :country => "Spain"}, :listeners => 2, :bytes => 200, :time => 30},
-        {:_id => {:region => "New Jersey", :country => "United States"}, :listeners => 1, :bytes => 23, :time => 9},
-        {:_id => {:region => "Madrid", :country => "Spain"}, :listeners => 1, :bytes => 23, :time => 8},
-        {:_id => {:region => "Nacional", :country => "Dominican Republic"}, :listeners => 1, :bytes => 16, :time => 23},
+  			{:_id => {:region => "Cataluña", :country => "Spain"}, :time => 60, :bytes => 75, :listeners => 3},
+        {:_id => {:region => "Extremadura", :country => "Spain"}, :time => 30, :bytes => 200, :listeners => 2},
+        {:_id => {:region => "Nacional", :country => "Dominican Republic"}, :time => 23, :bytes => 16, :listeners => 1},
+        {:_id => {:region => "New Jersey", :country => "United States"}, :time => 9, :bytes => 23, :listeners => 1},
+        {:_id => {:region => "Madrid", :country => "Spain"}, :time => 8, :bytes => 23, :listeners => 1},
         {:hasMore => false}
   		]
   		xhrRequestRegionRanking expected_array, '01/12/2014', '25/02/2015', 0, 5
@@ -76,22 +76,22 @@ RSpec.describe RankingController, type: :controller do
   	it "should return ranking of regions paginated and filtered by date" do
 
   		expected_array = [
-  			{:_id => {:region => "Cataluña", :country => "Spain"}, :listeners => 3, :bytes => 75, :time => 60},
-  			{:_id => {:region => "New Jersey", :country => "United States"}, :listeners => 1, :bytes => 23, :time => 9},
+  			{:_id => {:region => "Cataluña", :country => "Spain"}, :time => 60, :bytes => 75, :listeners => 3},
+        {:_id => {:region => "Nacional", :country => "Dominican Republic"}, :time => 23, :bytes => 16, :listeners => 1},
         {:hasMore => true}
-  		]
-  		xhrRequestRegionRanking expected_array, '01/02/2015', '25/02/2015', 0, 2
+      ]
+      xhrRequestRegionRanking expected_array, '01/02/2015', '25/02/2015', 0, 2
 
-  		expected_array = [
-        {:_id => {:region => "Madrid", :country => "Spain"}, :listeners => 1, :bytes => 23, :time => 8},
-  			{:_id => {:region => "Nacional", :country => "Dominican Republic"}, :listeners => 1, :bytes => 16, :time => 23},
+      expected_array = [
+  			{:_id => {:region => "New Jersey", :country => "United States"}, :time => 9, :bytes => 23, :listeners => 1},
+        {:_id => {:region => "Madrid", :country => "Spain"}, :time => 8, :bytes => 23, :listeners => 1},
         {:hasMore => false}
   		]
   		xhrRequestRegionRanking expected_array, '01/02/2015', '25/03/2015', 2, 2
 
       expected_array = [
-        {:_id => {:region => "BlaBla", :country => "Unknown"}, :listeners => 1, :bytes => 80, :time => 25},
-        {:_id => {:region => "Unknown", :country => "Spain"}, :listeners => 1, :bytes => 40, :time => 14},
+        {:_id => {:region => "BlaBla", :country => "Unknown"}, :time => 25, :bytes => 80, :listeners => 1},
+        {:_id => {:region => "Unknown", :country => "Spain"}, :time => 14, :bytes => 40, :listeners => 1},
         {:hasMore => false}
       ]
       xhrRequestRegionRanking expected_array, '17/07/2015', '18/07/2015', 0, 2

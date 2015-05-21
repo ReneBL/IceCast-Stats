@@ -92,14 +92,14 @@ feature 'filter data by time' do
       page.should_not have_content("2014")
     end
 
-    click_button 'Mes'
-
-    within "#cbdMonth" do
-      page.text.should match("11/2013")
-      page.text.should match("12/2013")
-      page.text.should_not match("1/2014")
+    within "#cgcController" do
+      click_button 'Mes'
+      within "#cbdMonth" do
+        page.text.should match("11/2013")
+        page.text.should match("12/2013")
+        page.text.should_not match("1/2014")
+      end
     end
-
   end
 
   scenario 'wide dates, hour in/out of range', :js => true do
@@ -165,12 +165,16 @@ feature 'filter data by time' do
     fill_in 'fechaFin', :with => Date.new(2013,12,14)
 
     # La franja horaria por defecto es desde las 00:00:00 hasta las 23:59:59
-    click_button 'Mes'
+    within "#cgcController" do
+      click_button 'Mes'
+    end
 
     # Comprobamos que, aunque tenga un filtro de horas que abarque todo el día, solo
     # nos representa las estadísticas en la fecha marcada
-    within "#cbdMonth" do
-      page.text.should match("12/2013")
+    within "#cgcController" do
+      within "#cbdMonth" do
+        page.text.should match("12/2013")
+      end
     end
 
     fill_in 'fechaFin', :with => Date.new(2014,1,1)

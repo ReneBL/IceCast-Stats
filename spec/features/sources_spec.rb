@@ -25,7 +25,6 @@ feature "connections stats filtered out" do
   scenario 'access the configuration page and select filter', :js => true do
     log_in_process
     select_filter 'cuacfm.mp3'
-    page.should have_content("Seleccionado filtro: cuacfm.mp3")
     
     go_to_estadisticas
     page.should have_content("Filtrando estadísticas por...cuacfm.mp3")
@@ -34,7 +33,9 @@ feature "connections stats filtered out" do
     page.should have_content("2013")
     page.should have_content("2")
 
-    click_button 'Mes'
+    within "#cgcController" do
+      click_button 'Mes'
+    end
     page.should have_content("11/2013")
     page.should have_content("12/2013")
 
@@ -55,7 +56,6 @@ feature "connections stats filtered out" do
     page.should have_content("2013")
     page.should have_content("1")
     page.should have_content("Filtrando estadísticas por...pepito.ogg")
-    click_button "menuButton"
     page.should have_content('Usuario: admin, Logout')
     #Hacemos log out
     click_link 'Logout'

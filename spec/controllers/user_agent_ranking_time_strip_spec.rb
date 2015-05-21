@@ -26,32 +26,32 @@ RSpec.describe RankingController, type: :controller do
 
 		it "should return ranking of user agents filtered by time and paginated" do
 			expected_array = [
-  			{:_id => "Google Chrome", :listeners => 5, :bytes => 150, :time => 75},
-        {:_id => "Safari", :listeners => 2, :bytes => 40, :time => 20},
-        {:_id => "Winamp", :listeners => 1, :bytes => 11356, :time => 16},
-        {:_id => "VLC Media Player", :listeners => 1, :bytes => 345, :time => 6},
-        {:_id => "iTunes/9.1.1", :listeners => 1, :bytes => 40, :time => 20},
+  			{:_id => "Google Chrome", :time => 75, :bytes => 150, :listeners => 5},
+				{:_id => "Safari", :time => 20, :bytes => 40, :listeners => 2},
+				{:_id => "iTunes/9.1.1", :time => 20, :bytes => 40, :listeners => 1},
+				{:_id => "Winamp", :time => 16, :bytes => 11356, :listeners => 1},
+				{:_id => "VLC Media Player", :time => 6, :bytes => 345, :listeners => 1},
         {:hasMore => true}
   		]
 			xhrRequestUserAgentRanking expected_array
 
 			expected_array = [
-				{:_id => "Google Chrome", :listeners => 5, :bytes => 150, :time => 75},
-        {:_id => "Winamp", :listeners => 1, :bytes => 11356, :time => 16},
-        {:_id => "Mozilla Firefox", :listeners => 1, :bytes => 10, :time => 5},
+				{:_id => "Google Chrome", :time => 75, :bytes => 150, :listeners => 5},
+        {:_id => "Winamp", :time => 16, :bytes => 11356, :listeners => 1},
+        {:_id => "Mozilla Firefox", :time => 5, :bytes => 10, :listeners => 1},
 				{:hasMore => false}
 			]
 			xhrRequestUserAgentRanking expected_array, '05:27:05', '10:55:42'
 
 			expected_array = [
-				{:_id => "Google Chrome", :listeners => 5, :bytes => 150, :time => 75},
-        {:_id => "Winamp", :listeners => 1, :bytes => 11356, :time => 16},
+				{:_id => "Google Chrome", :time => 75, :bytes => 150, :listeners => 5},
+        {:_id => "Winamp", :time => 16, :bytes => 11356, :listeners => 1},
 				{:hasMore => true}
 			]
 			xhrRequestUserAgentRanking expected_array, '05:27:05', '10:55:42', 0, 2
 
 			expected_array = [
-				{:_id => "Mozilla Firefox", :listeners => 1, :bytes => 10, :time => 5},
+				{:_id => "Mozilla Firefox", :time => 5, :bytes => 10, :listeners => 1},
 				{:hasMore => false}
 			]
 			xhrRequestUserAgentRanking expected_array, '05:27:05', '10:55:42', 2, 2
@@ -59,22 +59,22 @@ RSpec.describe RankingController, type: :controller do
 
 		it "should return ranking of user agents filtered by time and date and paginated" do
 			expected_array = [
-				{:_id => "Google Chrome", :listeners => 5, :bytes => 150, :time => 75},
-				{:_id => "Winamp", :listeners => 1, :bytes => 11356, :time => 16},
+				{:_id => "Google Chrome", :time => 75, :bytes => 150, :listeners => 5},
+        {:_id => "Winamp", :time => 16, :bytes => 11356, :listeners => 1},
 				{:hasMore => true}
 			]
 			xhrRequestUserAgentRanking expected_array, '05:27:04', '23:59:59', 0, 2, '11/02/2015', '27/11/2015'
 
 			expected_array = [
-				{:_id => "VLC Media Player", :listeners => 1, :bytes => 345, :time => 6},
+				{:_id => "VLC Media Player", :time => 6, :bytes => 345, :listeners => 1},
 				{:hasMore => false}
 			]
 			xhrRequestUserAgentRanking expected_array, '05:27:04', '23:59:59', 2, 2, '11/02/2015', '27/11/2015'
 
 			expected_array = [
-				{:_id => "Safari", :listeners => 2, :bytes => 40, :time => 20},
-        {:_id => "Winamp", :listeners => 1, :bytes => 11356, :time => 16},
-        {:_id => "iTunes/9.1.1", :listeners => 1, :bytes => 40, :time => 20},
+				{:_id => "Safari", :time => 20, :bytes => 40, :listeners => 2},
+				{:_id => "iTunes/9.1.1", :time => 20, :bytes => 40, :listeners => 1},
+				{:_id => "Winamp", :time => 16, :bytes => 11356, :listeners => 1},
 				{:hasMore => false}
 			]
 			xhrRequestUserAgentRanking expected_array, '03:10:39', '06:27:04', 0, 5, '14/11/2014', '27/11/2015'

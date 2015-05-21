@@ -25,30 +25,30 @@ RSpec.describe RankingController, type: :controller do
   	it "should return ranking of user agent paginated" do
 
   		expected_array = [
-  			{:_id => "http://cuacfm.org/directo", :listeners => 2, :bytes => 28, :time => 66},
-        {:_id => "http://url9.com", :listeners => 1, :bytes => 33, :time => 50},
-        {:_id => "http://url8.com", :listeners => 1, :bytes => 24, :time => 46},
-        {:_id => "http://url7.com", :listeners => 1, :bytes => 19, :time => 21},
-        {:_id => "http://url6.com", :listeners => 1, :bytes => 18, :time => 28},
-        {:_id => "http://url2.com", :listeners => 1, :bytes => 15, :time => 20},
-        {:_id => "http://url4.com", :listeners => 1, :bytes => 13, :time => 25},
-        {:_id => "http://url10.com", :listeners => 1, :bytes => 12, :time => 90},
-        {:_id => "http://url5.com", :listeners => 1, :bytes => 11, :time => 30},
-        {:_id => "http://url3.com", :listeners => 1, :bytes => 8, :time => 16}
+        {:_id => "http://url10.com", :time => 90, :bytes => 12, :listeners => 1},
+        {:_id => "http://cuacfm.org/directo", :time => 66, :bytes => 28, :listeners => 2},
+        {:_id => "http://url9.com", :time => 50, :bytes => 33, :listeners => 1},
+        {:_id => "http://url8.com", :time => 46, :bytes => 24, :listeners => 1},
+        {:_id => "http://url5.com", :time => 30, :bytes => 11, :listeners => 1},
+        {:_id => "http://url6.com", :time => 28, :bytes => 18, :listeners => 1},
+        {:_id => "http://url4.com", :time => 25, :bytes => 13, :listeners => 1},
+        {:_id => "http://url7.com", :time => 21, :bytes => 19, :listeners => 1},
+        {:_id => "http://url2.com", :time => 20, :bytes => 15, :listeners => 1},
+        {:_id => "http://url3.com", :time => 16, :bytes => 8, :listeners => 1}
   		]
   		xhrRequestTopLinksRanking expected_array
 
   		expected_array = [
-        {:_id => "http://url9.com", :listeners => 1, :bytes => 33, :time => 50},
-        {:_id => "http://url8.com", :listeners => 1, :bytes => 24, :time => 46},
-        {:_id => "http://url7.com", :listeners => 1, :bytes => 19, :time => 21},
-        {:_id => "http://url6.com", :listeners => 1, :bytes => 18, :time => 28},
-        {:_id => "http://url2.com", :listeners => 1, :bytes => 15, :time => 20},
-        {:_id => "http://url4.com", :listeners => 1, :bytes => 13, :time => 25},
-        {:_id => "http://url10.com", :listeners => 1, :bytes => 12, :time => 90},
-        {:_id => "http://url5.com", :listeners => 1, :bytes => 11, :time => 30},
-        {:_id => "http://cuacfm.org/directo", :listeners => 1, :bytes => 10, :time => 10},
-        {:_id => "http://url3.com", :listeners => 1, :bytes => 8, :time => 16}
+        {:_id => "http://url10.com", :time => 90, :bytes => 12, :listeners => 1},
+        {:_id => "http://url9.com", :time => 50, :bytes => 33, :listeners => 1},
+        {:_id => "http://url8.com", :time => 46, :bytes => 24, :listeners => 1},
+        {:_id => "http://url5.com", :time => 30, :bytes => 11, :listeners => 1},
+        {:_id => "http://url6.com", :time => 28, :bytes => 18, :listeners => 1},
+        {:_id => "http://url4.com", :time => 25, :bytes => 13, :listeners => 1},
+        {:_id => "http://url7.com", :time => 21, :bytes => 19, :listeners => 1},
+        {:_id => "http://url2.com", :time => 20, :bytes => 15, :listeners => 1},
+        {:_id => "http://url3.com", :time => 16, :bytes => 8, :listeners => 1},
+        {:_id => "http://cuacfm.org/directo", :time => 10, :bytes => 10, :listeners => 1}
       ]
   		xhrRequestTopLinksRanking expected_array, '14/11/2014'
 
@@ -60,30 +60,30 @@ RSpec.describe RankingController, type: :controller do
     it "should return ranking of user agent paginated" do
 
       expected_array = [
-        {:_id => "http://cuacfm.org/directo", :listeners => 2, :bytes => 28, :time => 66},
-        {:_id => "http://url9.com", :listeners => 1, :bytes => 33, :time => 50},
-        {:_id => "http://url8.com", :listeners => 1, :bytes => 24, :time => 46},
-        {:_id => "http://url7.com", :listeners => 1, :bytes => 19, :time => 21},
-        {:_id => "http://url6.com", :listeners => 1, :bytes => 18, :time => 28},
-        {:_id => "http://url2.com", :listeners => 1, :bytes => 15, :time => 20},
-        {:_id => "http://url4.com", :listeners => 1, :bytes => 13, :time => 25},
-        {:_id => "http://url10.com", :listeners => 1, :bytes => 12, :time => 90},
-        {:_id => "http://url5.com", :listeners => 1, :bytes => 11, :time => 30},
-        {:_id => "http://url3.com", :listeners => 1, :bytes => 8, :time => 16}
+        {:_id => "http://url10.com", :time => 90, :bytes => 12, :listeners => 1},
+        {:_id => "http://cuacfm.org/directo", :time => 66, :bytes => 28, :listeners => 2},
+        {:_id => "http://url9.com", :time => 50, :bytes => 33, :listeners => 1},
+        {:_id => "http://url8.com", :time => 46, :bytes => 24, :listeners => 1},
+        {:_id => "http://url5.com", :time => 30, :bytes => 11, :listeners => 1},
+        {:_id => "http://url6.com", :time => 28, :bytes => 18, :listeners => 1},
+        {:_id => "http://url4.com", :time => 25, :bytes => 13, :listeners => 1},
+        {:_id => "http://url7.com", :time => 21, :bytes => 19, :listeners => 1},
+        {:_id => "http://url2.com", :time => 20, :bytes => 15, :listeners => 1},
+        {:_id => "http://url3.com", :time => 16, :bytes => 8, :listeners => 1}
       ]
       xhrRequestTopLinksRankingTime expected_array
 
       expected_array = [
-        {:_id => "http://url9.com", :listeners => 1, :bytes => 33, :time => 50},
-        {:_id => "http://url8.com", :listeners => 1, :bytes => 24, :time => 46},
-        {:_id => "http://url7.com", :listeners => 1, :bytes => 19, :time => 21},
-        {:_id => "http://url6.com", :listeners => 1, :bytes => 18, :time => 28},
-        {:_id => "http://url2.com", :listeners => 1, :bytes => 15, :time => 20},
-        {:_id => "http://url4.com", :listeners => 1, :bytes => 13, :time => 25},
-        {:_id => "http://url10.com", :listeners => 1, :bytes => 12, :time => 90},
-        {:_id => "http://url5.com", :listeners => 1, :bytes => 11, :time => 30},
-        {:_id => "http://cuacfm.org/directo", :listeners => 1, :bytes => 10, :time => 10},
-        {:_id => "http://url3.com", :listeners => 1, :bytes => 8, :time => 16}
+        {:_id => "http://url10.com", :time => 90, :bytes => 12, :listeners => 1},
+        {:_id => "http://url9.com", :time => 50, :bytes => 33, :listeners => 1},
+        {:_id => "http://url8.com", :time => 46, :bytes => 24, :listeners => 1},
+        {:_id => "http://url5.com", :time => 30, :bytes => 11, :listeners => 1},
+        {:_id => "http://url6.com", :time => 28, :bytes => 18, :listeners => 1},
+        {:_id => "http://url4.com", :time => 25, :bytes => 13, :listeners => 1},
+        {:_id => "http://url7.com", :time => 21, :bytes => 19, :listeners => 1},
+        {:_id => "http://url2.com", :time => 20, :bytes => 15, :listeners => 1},
+        {:_id => "http://url3.com", :time => 16, :bytes => 8, :listeners => 1},
+        {:_id => "http://cuacfm.org/directo", :time => 10, :bytes => 10, :listeners => 1}
       ]
       xhrRequestTopLinksRankingTime expected_array, "01:11:45"
 

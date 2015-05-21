@@ -28,10 +28,10 @@ RSpec.describe RankingController, type: :controller do
   describe "when access to ranking of cities" do
   	it "should return all ranking without pagination" do
   		expected_array = [
-  			{:_id => {:city => "A Coruña", :region => "Galicia", :country => "Spain"}, :listeners => 3, :bytes => 120, :time => 60},
-        {:_id => {:city => "Bilbao", :region => "País Vasco", :country => "Spain"}, :listeners => 3, :bytes => 90, :time => 45},
-  			{:_id => {:city => "Valencia", :region => "Comunidad Valenciana", :country => "Spain"}, :listeners => 2, :bytes => 40, :time => 20},
-        {:_id => {:city => "Barcelona", :region => "Cataluña", :country => "Spain"}, :listeners => 1, :bytes => 10, :time => 5}
+  			{:_id => {:city => "A Coruña", :region => "Galicia", :country => "Spain"}, :time => 60, :bytes => 120, :listeners => 3},
+        {:_id => {:city => "Bilbao", :region => "País Vasco", :country => "Spain"}, :time => 45, :bytes => 90, :listeners => 3},
+  			{:_id => {:city => "Valencia", :region => "Comunidad Valenciana", :country => "Spain"}, :time => 20, :bytes => 40, :listeners => 2},
+        {:_id => {:city => "Barcelona", :region => "Cataluña", :country => "Spain"}, :time => 5, :bytes => 10, :listeners => 1}
   		]
   		expected = expected_array.to_json
     	xhr :get, :city_ranking, :start_date => '14/11/2014', :end_date => '11/02/2015', :format => :json
@@ -41,22 +41,22 @@ RSpec.describe RankingController, type: :controller do
   	it "should return ranking of cities paginated" do
 
       expected_array = [
-        {:_id => {:city => "A Coruña", :region => "Galicia", :country => "Spain"}, :listeners => 3, :bytes => 120, :time => 60},
-        {:_id => {:city => "Bilbao", :region => "País Vasco", :country => "Spain"}, :listeners => 3, :bytes => 90, :time => 45},
+        {:_id => {:city => "A Coruña", :region => "Galicia", :country => "Spain"}, :time => 60, :bytes => 120, :listeners => 3},
+        {:_id => {:city => "Bilbao", :region => "País Vasco", :country => "Spain"}, :time => 45, :bytes => 90, :listeners => 3},
         {:hasMore => true}
       ]
       xhrRequestCityRanking expected_array, '14/11/2014', '11/02/2015', 0, 2
 
       expected_array = [
-        {:_id => {:city => "Valencia", :region => "Comunidad Valenciana", :country => "Spain"}, :listeners => 2, :bytes => 40, :time => 20},
-        {:_id => {:city => "Barcelona", :region => "Cataluña", :country => "Spain"}, :listeners => 1, :bytes => 10, :time => 5},
+        {:_id => {:city => "Valencia", :region => "Comunidad Valenciana", :country => "Spain"}, :time => 20, :bytes => 40, :listeners => 2},
+        {:_id => {:city => "Barcelona", :region => "Cataluña", :country => "Spain"}, :time => 5, :bytes => 10, :listeners => 1},
         {:hasMore => false}
       ]
       xhrRequestCityRanking expected_array, '17/07/2014', '25/02/2015', 2, 2
 
   		expected_array = [
-        {:_id => {:city => "Bilbao", :region => "País Vasco", :country => "Spain"}, :listeners => 3, :bytes => 90, :time => 45},
-        {:_id => {:city => "Valencia", :region => "Comunidad Valenciana", :country => "Spain"}, :listeners => 2, :bytes => 40, :time => 20},
+        {:_id => {:city => "Bilbao", :region => "País Vasco", :country => "Spain"}, :time => 45, :bytes => 90, :listeners => 3},
+        {:_id => {:city => "Valencia", :region => "Comunidad Valenciana", :country => "Spain"}, :time => 20, :bytes => 40, :listeners => 2},
         {:hasMore => false}
   		]
   		xhrRequestCityRanking expected_array, '02/12/2014', '11/02/2015', 0, 2
@@ -67,14 +67,14 @@ RSpec.describe RankingController, type: :controller do
   	it "should return ranking of cities paginated and filtered by date" do
 
       expected_array = [
-        {:_id => {:city => "Unknown", :region => "Unknown", :country => "Unknown"}, :listeners => 1, :bytes => 11356, :time => 16},
-        {:_id => {:city => "BlaBla", :region => "Unknown", :country => "Unknown"}, :listeners => 1, :bytes => 657, :time => 8},
+        {:_id => {:city => "Unknown", :region => "Unknown", :country => "Unknown"}, :time => 16, :bytes => 11356, :listeners => 1},
+        {:_id => {:city => "BlaBla", :region => "Unknown", :country => "Unknown"}, :time => 8, :bytes => 657, :listeners => 1},
         {:hasMore => true}
       ]
       xhrRequestCityRanking expected_array, '26/11/2015', '28/11/2015', 0, 2
 
       expected_array = [
-        {:_id => {:city => "Unknown", :region => "Unknown", :country => "Spain"}, :listeners => 1, :bytes => 345, :time => 6},
+        {:_id => {:city => "Unknown", :region => "Unknown", :country => "Spain"}, :time => 6, :bytes => 345, :listeners => 1},
         {:hasMore => false}
       ]
       xhrRequestCityRanking expected_array, '26/11/2015', '28/11/2015', 2, 2

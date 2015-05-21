@@ -8,15 +8,16 @@ class SourcesController < ApplicationController
 
 	def set_source
 		source = params[:source]
-		unless (!source.eql? "Todos")
+		default_source = (source.eql? DEFAULT_SOURCE)
+		if default_source
 			session[:source] = nil
-		end
-		if (sources_file_lines.include? source)
+		elsif (sources_file_lines.include? source)
 			session[:source] = source
-			render :json => {"source" => source}.to_json
-		else
-			render :json => {"source" => "does not exist"}.to_json
+		else 
+			render :json => {"source" => "does not exists"}.to_json
+			return
 		end
+		render :json => {"source" => source}.to_json
 	end
 
 	private

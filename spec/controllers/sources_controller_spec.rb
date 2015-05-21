@@ -33,9 +33,19 @@ RSpec.describe SourcesController, type: :controller do
 		it "should introduce the name of the source in session" do	
 			assert session[:source] == nil
 			post :set_source, {:source => "cuacfm.mp3"}
+			expect(response.body).to eql({"source" => "cuacfm.mp3"}.to_json)
 			assert session[:source] == "cuacfm.mp3"
+
+			post :set_source, {:source => DEFAULT_SOURCE}
+			expect(response.body).to eql({"source" => "Todos"}.to_json)
+			assert session[:source] == nil
 		end
 
+		it "should return error" do
+			assert session[:source] == nil
+			post :set_source, {:source => "nonexistentsource.mp3"}
+			expect(response.body).to eql({"source" => "does not exists"}.to_json)
+			assert session[:source] == nil
+		end
 	end
-
 end

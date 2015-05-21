@@ -5,16 +5,16 @@
     		<tr>
     			<th>#</th>
     			<th>País</th>
-    			<th>Oyentes totales</th>
-    			<th>Bytes consumidos</th>
     			<th>Tiempo total de escucha</th>
+                <th>Bytes consumidos</th>
+                <th>Oyentes totales</th>
     		</tr>
     		<tr id="tableRow" ng-repeat="row in data">
     			<td ng-model="startIndex">{{(startIndex + $index) + 1}}</td>
     			<td>{{row._id}}</td>
-    			<td>{{row.listeners}}</td>
-    			<td>{{row.bytes | bytesFilter:2}}</td>
     			<td>{{row.time | secondsFilter}}</td>
+                <td>{{row.bytes | bytesFilter:2}}</td>
+                <td>{{row.listeners}}</td>
     		</tr>
   		</table>
   		<span id="template" ng-include="'_botonera.html'"></span>
@@ -25,16 +25,16 @@
     		<tr>
     			<th>#</th>
     			<th>Región</th>
+                <th>Tiempo total de escucha</th>
+                <th>Bytes consumidos</th>
     			<th>Oyentes totales</th>
-    			<th>Bytes consumidos</th>
-    			<th>Tiempo total de escucha</th>
     		</tr>
     		<tr id="tableRow" ng-repeat="row in data">
     			<td ng-model="startIndex">{{(startIndex + $index) + 1}}</td>
     			<td>{{row._id.region}}, {{row._id.country}}</td>
-    			<td>{{row.listeners}}</td>
-    			<td>{{row.bytes | bytesFilter:2}}</td>
     			<td>{{row.time | secondsFilter}}</td>
+                <td>{{row.bytes | bytesFilter:2}}</td>
+                <td>{{row.listeners}}</td>
     		</tr>
   		</table>
   		<span id="template" ng-include="'_botonera.html'"></span>
@@ -45,16 +45,16 @@
             <tr>
                 <th>#</th>
                 <th>Ciudad</th>
-                <th>Oyentes totales</th>
-                <th>Bytes consumidos</th>
                 <th>Tiempo total de escucha</th>
+                <th>Bytes consumidos</th>
+                <th>Oyentes totales</th>
             </tr>
             <tr id="tableRow" ng-repeat="row in data">
                 <td ng-model="startIndex">{{(startIndex + $index) + 1}}</td>
                 <td>{{row._id.city}}, {{row._id.region}}, {{row._id.country}}</td>
-                <td>{{row.listeners}}</td>
-                <td>{{row.bytes | bytesFilter:2}}</td>
                 <td>{{row.time | secondsFilter}}</td>
+                <td>{{row.bytes | bytesFilter:2}}</td>
+                <td>{{row.listeners}}</td>
             </tr>
         </table>
         <span id="template" ng-include="'_botonera.html'"></span>
@@ -65,16 +65,16 @@
             <tr>
                 <th>#</th>
                 <th>Agente</th>
-                <th>Veces usado</th>
-                <th>Bytes consumidos</th>
                 <th>Tiempo total de escucha</th>
+                <th>Bytes consumidos</th>
+                <th>Veces usado</th>
             </tr>
             <tr id="tableRow" ng-repeat="row in data">
                 <td ng-model="startIndex">{{(startIndex + $index) + 1}}</td>
                 <td>{{row._id}}</td>
-                <td>{{row.listeners}}</td>
-                <td>{{row.bytes | bytesFilter:2}}</td>
                 <td>{{row.time | secondsFilter}}</td>
+                <td>{{row.bytes | bytesFilter:2}}</td>
+                <td>{{row.listeners}}</td>
             </tr>
         </table>
         <span id="template" ng-include="'_botonera.html'"></span>
@@ -85,16 +85,16 @@
             <tr>
                 <th>#</th>
                 <th>Link</th>
-                <th>Veces usado</th>
-                <th>Bytes consumidos</th>
                 <th>Tiempo total de escucha</th>
+                <th>Bytes consumidos</th>
+                <th>Veces usado</th>
             </tr>
             <tr id="tableRow" ng-repeat="row in data">
                 <td ng-model="startIndex">{{(startIndex + $index) + 1}}</td>
                 <td>{{row._id}}</td>
-                <td>{{row.listeners}}</td>
-                <td>{{row.bytes | bytesFilter:2}}</td>
                 <td>{{row.time | secondsFilter}}</td>
+                <td>{{row.bytes | bytesFilter:2}}</td>
+                <td>{{row.listeners}}</td>
             </tr>
         </table>
     </div>
