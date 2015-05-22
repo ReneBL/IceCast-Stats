@@ -73,11 +73,11 @@ module Parser
           seconds_connected: seconds, city: ct, region: reg, country: cnt, country_code: ct_code)
         connection.programs.create!(listened)
       end
-    rescue Mongoid::Errors::Validations => e
+    rescue Mongoid::Errors::Validations
       raise ParserException, "Datos inválidos: [line: #{line}]"
-    rescue NoMethodError => e
+    rescue NoMethodError
       raise ParserException, "Linea nula: [#{line}]"
-    rescue ArgumentError => e
+    rescue ArgumentError
       raise ParserException, "Formato de fecha incorrecto"
     end
   end
@@ -111,7 +111,7 @@ module Parser
       Rails.cache.write(ip, solvedIp, expires_in: 12.hours) if (!solvedIp.empty?)
     end
     if (geoinfo == nil || geoinfo.empty?)
-      Parser.write_log "Problema en la resolución de localización para la ip ~> #{ip}"
+      Rails.logger.warn "Problema en la resolución de localización para la ip ~> #{ip}"
       ["", "", "", ""]
     else
       data = geoinfo[0].data
@@ -141,7 +141,7 @@ module Parser
           result << (ParserHelper.create_program_element program["program"], seconds_listened)
           start_of_connection = start_of_connection.to_time + seconds_listened
         rescue KeyError => e
-          Parser.write_log e
+          Rails.logger.error "No se encuentra clave: #{e}"
         end
       end
     end

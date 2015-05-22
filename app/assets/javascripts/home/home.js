@@ -3,18 +3,22 @@ var app = angular.module('icecastStats');
 app.controller("HomeController", function($scope, $interval, StateFactory,
 					 	IceCastServer, ServerStreamingDataParser) {
     $scope.intermitent = false;
-	$scope.listeners = StateFactory.getListeners();
 	$scope.invalidData = false;
+    var getData = function () {
+        IceCastServer.get({url: StateFactory.getServer()}, function(datos) {
+            if (validateDatos(datos)) {
+                var result = ServerStreamingDataParser.fromJsonGetListeners(datos);
+                var content = ServerStreamingDataParser.fromJsonGetContent(datos);
+                processListeners(result);
+                processContent(content);
+            }
+        });
+    }
+    getData();
 	var poll = $interval(function () {
-		IceCastServer.get({url: StateFactory.getServer()}, function(datos) {
-			if (validateDatos(datos)) {
-				var result = ServerStreamingDataParser.fromJsonGetListeners(datos);
-				var content = ServerStreamingDataParser.fromJsonGetContent(datos);
-				processListeners(result);
-				processContent(content);
-			}
-		});
+		getData();
 	}, StateFactory.getRefreshSeconds());
+
     var intermitent = $interval(function () {
         $scope.intermitent = !$scope.intermitent;
     }, 1000);
@@ -24,7 +28,6 @@ app.controller("HomeController", function($scope, $interval, StateFactory,
 	$scope.$on('$destroy', function() {
         $interval.cancel(poll);
         $interval.cancel(intermitent);
-        StateFactory.setListeners($scope.listeners);
     });
 
     var processListeners = function(result) {
@@ -46,7 +49,7 @@ app.controller("HomeController", function($scope, $interval, StateFactory,
 });
 
 app.controller("LastXHoursController", function ($scope, $interval, Last24HoursDataProvider, 
-    Last24HoursOptionsProvider, LastConnections) {
+    Last24HoursOptionsProvider, LastConnections, StateFactory) {
 
     var initData = function () {
         LastConnections.query({}, function (datos) {
@@ -55,13 +58,14 @@ app.controller("LastXHoursController", function ($scope, $interval, Last24HoursD
                 $scope.options = Last24HoursOptionsProvider.provide();
                 $scope.data = Last24HoursDataProvider.provide(datos);
             }
+            $scope.loaded = !$scope.dataEmpty;
         });
     }
     initData();
 
     var pollXHours = $interval(function () {
         initData();
-    }, 5000);
+    }, StateFactory.getRefreshMinutes());
 
     $scope.$on('$destroy', function() {
         $interval.cancel(pollXHours);

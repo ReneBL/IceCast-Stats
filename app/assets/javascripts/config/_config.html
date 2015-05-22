@@ -23,6 +23,17 @@
 			</form>
   		</span>
   		<span class="list-group-item">
+  			<form name="refreshListenersForm">
+				<div id="configRefresh">
+					<label ng-class="{true: 'hint--top hint--error hint--always hint--bounce', false: undefined}[refreshListenersForm.inputRefreshMinutes.$error.required || !refreshListenersForm.inputRefreshMinutes.$valid]" ng-attr-data-hint="{{(refreshListenersForm.inputRefreshMinutes.$error.required || !refreshListenersForm.inputRefreshMinutes.$valid) ? 'Tasa de refresco no válida (mínimo 1 minuto)' : undefined}}">
+					Tiempo de refresco de oyentes en las últimas horas (en minutos): 
+					</label>
+					<input class="form-control" type="number" name="inputRefreshMinutes" ng-model="refreshMinutes" 
+					ng-change="setRefreshMinutes(refreshListenersForm.$valid)" min="1" required>
+				</div>
+			</form>
+  		</span>
+  		<span class="list-group-item">
   			<form name="serverForm">
 				<div id="configServer">
 					<label ng-class="{true: 'hint--top hint--error hint--always hint--bounce', false: undefined}[serverForm.inputServer.$error.required || !serverForm.inputServer.$valid]" ng-attr-data-hint="{{(serverForm.inputServer.$error.required || !serverForm.inputServer.$valid) ? 'Dirección URL no válida' : undefined}}">

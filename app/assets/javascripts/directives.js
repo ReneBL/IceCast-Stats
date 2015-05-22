@@ -18,8 +18,6 @@ app.directive("chart", function() {
 	  	   	  				break;
 	  	   	  case 'Combo' : chart = new google.visualization.AreaChart(elm[0]);
 	  	   	  				 break;
-	  	   	  case 'Stepped' : chart = new google.visualization.SteppedAreaChart(elm[0]);
-	  	   	  				   break;
 	  	   	  default: console.log('Gráfica no disponible');
 	  	   }
 	  	   $scope.$watch('data', function(n, o) {

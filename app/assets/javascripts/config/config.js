@@ -2,6 +2,7 @@ var app = angular.module('icecastStats');
 
 app.controller('ConfigurationController', function ($scope, Sources, StateFactory, CONFIGURATION) {
 	$scope.refreshSeconds = StateFactory.getRefreshSeconds() / 1000;
+	$scope.refreshMinutes = StateFactory.getRefreshMinutes() / 60000;
 	$scope.server = StateFactory.getServer();
 
 	Sources.query(function (data) {
@@ -23,6 +24,13 @@ app.controller('ConfigurationController', function ($scope, Sources, StateFactor
 		if (validForm) {
 			var seconds = $scope.refreshSeconds * 1000;
 			StateFactory.setRefreshSeconds(seconds);
+		}
+	};
+
+	$scope.setRefreshMinutes = function (validForm) {
+		if (validForm) {
+			var minutes = $scope.refreshMinutes * 60000;
+			StateFactory.setRefreshMinutes(minutes);
 		}
 	};
 

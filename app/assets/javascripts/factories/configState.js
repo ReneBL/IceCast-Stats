@@ -25,26 +25,26 @@ module.factory("StateFactory", function (CONFIGURATION) {
 		this.server = server;
 	}
 
-	var getListeners = function () {
-		return this.listeners;
+	var getMinutes = function () {
+		return this.minutes;
 	}
 
-	var setListeners = function(listeners) {
-		this.listeners = listeners;
+	var setMinutes = function(minutes) {
+		this.minutes = minutes;
 	}
 
 	return {
 		source: CONFIGURATION.DEFAULT_SOURCE,
-		refreshSeconds: 5000,
+		refreshSeconds: CONFIGURATION.DEFAULT_REFRESH_SECONDS,
+		minutes: CONFIGURATION.DEFAULT_REFRESH_MINUTES,
 		server: CONFIGURATION.DEFAULT_POLL_URL,
-		listeners: 0,
 		getSelectedSource: getSource,
 		setSelectedSource: setSource,
 		getRefreshSeconds: getSeconds,
 		setRefreshSeconds: setSeconds,
 		getServer: getServer,
 		setServer: setServer,
-		getListeners: getListeners,
-		setListeners: setListeners
+		getRefreshMinutes: getMinutes,
+		setRefreshMinutes: setMinutes
 	};
 });

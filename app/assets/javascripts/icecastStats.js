@@ -30,7 +30,9 @@ app.constant('START_INDEX', 0).
       "DAY": "day"
     }).constant('CONFIGURATION', {
       'DEFAULT_SOURCE': 'Todos',
-      'DEFAULT_POLL_URL': 'http://streaming.cuacfm.org/status-json.xsl'
+      'DEFAULT_POLL_URL': 'http://streaming.cuacfm.org/status-json.xsl',
+      'DEFAULT_REFRESH_SECONDS': 5000, // A milisegundos (5 segundos)
+      'DEFAULT_REFRESH_MINUTES': 60000 // A milisegundos (1 minuto)
     });
 
 app.config(function(snapRemoteProvider) {
