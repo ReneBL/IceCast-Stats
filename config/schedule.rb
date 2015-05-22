@@ -15,6 +15,10 @@ set :output, "#{Rails.root}/log/cron_log.log"
 # every 4.days do
 #   runner "AnotherModel.prune_old_records"
 # end
+every 1.minutes do
+	runner "ParserRT.automatic_start"
+end
+
 every :day, :at => '19:57 pm' do
 	runner "Parser.parse_without_path"
 end

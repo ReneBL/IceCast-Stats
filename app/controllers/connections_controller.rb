@@ -1,7 +1,4 @@
 class ConnectionsController < StatsController
-  
-  def index
-  end
 
   def programs
     project = {"$project" => {"programs" => 1}}

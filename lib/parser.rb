@@ -66,7 +66,7 @@ module Parser
         # Una vez los tenemos, los procesamos para saber qué programas ha escuchado el oyente en base a la fecha de fin de conexion
         # y los segundos que ha escuchado, lo que nos permitira extraer la hora de inicio
         listened = (programs.empty?) ? [] : (programs_listened programs, date, seconds)
-        mongo_date = DateTime.evolve(date)
+        mongo_date = ParserHelper.date_to_mongodate date
         cnt, reg, ct, ct_code = Parser.get_geo_info line["%h"]
         connection = Connection.create!(ip: line["%h"], identd: line["%l"], userid: line["%u"], datetime: mongo_date, request: request,
           status: line["%>s"], bytes: line["%b"], referrer: line["%{Referer}i"], user_agent: line["%{User-agent}i"],
@@ -74,13 +74,10 @@ module Parser
         connection.programs.create!(listened)
       end
     rescue Mongoid::Errors::Validations => e
-      Parser.write_log e
       raise ParserException, "Datos inválidos: [line: #{line}]"
     rescue NoMethodError => e
-      Parser.write_log e
       raise ParserException, "Linea nula: [#{line}]"
     rescue ArgumentError => e
-      Parser.write_log e
       raise ParserException, "Formato de fecha incorrecto"
     end
   end
@@ -105,10 +102,6 @@ module Parser
     # Si es el final del fichero, devolvemos nil directamente
     line = file.gets
     line
-  end
-  
-  def Parser.write_log exception
-    Rails.logger.warn exception.class.to_s
   end
   
   def Parser.get_geo_info ip

@@ -44,3 +44,27 @@ app.controller("HomeController", function($scope, $interval, StateFactory,
     };
 
 });
+
+app.controller("LastXHoursController", function ($scope, $interval, Last24HoursDataProvider, 
+    Last24HoursOptionsProvider, LastConnections) {
+
+    var initData = function () {
+        LastConnections.query({}, function (datos) {
+            $scope.dataEmpty = (datos.length == 0);
+            if (!datos.length == 0) {
+                $scope.options = Last24HoursOptionsProvider.provide();
+                $scope.data = Last24HoursDataProvider.provide(datos);
+            }
+        });
+    }
+    initData();
+
+    var pollXHours = $interval(function () {
+        initData();
+    }, 5000);
+
+    $scope.$on('$destroy', function() {
+        $interval.cancel(pollXHours);
+    });
+});
+

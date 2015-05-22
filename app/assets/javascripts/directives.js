@@ -18,27 +18,12 @@ app.directive("chart", function() {
 	  	   	  				break;
 	  	   	  case 'Combo' : chart = new google.visualization.AreaChart(elm[0]);
 	  	   	  				 break;
+	  	   	  case 'Stepped' : chart = new google.visualization.SteppedAreaChart(elm[0]);
+	  	   	  				   break;
 	  	   	  default: console.log('Gráfica no disponible');
 	  	   }
 	  	   $scope.$watch('data', function(n, o) {
-	  	   	chart != null? chart.draw($scope.data, $scope.options) : console.log("Error interno");
+	  	   		chart != null ? chart.draw($scope.data, $scope.options) : console.log("Error interno");
 	  	   });
-	  };
-});
-app.directive("jqdatepicker", function() {
-	  return {
-	  	   restrict: 'A',
-     require: 'ngModel',
-     link: function (scope, element, attrs, ngModelCtrl) {
-         element.datepicker({
-           dateFormat: 'dd/mm/yy',
-           showAnim: 'drop',
-           onSelect: function (date) {
-             ngModelCtrl.$setViewValue(date);
-             ngModelCtrl.$render();
-             scope.$apply();
-           }
-         });
-     }
 	  };
 });

@@ -1,27 +1,40 @@
-<div class="container" ng-controller="HomeController">
-
-	<div class="alert alert-danger" role="alert" ng-show="invalidData" ng-model="message">
-		No existen datos. Por favor, compruebe que la URL del servidor IceCast es correcta.
-	</div>
-	<div id ="realTimeStats">
-		<div id="currentListeners" class="panel panel-default col-xs-4">
-			<div class="text-center">
-				<label>
-					Oyentes actuales
-				</label>
+<div class="container">
+	<div ng-controller="HomeController">
+		<div class="alert alert-danger" role="alert" ng-show="invalidData" ng-model="message">
+			No existen datos. Por favor, compruebe que la URL del servidor IceCast es correcta.
+		</div>
+		<div id ="realTimeStats">
+			<div id="currentListeners" class="panel panel-default col-xs-4">
+				<div class="text-center">
+					<label>
+						Oyentes actuales
+					</label>
+				</div>
+	  			<div class="panel-body text-center" ng-model="listeners">
+	    			<h1>{{listeners}}</h1>
+	  			</div>
+	  			<br/><br/><br/><br/><br/>
 			</div>
-  			<div class="panel-body text-center" ng-model="listeners">
-    			<h1>{{listeners}}</h1>
-  			</div>
-  			<br/><br/><br/><br/><br/>
-		</div>
-		<div id="currentlyPlaying" class ="col-xs-8">
-			<h2>Actualmente sonando : </h2>
-			<span id="broadcast" class="glyphicon glyphicon-bullhorn" ng-class="{'broadcastHidden' : intermitent}">
-			</span>
-			<label ng-model="programa">{{programa}}</label>
-			<br/><br/><br/><br/><br/>
+			<div id="currentlyPlaying" class ="col-xs-8">
+				<h2>Actualmente sonando : </h2>
+				<span id="broadcast" class="glyphicon glyphicon-bullhorn" ng-class="{'broadcastHidden' : intermitent}">
+				</span>
+				<label ng-model="programa">{{programa}}</label>
+				<br/><br/><br/><br/><br/>
+			</div>
 		</div>
 	</div>
-	
+	<div id="lastConnections" ng-controller="LastXHoursController">
+		<h4>Conexiones <small>En las últimas 24 horas</small></h4>
+		<div ng-show="dataEmpty">
+			<div class="panel panel-default">
+				<div class="panel-body">
+	   				No existen datos en este período
+				</div>
+			</div>
+		</div>
+		<span ng-if="loaded">
+			<div id="lastConnectionsChart" chart chart-type="Stepped"></div>
+		</span>
+	</div>
 </div>

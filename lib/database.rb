@@ -8,8 +8,11 @@ module Database
 
 	# Devuelve la colección connections
 	def Database.getConnectionCollection
-    collection = @db["connections"]
-    collection
+    @db["connections"]
+	end
+
+	def Database.getRealTimeCollection
+		@db["connection_real_times"]
 	end
 	
 	def Database.cleanConnectionCollection

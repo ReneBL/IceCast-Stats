@@ -36,6 +36,8 @@ Rails.application.routes.draw do
 
   get 'poll/:route' => "polling#poll", :constraints => {:route => /.*/}
 
+  get 'real_time/last_connections' => 'real_time#last_connections'
+
   # Establecemos una expresion regular para decirle a Rails que en el parametro "source" deje pasar valores del tipo "nombre.extension"
   #map.resources :sources, :requirements => { :source => /[a-z]+\.[a-z]+/}
 

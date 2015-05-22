@@ -1,6 +1,6 @@
 var app = angular.module('icecastStats', ['snap', 'ngRoute', 'templates', 'iceServices',
     'connFactories', 'configState', 'dataServerParser', 'notificationService', 'locationFactories', 
-    'timeFactory', 'rankingFactories', 'iso-3166-country-codes', 'filters']);
+    'timeFactory', 'rankingFactories', 'iso-3166-country-codes', 'filters', 'homeFactories']);
 
 app.config(['$routeProvider',
   function($routeProvider) {

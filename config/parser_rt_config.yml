@@ -1,0 +1,2 @@
+server_url: 'http://streaming.cuacfm.org/status-json.xsl'
+real_time_hour_range: 24

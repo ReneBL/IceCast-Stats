@@ -41,4 +41,7 @@ module ParserHelper
   		(hour == "00:00:00") ? "24:00:00" : hour
   	end
 
+  	def self.date_to_mongodate datetime
+  		DateTime.evolve(datetime)
+  	end
 end

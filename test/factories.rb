@@ -243,4 +243,29 @@ FactoryGirl.define do
 		user_agent ''
 		seconds_connected '' 
 	end
+
+	factory :valid_connection_real_time, class: ConnectionRealTime do
+		datetime '2014-04-28 19:43:35 UTC'
+		listeners 3
+	end
+
+	factory :connection_real_time_blank_datetime, class: ConnectionRealTime do
+		datetime ''
+		listeners 3
+	end
+
+	factory :connection_real_time_blank_listeners, class: ConnectionRealTime do
+		datetime '2014-04-28 19:43:35 UTC'
+		listeners ''
+	end
+
+	factory :connection_real_time_blank, class: ConnectionRealTime do
+		datetime ''
+		listeners ''
+	end
+
+	factory :connection_real_time_negative_listeners, class: ConnectionRealTime do
+		datetime '2014-04-28 19:43:35 UTC'
+		listeners -1
+	end
 end

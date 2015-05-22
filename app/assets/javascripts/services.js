@@ -112,3 +112,7 @@ iceServices.factory("Sources", ['$resource', function($resource) {
 iceServices.factory("IceCastServer", ['$resource', function($resource) {
 		return $resource('poll/:url', {url: '@url'}, {isArray : false});
 }]);
+
+iceServices.factory("LastConnections", ['$resource', function($resource) {
+		return $resource('real_time/last_connections:json', {}, {isArray : false});
+}]);
