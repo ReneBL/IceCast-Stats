@@ -4,6 +4,14 @@
 	padding-top : 5%;
 }
 
+#datePickers {
+	margin-top: 38px;
+}
+
+#cssmenu ul li.active a{
+	background-color: #3F51B5;
+}
+
 #cssmenu ul,
 #cssmenu ul li {
 	margin: 0;
@@ -12,7 +20,7 @@
 
 #cssmenu {
 	list-style-type: none;
-	background-color: #727272;
+	background-color: #303F9F;
 	display: block;
 	text-decoration: none;
 	padding: 0;
@@ -23,6 +31,7 @@
 }
 
 #cssmenu ul li a:hover {
+	background-color: #3F51B5;
 	border-bottom-color: #B6B6B6;
 	border-bottom-width: 5px;
 	border-bottom-style: solid;
@@ -38,12 +47,17 @@
 	text-decoration: none;
 }
 
-#cssmenu ul li.active {
-	
-}
-
-#source {
-	clear: both;
+#filters {
+	width: 100%;
+	border-top-style: solid;
+	border-top-color: black;
+	border-top-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: black;
+	border-bottom-width: 1px;
+	padding-top: 10px;
+	padding-bottom: 50px;
+	background-color: gainsboro;
 }
 
 /*#cssmenu,
@@ -182,8 +196,26 @@
 	width: 20%;
 }
 
+#source,
 #buttonActions {
 	float: left;
+	border-right-style: solid;
+	border-right-width: 1px;
+	border-right-color: darkgrey;
+	margin-right: 10px;
+	padding-left: 6px;
+	padding-right: 20px;
+	height: 40px;
+}
+
+#actionMenu,
+#dropDownMenu,
+#buttonActions,
+#cssmenu,
+#cssmenu ul,
+#cssmenu ul li,
+#cssmenu ul li a{
+	position: inherit;
 }
 
 #fechas {

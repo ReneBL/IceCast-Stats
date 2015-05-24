@@ -1,6 +1,6 @@
 var app = angular.module('icecastStats');
 
-app.controller('StatsController', function($scope, StateFactory) {
+app.controller('StatsController', function($scope) {
 	  $scope.page = 'stats/connections/_connections.html';
 	  $scope.selectedOption = 'conexiones';
 	  
@@ -18,12 +18,9 @@ app.controller('StatsController', function($scope, StateFactory) {
 	  	  $scope.page = 'stats/rankings/_rankings.html';
 	  	  $scope.selectedOption = 'rankings';
 	  };
-	  // Obtenemos el source actual de la factoria que contiene el estado
-	  $scope.source = StateFactory.getSelectedSource();
-	  
 });
 
-app.controller("FilterController", function($scope, $filter, NotificationService) {
+app.controller("FilterController", function($scope, $filter, StateFactory, NotificationService) {
 	var fechaActual = new Date();
 	$scope.fechaInicio = fechaActual;
 	$scope.fechaFin = fechaActual;
@@ -35,6 +32,8 @@ app.controller("FilterController", function($scope, $filter, NotificationService
 	$scope.validFormWhenHoursActived = true;
 	$scope.unique = false;
 	$scope.invalid = false;
+	// Obtenemos el source actual de la factoria que contiene el estado
+	$scope.source = StateFactory.getSelectedSource();
 
 	$scope.doGetParams = function() {
 		var params = {start_date : $filter('date')($scope.fechaInicio, 'dd/MM/yyyy'), 
