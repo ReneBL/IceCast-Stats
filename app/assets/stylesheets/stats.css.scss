@@ -208,14 +208,12 @@
 	height: 40px;
 }
 
-#actionMenu,
-#dropDownMenu,
-#buttonActions,
-#cssmenu,
-#cssmenu ul,
-#cssmenu ul li,
-#cssmenu ul li a{
-	position: inherit;
+#actionsMenu {
+	padding: 6px 6px 6px 8px;
+}
+
+#actionsMenu li {
+	padding-bottom: 3px;
 }
 
 #fechas {
