@@ -1,7 +1,7 @@
 var app = angular.module("icecastStats");
 
-app.controller("RegionsCitiesConnectionsController", function ($scope, RegionsConnections, RegionsTotalTime, 
-	CitiesConnections, CitiesTotalTime, Countries, Regions, RegionsCitiesDataProvider, RegionsCitiesOptionsProvider, 
+app.controller("RegionsCitiesConnectionsController", function ($scope, RegionsConnections, RegionsTotalTime,
+	CitiesConnections, CitiesTotalTime, Countries, Regions, RegionsCitiesDataProvider, RegionsCitiesOptionsProvider,
 	NotificationService, ISO3166, CONNECTIONS) {
 
 	$scope.dataType = CONNECTIONS.TOTAL_LISTENERS;
@@ -9,10 +9,29 @@ app.controller("RegionsCitiesConnectionsController", function ($scope, RegionsCo
 		checked : false
 	}
 
+	var getIndexOfActualCountryFromArray = function(countryArray) {
+		var locales = navigator.languages;
+		var localeSplit = locales[0].split("-");
+		// Si la posicion 1 del array (la que representa el país del locale) es undefined, tomamos como país de origen
+		// la posición 0, que representa al idioma
+		var countryCode = (localeSplit[1] != undefined) ? localeSplit[1] : localeSplit[0].toUpperCase();
+		if (ISO3166.isCountryCode(countryCode)) {
+			var countryName = ISO3166.getCountryName(countryCode, 'toLowerCase');
+			for (var i = 0; i < countryArray.length; i++) {
+				if (countryArray[i].toLowerCase().localeCompare(countryName) == 0) {
+					return i;
+				}
+			}
+			return countryArray.indexOf(countryName);
+		} else {
+				return 0;
+		}
+	}
+
 	var getDataCountries = function() {
 		Countries.query({}, function(datos) {
 			$scope.countries = datos;
-			$scope.country = datos[0];
+			$scope.country = datos[getIndexOfActualCountryFromArray(datos)];
 			$scope.doGetData($scope.$parent.doGetParams(), RegionsConnections);
 		});
 	}
@@ -67,10 +86,10 @@ app.controller("RegionsCitiesConnectionsController", function ($scope, RegionsCo
 	var getTypeOfChart = function() {
 		var obj;
 		switch ($scope.dataType) {
-			case CONNECTIONS.TOTAL_LISTENERS : obj = $scope.citiesCheckedModel.checked ? CitiesConnections : 
+			case CONNECTIONS.TOTAL_LISTENERS : obj = $scope.citiesCheckedModel.checked ? CitiesConnections :
 														RegionsConnections;
 											   break;
-			case CONNECTIONS.TOTAL_SECONDS :  obj = $scope.citiesCheckedModel.checked ? CitiesTotalTime : 
+			case CONNECTIONS.TOTAL_SECONDS :  obj = $scope.citiesCheckedModel.checked ? CitiesTotalTime :
 														RegionsTotalTime;
 											  break;
 		}
@@ -128,7 +147,7 @@ app.controller("CountriesConnectionsController", function ($scope, CountriesConn
 			switch (dataType) {
 				case CONNECTIONS.TOTAL_LISTENERS : $scope.doGetData(temp, CountriesConnections);
 												   break;
-								   				  /* Adaptamos los parámetros del padre a los que recibe 
+								   				  /* Adaptamos los parámetros del padre a los que recibe
 								   				  CountriesTotalTime (todos menos "unique_visitors")*/
 				case CONNECTIONS.TOTAL_SECONDS :  delete temp.unique_visitors;
 												  $scope.doGetData(temp, CountriesTotalTime);

@@ -11,7 +11,6 @@ icecast.factory("GroupedChartDataProvider", function (CONNECTIONS, SecondsConver
 						if (totalSeconds) {
 							data.addColumn({type: 'string', role: 'tooltip'});
 						}
-						 // Capitalize first letter
 						for(var i=0; i < datos.length; i++) {
 							 if (groupBy == 'year') {
 							 		 var year =  datos[i]._id.year.toString();
@@ -20,10 +19,10 @@ icecast.factory("GroupedChartDataProvider", function (CONNECTIONS, SecondsConver
 							 } else {
 							 		var month = datos[i]._id.month.toString();
 							 		var year = datos[i]._id.year.toString();
-							 		!totalSeconds ? data.addRow([month + "/" + year, datos[i].count]) : 
+							 		!totalSeconds ? data.addRow([month + "/" + year, datos[i].count]) :
 							 			data.addRow([month + "/" + year, datos[i].count, columnDescription + ': ' + SecondsConverter.toStringSeconds(datos[i].count)]);
 
-							 } 
+							 }
 						}
 						return data;
 					} else if (groupBy == 'day') {
@@ -36,7 +35,7 @@ icecast.factory("GroupedChartDataProvider", function (CONNECTIONS, SecondsConver
 						}
 						for(var i=0; i < datos.length; i++) {
 							 var date = new Date(datos[i]._id.year, datos[i]._id.month - 1, datos[i]._id.day);
-							 !totalSeconds ? data.addRow([date, datos[i].count]) : 
+							 !totalSeconds ? data.addRow([date, datos[i].count]) :
 							 	data.addRow([date, datos[i].count, columnDescription + ': ' + SecondsConverter.toStringSeconds(datos[i].count)]);
 						}
 						return data;
