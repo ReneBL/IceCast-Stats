@@ -10,11 +10,9 @@ class ConnectionsController < StatsController
     qb.add_match @match
     qb.add_group_by group_by
     qb.add_extra_unwind unwind_programs
-    sort = SortDecorator.new
-    sort.add "_id", SortDecorator::ASC
     group_decorator = CompositeGroupDecorator.new
     group_decorator.add(CountGroupDecorator.new "listeners")
-    group_decorator.add(AvgSecondsGroupDecorator.new "avg", "$programs.seconds_listened")
+    group_decorator.add(AvgGroupDecorator.new "avg", "$programs.seconds_listened")
     group_decorator.add(CountGroupDecorator.new "time", "$programs.seconds_listened")
     qb.add_group_decorator group_decorator
     do_query qb
@@ -38,10 +36,10 @@ class ConnectionsController < StatsController
     qb.add_project project
     qb.add_match @match
     qb.add_group_by group_by
-    qb.add_group_decorator AvgSecondsGroupDecorator.new "count"
+    qb.add_group_decorator AvgGroupDecorator.new "count"
     do_query qb
   end
-  
+
   def ranges
     # Obtenemos los parametros min y max
     min, max, error = ranges_params
@@ -75,7 +73,7 @@ class ConnectionsController < StatsController
       render :json => error.to_json
     end
   end
-  
+
   def connections_between_dates
     project, group_by, error = DynamicQueryResolver.project_group_parts
     if error == nil
@@ -91,7 +89,7 @@ class ConnectionsController < StatsController
       render :json => error.to_json
     end
   end
-  
+
   private
 
   def ranges_params
@@ -111,5 +109,5 @@ class ConnectionsController < StatsController
     result = Connection.collection.aggregate(filters)
     render :json => result
   end
-  
+
 end

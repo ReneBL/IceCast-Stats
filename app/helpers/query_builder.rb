@@ -1,7 +1,10 @@
 class QueryBuilder
 	attr_accessor :match, :project, :group_by, :sort, :decorator
 
-	def initialize 
+	def initialize
+		# Ordenación ascendente por defecto
+		@sort = SortDecorator.new
+		@sort.add "_id", SortCriteria::ASC
 	end
 
 	def add_match match
@@ -44,7 +47,7 @@ class QueryBuilder
    	if ((unwind != nil) && (group != nil))
     	filters << unwind << group
     end
-		(@sort == nil) ? filters << DynamicQueryResolver.sort_part : filters << @sort.get
+		filters << @sort.get
 		if (@skip != nil && @limit != nil)
 			filters << (DynamicQueryResolver.skip_part @skip) << (DynamicQueryResolver.limit_part @limit)
 		end

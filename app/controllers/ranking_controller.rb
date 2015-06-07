@@ -79,16 +79,16 @@ class RankingController < StatsController
     	qb.add_group_by group_by
     	# Creamos todos los decoradores del group y los encapsulamos en un Composite
     	group_decorator = CompositeGroupDecorator.new
-    	group_decorator.add(CountGroupDecorator.new "time", "$seconds_connected") 
+    	group_decorator.add(CountGroupDecorator.new "time", "$seconds_connected")
     	group_decorator.add(CountGroupDecorator.new "bytes", "$bytes")
     	group_decorator.add(CountGroupDecorator.new "listeners")
     	qb.add_group_decorator group_decorator
     	# Ordenamos por distinto criterio y campos
-    	sort = SortDecorator.new
-    	sort.add "time", SortDecorator::DESC
-    	sort.add "bytes", SortDecorator::DESC
-    	sort.add "listeners", SortDecorator::DESC
-    	sort.add "_id", SortDecorator::ASC
+			sort = SortDecorator.new
+    	sort.add "time", SortCriteria::DESC
+    	sort.add "bytes", SortCriteria::DESC
+    	sort.add "listeners", SortCriteria::DESC
+    	sort.add "_id", SortCriteria::ASC
     	# Lo añadimos al Builder
     	qb.add_sort sort
     	qb

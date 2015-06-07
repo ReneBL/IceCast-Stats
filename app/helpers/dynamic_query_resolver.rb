@@ -35,8 +35,8 @@ module DynamicQueryResolver
   def self.group_by_distinct_visitors_decorator group
     group["$group"].merge!({"ips" => {"$addToSet" => "$ip"}})
   end
-  
-  def self.distinct_visitors_count        
+
+  def self.distinct_visitors_count
     unwind = {"$unwind" => "$ips"}
     group = {"$group" => {"_id" => "$_id"}}
     [unwind, group]
@@ -49,11 +49,6 @@ module DynamicQueryResolver
     match
   end
 
-  def self.sort_part
-    sort = {"$sort" => {"_id" => 1}}
-    sort
-  end
-
   def self.set_unique_if_exists project, group_by, group_decorator
   	if is_unique
     	# Si es así, decoramos project y group by para que agrupe por IP's y haga count gracias a unwind y un segundo group
@@ -61,13 +56,13 @@ module DynamicQueryResolver
       group_by_distinct_visitors_decorator group_by
       unwind, group = distinct_visitors_count
       # Si buscamos por visitantes únicos, necesitamos decorar la parte group que genera el distinct_visitors_count
-      gd = GroupDecorator.new group, group_decorator
-      gd.decorate
+      gd = GroupDecorator.new group_decorator
+      gd.decorate group
       return [unwind, group]
     else
       # Si no es por visitantes únicos, decoraremos la parte group_by que ha venido dada como parámetro
-    	gd = GroupDecorator.new group_by, group_decorator
-      gd.decorate
+    	gd = GroupDecorator.new group_decorator
+      gd.decorate group_by
       return [nil, nil]
     end
   end
@@ -77,18 +72,13 @@ module DynamicQueryResolver
     if (@qp.has_hour_filters?)
       if (@qp.max_hour_seconds < @qp.min_hour_seconds)
         # Si se da el caso de que start hour es anterior a end hour en cuanto a segundos, tenemos que ponerlo como primer parametro
-        # en el match, por que no tendria sentido comparar => value > MAX && value < MIN 
+        # en el match, por que no tendria sentido comparar => value > MAX && value < MIN
         hours_matcher["$match"].merge!({"totalSeconds" => {"$gte" => @qp.max_hour_seconds, "$lte" => @qp.min_hour_seconds}})
-      else 
+      else
         hours_matcher["$match"].merge!({"totalSeconds" => {"$gte" => @qp.min_hour_seconds, "$lte" => @qp.max_hour_seconds}})
-      end 
+      end
     end
     hours_matcher
-  end
-
-  def self.group_by_program_parts name, group_by
-    unwind = {"$unwind" => name}
-    group = {"$group" => {"_id" => name}}
   end
 
   def self.is_unique
@@ -98,7 +88,7 @@ module DynamicQueryResolver
   def self.skip_part skip
     {"$skip" => skip}
   end
-  
+
   def self.limit_part limit
     {"$limit" => limit}
   end

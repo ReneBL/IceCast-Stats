@@ -1,5 +1,5 @@
 class QueryParams
-	attr_accessor :group_by, :unique, :start_date, :end_date, :start_hour, :end_hour
+	attr_reader :group_by, :unique, :start_date, :end_date, :start_hour, :end_hour
 
 	def initialize (group_by, unique, start_date, end_date, start_hour, end_hour)
 		@group_by = group_by

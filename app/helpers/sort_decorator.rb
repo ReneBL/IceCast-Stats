@@ -1,6 +1,4 @@
 class SortDecorator
-	ASC = 1
-	DESC = -1
 
 	def initialize
 		@sort = {"$sort" => {}}
@@ -14,4 +12,9 @@ class SortDecorator
 		@sort
 	end
 
+end
+
+module SortCriteria
+  ASC = 1
+  DESC = -1
 end

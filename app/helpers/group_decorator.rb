@@ -1,12 +1,11 @@
 class GroupDecorator
 	attr_accessor :decorator, :group
 
-	def initialize group, decorator
-		@group = group
+	def initialize decorator
 		@decorator = decorator
 	end
 
-	def decorate
+	def decorate group
 		@decorator.decorate group
 	end
 
@@ -43,7 +42,7 @@ class CountGroupDecorator < GroupDecorator
 	end
 end
 
-class AvgSecondsGroupDecorator < GroupDecorator
+class AvgGroupDecorator < GroupDecorator
 	attr_accessor :name
 
 	def initialize name, field="$seconds_connected"
