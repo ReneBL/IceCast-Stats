@@ -1,5 +1,5 @@
 ---
 log_format: '%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-agent}i\" (%{ratio}n)'
 log_path: "/Users/Rene/Desktop/TFG/stats-icecast/access.log"
-seek_pos: 630362
+seek_pos: 0
 last_line: ''

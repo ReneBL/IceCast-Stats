@@ -2,12 +2,8 @@
 	<h4>Localizaciones <small>Países</small></h4>
 	<div ng-controller="CountriesConnectionsController">
 		<div ng-show="dataEmpty">
-  			<div class="panel panel-default">
-  				<div class="panel-body">
-    				No existen datos para estas fechas
-  				</div>
-			</div>
-  		</div>
+					<span id="template" ng-include="'_noData.html'"></span>
+  	</div>
 		<span ng-if="loaded">
 			<label>Mostrar: </label>
 			<div class="btn-group" role="group">
@@ -19,12 +15,13 @@
 			<div id="countriesChart" chart chart-type="Geo"></div>
 		</span>
 	</div>
+	<div id="regionsAndCitiesContent">
 	<h4>Localizaciones <small>Regiones y ciudades</small></h4>
-	<div ng-controller="RegionsCitiesConnectionsController">
+	<div ng-controller="RegionsCitiesConnectionsController" id="regionsCities">
 		<div id="divCombosCitiesRegions">
 			<div>
   				<label ng-class="{true: 'hint--top hint--info hint--always hint--bounce', false: undefined}[citiesCheckedModel.checked && regionsEmpty]" ng-attr-data-hint="{{citiesCheckedModel.checked && regionsEmpty ? 'No existen regiones para este país' : undefined}}">
-  					Seleccione un país: 
+  					Seleccione un país:
   				</label>
 				<select class="form-control" id="comboCountries" ng-model="country" ng-options="country for country in 			countries" ng-change="selectedCountry()">
 				</select>
@@ -39,13 +36,9 @@
 				<input id="citiesCB" type="checkbox" ng-model="citiesCheckedModel.checked" ng-change="changedCheckBoxCities()">
 			</span>
 		</div>
-		<div ng-show="dataEmpty">
-  			<div class="panel panel-default">
-  				<div class="panel-body">
-    				No existen datos para estas fechas
-  				</div>
-			</div>
-  		</div>
+		<div ng-show="dataEmpty" id="dataEmpty">
+			<span id="template" ng-include="'_noData.html'"></span>
+  	</div>
 		<span ng-if="loaded">
 			<label>Mostrar: </label>
 			<span class="btn-group" role="group">
@@ -57,4 +50,5 @@
 			<div id="regionsChart" chart chart-type="Geo"></div>
 		</span>
 	</div>
+</div>
 </div>

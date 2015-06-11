@@ -41,7 +41,7 @@
 #cssmenu ul li a:visited,
 #cssmenu ul li a:link {
 	font-size: 14px;
-	float: left;  
+	float: left;
 	padding: 20px;
 	color: #FFFFFF;
 	text-decoration: none;
@@ -134,7 +134,7 @@
 #cssmenu ul li a:hover {
 	border-bottom-style: solid;
 	border-bottom-width: 3px;
-	border-bottom-color: #0f71ba; 
+	border-bottom-color: #0f71ba;
 }
 
 #cssmenu ul li {
@@ -174,26 +174,8 @@
 #fechaIni.ng-invalid,
 #fechaFin.ng-invalid,
 #horaInicio.ng-invalid,
-#horaFin.ng-invalid { 
-	border:1px solid red; 
-}
-
-#regionsChart {
-	width: 900px;
-	height: 500px;
-}
-
-#countriesChart {
-	width: 900px;
-	height: 500px;
-}
-
-#comboCountries {
-	width: 20%;
-}
-
-#comboRegions {
-	width: 20%;
+#horaFin.ng-invalid {
+	border:1px solid red;
 }
 
 #source,

@@ -9,13 +9,13 @@
  * compiled file so the styles you add here take precedence over styles defined in any styles
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
- * 
+ *
  *= require angular-snap/angular-snap.min
  *= require snapjs/snap
  *= require angular/angular-csp
  *= require hint.css/hint.min
  *= require_tree .
- *= require_self 
+ *= require_self
  */
 @import "bootstrap-sprockets";
 @import "bootstrap";
@@ -30,11 +30,11 @@
 
 }
 #fechaIni {
-  
+
 }
 
 #fechaFin {
-  
+
 }
 
 #contenido {
@@ -61,6 +61,7 @@ background-color: black;
 position: fixed;
 width: 100%;
 z-index: 100;
+height: 55px;
 }
 
 #cabecera h1 {
@@ -91,7 +92,8 @@ z-index: 100;
 }
 
 #icecastImage img {
-  width: 7%;
+  margin-bottom: 15px;
+  width: 50px;
 }
 
 div#month_per_year  div {
@@ -152,8 +154,8 @@ background-color: #28272C;
   font-size: 30px;
 }
 
-@media (min-width: 800px) {
+@media (max-width: 440px) {
   #icecastImage img {
-    width: 4%;
+    width: 30px;
   }
 }
