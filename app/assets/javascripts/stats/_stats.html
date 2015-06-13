@@ -8,11 +8,14 @@
 	</nav>
 	<br/>
 	<div id="datePickers" ng-controller="FilterController">
-		<div ng-show="invalid">
+		<div ng-show="dates.consistent" class="fadein fadeout invalidDates">
+			Fechas inválidas
+		</div>
+		<!-- <div ng-show="dates.consistent" class="fadein fadeout">
 			<div class="alert alert-danger alert-dismissible">
 				Fechas inválidas
 			</div>
-		</div>
+		</div> -->
 		<div id="filters">
 			<div id="source">
 				<span ng-model="source">Filtrando estadísticas por... <br/> 

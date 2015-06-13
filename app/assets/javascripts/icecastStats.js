@@ -1,4 +1,4 @@
-var app = angular.module('icecastStats', ['snap', 'ngRoute', 'templates', 'iceServices',
+var app = angular.module('icecastStats', ['ngAnimate', 'snap', 'ngRoute', 'templates', 'iceServices',
     'connFactories', 'configState', 'dataServerParser', 'notificationService', 'locationFactories', 
     'timeFactory', 'rankingFactories', 'iso-3166-country-codes', 'filters', 'homeFactories']);
 

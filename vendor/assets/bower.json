@@ -5,8 +5,8 @@
     "angular-route": "latest",
     "angular-snap": "latest",
     "angular-resource": "latest",
-    "angular-ui": "latest",
     "hint.css": "latest",
-    "iso-3166-country-codes-angular": "latest"
+    "iso-3166-country-codes-angular": "latest",
+    "angular-animate": "latest"
   }
 }

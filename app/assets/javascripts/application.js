@@ -13,6 +13,7 @@
 //= require jquery
 //= require jquery-ui
 //= require angular/angular.min
+//= require angular-animate/angular-animate.min
 //= require angular-route/angular-route.min
 //= require angular-snap/angular-snap.min
 //= require snapjs/snap.min

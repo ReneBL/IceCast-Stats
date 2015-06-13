@@ -31,7 +31,9 @@ app.controller("FilterController", function($scope, $filter, StateFactory, Notif
 	$scope.showHourRange = false;
 	$scope.validFormWhenHoursActived = true;
 	$scope.unique = false;
-	$scope.invalid = false;
+	$scope.dates = {
+		consistent : false
+	};
 	// Obtenemos el source actual de la factoria que contiene el estado
 	$scope.source = StateFactory.getSelectedSource();
 
@@ -61,13 +63,13 @@ app.controller("FilterController", function($scope, $filter, StateFactory, Notif
 	}
 
    	$scope.changedCheckBoxUniqueVisitors = function(validForm, validDates) {
-   		var checkHoursOk = ($scope.showHourRange && validForm && (!$scope.invalid) && (!$scope.startNotLesserEnd))
-   		 	|| (!$scope.showHourRange && validDates && (!$scope.invalid));
+   		var checkHoursOk = ($scope.showHourRange && validForm && (!$scope.dates.consistent) && (!$scope.startNotLesserEnd))
+   		 	|| (!$scope.showHourRange && validDates && (!$scope.dates.consistent));
    		// Antes de realizar la peticion, comprobamos si está activo el formulario
    		// de las horas. Si es así y el formulario es válido, OK, pero si no está activo tiene que ser
    		// válido porque no se va a tener en cuenta si las horas son válidas o no, se hará una petición con la hora estándar
    		// de un día (de 00:00:00 a 23:59:59)
-		if(!$scope.invalid && validForm && checkHoursOk) {
+		if(!$scope.dates.consistent && validForm && checkHoursOk) {
 			sendBroadcastUnique();
    		}
    	};
@@ -76,14 +78,14 @@ app.controller("FilterController", function($scope, $filter, StateFactory, Notif
 	   	$scope.startNotLesserEnd = ($scope.horaInicio > $scope.horaFin); 
 	   	// Tenemos que comprobar si todo el formulario de filtros es válido antes de hacer ninguna petición
 	   	$scope.validFormWhenHoursActived = validForm;
-	   	if ($scope.validFormWhenHoursActived && !$scope.startNotLesserEnd && !$scope.invalid) {
+	   	if ($scope.validFormWhenHoursActived && !$scope.startNotLesserEnd && !$scope.dates.consistent) {
 	   		sendBroadcast();
 		}
 	};
 
 	$scope.changedDate = function(validForm) {
-		$scope.invalid = ($scope.fechaFin < $scope.fechaInicio); 
-		if (!$scope.invalid && (validForm)) {
+		$scope.dates.consistent = ($scope.fechaFin < $scope.fechaInicio); 
+		if (!$scope.dates.consistent && (validForm)) {
 	   		sendBroadcast();
 	   	}
 	};

@@ -4,4 +4,5 @@ asset 'angular-snap'
 asset 'angular-resource'
 asset 'hint.css'
 asset 'iso-3166-country-codes-angular'
+asset 'angular-animate'
 # vim: ft=ruby
