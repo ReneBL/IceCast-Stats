@@ -4,7 +4,7 @@ icecast.factory("CountriesConnectionsDataProvider", function (SecondsConverter, 
      	return {
          provide : function(datos, dataType) {
             var numConnections = (dataType == CONNECTIONS.TOTAL_LISTENERS);
-            var countColumnName = numConnections ? CONNECTIONS.TOTAL_LISTENERS : CONNECTIONS.TOTAL_SECONDS; 
+            var countColumnName = numConnections ? CONNECTIONS.TOTAL_LISTENERS : CONNECTIONS.TOTAL_SECONDS;
          	dataCC = new google.visualization.DataTable();
             dataCC.addColumn({ type: 'string', label: 'Pais' });
             dataCC.addColumn({ type: 'number', label: countColumnName });
@@ -12,7 +12,7 @@ icecast.factory("CountriesConnectionsDataProvider", function (SecondsConverter, 
                 dataCC.addColumn({type: 'string', role: 'tooltip'});
             }
        		for(var i=0; i < datos.length; i++) {
-          		if (numConnections) { 
+          		if (numConnections) {
                     dataCC.addRow([datos[i]._id.country, datos[i].count])
                 } else {
                     str = SecondsConverter.toStringSeconds(datos[i].count);
@@ -27,7 +27,11 @@ icecast.factory("CountriesConnectionsDataProvider", function (SecondsConverter, 
 icecast.factory("CountriesConnectionsOptionsProvider", function() {
      return {
          provide : function() {
-            return {displayMode : 'auto'};
+            var options = {
+              displayMode : 'auto',
+              width : '100%'
+            };
+            return options;
         }
      };
 });
@@ -45,12 +49,12 @@ icecast.factory("RegionsCitiesDataProvider", function (SecondsConverter, CONNECT
                 dataRC.addColumn({type: 'string', role: 'tooltip'});
             }
             for(var i=0; i < datos.length; i++) {
-                if (numConnections) { 
-                    citiesChecked ? dataRC.addRow([datos[i]._id.city, datos[i].count]) : 
+                if (numConnections) {
+                    citiesChecked ? dataRC.addRow([datos[i]._id.city, datos[i].count]) :
                         dataRC.addRow([datos[i]._id.region, datos[i].count]);
                 } else {
                     hms = SecondsConverter.toStringSeconds(datos[i].count);
-                    citiesChecked ? dataRC.addRow([datos[i]._id.city, datos[i].count, countColumnName + ': ' + hms]) : 
+                    citiesChecked ? dataRC.addRow([datos[i]._id.city, datos[i].count, countColumnName + ': ' + hms]) :
                         dataRC.addRow([datos[i]._id.region, datos[i].count, countColumnName + ': ' + hms]);
                 }
             }

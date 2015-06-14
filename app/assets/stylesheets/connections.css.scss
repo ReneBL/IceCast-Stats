@@ -5,23 +5,33 @@ body.connections {
 
 }
 
+#gtsController,
+#cgcController,
+#pieTimeConnections {
+	clear: both;
+	border-style: outset;
+	border-width: 1px;
+	margin-bottom: 2%;
+	padding: 8px 8px 2px 8px;
+}
+
 #time_connections {
 	width : 900px;
 	height: 500px;
 }
 
 #programsDonut {
-	width: 950px; 
+	width: 950px;
 	height: 500px;
 }
 
 #programsCombo {
-	width: 950px; 
+	width: 950px;
 	height: 500px;
 }
 
 #pieTimeConnections {
-	
+
 }
 
 span.minMaxError {

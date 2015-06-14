@@ -5,7 +5,7 @@
 }
 
 #datePickers {
-	margin-top: 38px;
+	margin-top: 43px;
 }
 
 #cssmenu ul li.active a{
@@ -30,8 +30,8 @@
 	display: inline;
 }
 
+#cssmenu ul li.active a,
 #cssmenu ul li a:hover {
-	background-color: #3F51B5;
 	border-bottom-color: #B6B6B6;
 	border-bottom-width: 5px;
 	border-bottom-style: solid;
@@ -211,6 +211,17 @@
 	clear: both;
 }
 
+#alertIcon {
+	font-size: 25px;
+}
+
+#textErrorDates {
+	padding-left: 3px;
+	font-size: 16px;
+	font-weight: bold;
+	vertical-align: top;
+}
+
 .invalidDates {
     opacity: 1;
 		//border: 2px solid red;
@@ -218,7 +229,9 @@
 		margin-left: 83%;
 		margin-top: 5%;
 		padding: 1% 1% 1% 1%;
-		background-color: rgba(181, 67, 67, 0.62);
+		background-color: rgba(217, 83, 79, 0.7);
+		border-radius: 6px;
+		z-index: 100;
 }
 
 .fadein,

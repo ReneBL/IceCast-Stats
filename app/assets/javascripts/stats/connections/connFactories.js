@@ -1,9 +1,9 @@
 var icecast = angular.module("connFactories", ['timeFactory']);
 
-icecast.factory("GroupedChartDataProvider", function (CONNECTIONS, SecondsConverter) {
+icecast.factory("GroupedChartDataProvider", function (CONNECTIONS, GROUP_BY, SecondsConverter) {
 		 return {
 				 provide : function(groupBy, datos, columnDescription) {
-					if (groupBy == 'year' || groupBy == 'month') {
+					if (groupBy == GROUP_BY.YEAR || GROUP_BY.MONTH) {
 						var data = new google.visualization.DataTable();
 						data.addColumn({ type: 'string', label: (groupBy.charAt(0).toUpperCase() + groupBy.slice(1)) });
 						data.addColumn({ type: 'number', label: columnDescription });
@@ -50,7 +50,7 @@ icecast.factory("ConnBetDatesOptionsProvider", function() {
 					if (groupBy == 'year') {
 						var options = {
 							title: 'Oyentes agrupados por año',
-							chartArea: {width: '60%', height:'70%'},
+							chartArea: {width: '70%', height:'70%'},
 							hAxis: {
 								title: 'Oyentes',
 								minValue: 0
@@ -112,6 +112,7 @@ icecast.factory("RangesOptionsProvider", function() {
 					var options = {
 						title: 'Porcentaje de conexiones por rango',
 						is3D: true,
+						chartArea: {width: '50%', height:'60%'}
 					};
 					return options;
 				}
@@ -169,11 +170,10 @@ icecast.factory("GroupedTotalSecondsOptionsProvider", function() {
 						var options = {
 							title: 'Tiempo total agrupado por año',
 							subtitle: 'en segundos',
-							chartArea: {width: '60%', height:'70%'},
-							hAxis: {
-								title: 'Año',
-								minValue: 0
-							},
+							// hAxis: {
+							// 	title: 'Año',
+							// 	minValue: 0
+							// },
 							animation: {
 								duration: 1000,
 								easing: 'in',
@@ -183,7 +183,7 @@ icecast.factory("GroupedTotalSecondsOptionsProvider", function() {
 								title: 'Segundos'
 							},
 							curveType: 'function',
-							chartArea:{width:'75%', height:'75%'}
+							chartArea: {width: '65%', height:'70%'}
 						};
 						return options;
 					} else if (groupBy == 'month') {
