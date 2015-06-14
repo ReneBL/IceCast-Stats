@@ -3,7 +3,7 @@ var icecast = angular.module("connFactories", ['timeFactory']);
 icecast.factory("GroupedChartDataProvider", function (CONNECTIONS, GROUP_BY, SecondsConverter) {
 		 return {
 				 provide : function(groupBy, datos, columnDescription) {
-					if (groupBy == GROUP_BY.YEAR || GROUP_BY.MONTH) {
+					if (groupBy == GROUP_BY.YEAR || groupBy == GROUP_BY.MONTH) {
 						var data = new google.visualization.DataTable();
 						data.addColumn({ type: 'string', label: (groupBy.charAt(0).toUpperCase() + groupBy.slice(1)) });
 						data.addColumn({ type: 'number', label: columnDescription });
@@ -12,7 +12,7 @@ icecast.factory("GroupedChartDataProvider", function (CONNECTIONS, GROUP_BY, Sec
 							data.addColumn({type: 'string', role: 'tooltip'});
 						}
 						for(var i=0; i < datos.length; i++) {
-							 if (groupBy == 'year') {
+							 if (groupBy == GROUP_BY.YEAR) {
 							 		 var year =  datos[i]._id.year.toString();
 							 		 !totalSeconds ? data.addRow([year, datos[i].count]) :
 							 		 		data.addRow([year, datos[i].count, columnDescription + ': ' + SecondsConverter.toStringSeconds(datos[i].count)]);
@@ -25,7 +25,7 @@ icecast.factory("GroupedChartDataProvider", function (CONNECTIONS, GROUP_BY, Sec
 							 }
 						}
 						return data;
-					} else if (groupBy == 'day') {
+					} else if (groupBy == GROUP_BY.DAY) {
 						data = new google.visualization.DataTable();
 						data.addColumn({ type: 'date', label: (groupBy.charAt(0).toUpperCase() + groupBy.slice(1)) });
 						data.addColumn({ type: 'number', label: columnDescription });
@@ -44,10 +44,10 @@ icecast.factory("GroupedChartDataProvider", function (CONNECTIONS, GROUP_BY, Sec
 		 };
 });
 
-icecast.factory("ConnBetDatesOptionsProvider", function() {
+icecast.factory("ConnBetDatesOptionsProvider", function(GROUP_BY) {
 		 return {
 				 provide : function(groupBy) {
-					if (groupBy == 'year') {
+					if (groupBy == GROUP_BY.YEAR) {
 						var options = {
 							title: 'Oyentes agrupados por año',
 							chartArea: {width: '70%', height:'70%'},
@@ -66,7 +66,7 @@ icecast.factory("ConnBetDatesOptionsProvider", function() {
 							bar: { groupWidth: "90%" }
 						};
 						return options;
-					} else if (groupBy == 'month') {
+					} else if (groupBy == GROUP_BY.MONTH) {
 						var options = {
 							title: 'Oyentes agrupados por mes',
 							chartArea: {width: '60%', height:'70%'},
@@ -81,7 +81,7 @@ icecast.factory("ConnBetDatesOptionsProvider", function() {
 							bar: { groupWidth: "90%" }
 						};
 						return options;
-					} else if (groupBy == 'day') {
+					} else if (groupBy == GROUP_BY.DAY) {
 						var options = {
 							title: "Oyentes por día",
 							height: 350,
@@ -163,10 +163,10 @@ icecast.factory("ProgramsOptionsProvider", function() {
 		 };
 });
 
-icecast.factory("GroupedTotalSecondsOptionsProvider", function() {
+icecast.factory("GroupedTotalSecondsOptionsProvider", function(GROUP_BY) {
 				 return {
 				 provide : function(groupBy) {
-					if (groupBy == 'year') {
+					if (groupBy == GROUP_BY.DAY) {
 						var options = {
 							title: 'Tiempo total agrupado por año',
 							subtitle: 'en segundos',
@@ -186,7 +186,7 @@ icecast.factory("GroupedTotalSecondsOptionsProvider", function() {
 							chartArea: {width: '65%', height:'70%'}
 						};
 						return options;
-					} else if (groupBy == 'month') {
+					} else if (groupBy == GROUP_BY.MONTH) {
 						var options = {
 							title: 'Tiempo total agrupado por mes',
 							subtitle: 'en segundos',
@@ -201,11 +201,11 @@ icecast.factory("GroupedTotalSecondsOptionsProvider", function() {
 							}
 						};
 						return options;
-					} else if (groupBy == 'day') {
+					} else if (groupBy == GROUP_BY.DAY) {
 						var options = {
 							title: "Tiempo total agrupado por día",
 							subtitle: 'en segundos',
-							height: 350,
+							height: 500,
 						};
 						return options;
 					}
