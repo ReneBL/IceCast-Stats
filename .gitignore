@@ -59,3 +59,5 @@ Gemfile~
 *.css.scss~
 
 coverage
+
+*.yml~

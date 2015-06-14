@@ -25,7 +25,10 @@ app.factory("ServerStreamingDataParser", function() {
 			var playing = sources[0].yp_currently_playing;
 			var genre = sources[0].genre;
 			var url = sources[0].listenurl;
-			return {playing: playing, genre: genre, url: url};
+			var desc = object.description;
+			var guid = object.guid;
+			var link = object.link;
+			return {playing: playing, genre: genre, url: url, desc: desc, guid: guid, link: link};
 		}
 	}
 

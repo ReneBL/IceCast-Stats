@@ -2,7 +2,7 @@ var app = angular.module('icecastStats');
 
 app.controller("HomeController", function($scope, $interval, StateFactory,
 					 	IceCastServer, ServerStreamingDataParser) {
-    $scope.intermitent = false;
+  $scope.intermitent = false;
 	$scope.invalidData = false;
     var getData = function () {
         IceCastServer.get({url: StateFactory.getServer()}, function(datos) {
@@ -38,6 +38,9 @@ app.controller("HomeController", function($scope, $interval, StateFactory,
     	$scope.programa = content.playing;
     	$scope.genero = content.genre;
     	$scope.serverUrl = content.url;
+			$scope.descripcion = content.desc;
+			$scope.guid = content.guid;
+			$scope.image = content.link;
     };
 
     var validateDatos = function(datos) {
@@ -48,7 +51,7 @@ app.controller("HomeController", function($scope, $interval, StateFactory,
 
 });
 
-app.controller("LastXHoursController", function ($scope, $interval, Last24HoursDataProvider, 
+app.controller("LastXHoursController", function ($scope, $interval, Last24HoursDataProvider,
     Last24HoursOptionsProvider, LastConnections, StateFactory) {
 
     var initData = function () {
@@ -71,4 +74,3 @@ app.controller("LastXHoursController", function ($scope, $interval, Last24HoursD
         $interval.cancel(pollXHours);
     });
 });
-

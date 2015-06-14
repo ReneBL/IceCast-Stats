@@ -1,6 +1,5 @@
 ---
 log_format: '%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-agent}i\" (%{ratio}n)'
 log_path: "/Users/Rene/Desktop/TFG/stats-icecast/access.log"
-seek_pos: 368
-last_line: 81.45.53.99 - - [19/Jan/2015:16:08:41 +0100] "GET /cuacfm.mp3 HTTP/1.1"
-  200 689633 "-" "Dalvik/1.6.0 (Linux; U; Android 4.2.2; GT-S7580 Build/JDQ39)" 79
+seek_pos: 0
+last_line: ''

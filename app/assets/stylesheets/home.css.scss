@@ -1,5 +1,23 @@
+#realTimeStats {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+#currentListeners {
+	order: 1;
+}
+
+#blankDiv {
+	order: 2;
+}
+
+#headerCurrPlaying {
+	margin-top: 0px;
+}
+
 #currentlyPlaying {
-	background: url('/assets/cuac.jpg') right bottom no-repeat;
+	padding-left: 0px;
+	order: 3;
 }
 
 #broadcast {
@@ -21,4 +39,22 @@
 
 #divRealTime {
 	margin-top: 73px;
+}
+
+#numListeners {
+	font-size: 90px;
+}
+
+@media (max-width: 991px) {
+  #realTimeStats {
+    flex-direction: column;
+  }
+
+	#currentListeners {
+		width: 100%;
+	}
+
+	#currentlyPlaying {
+		width: 100%;
+	}
 }

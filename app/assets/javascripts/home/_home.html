@@ -11,16 +11,25 @@
 					</label>
 				</div>
 	  			<div class="panel-body text-center" ng-model="listeners">
-	    			<h1>{{listeners}}</h1>
+	    			<h1 id="numListeners">{{listeners}}</h1>
 	  			</div>
-	  			<br/><br/><br/><br/><br/>
+	  			<br/><br/><br/><br/>
 			</div>
-			<div id="currentlyPlaying" class ="col-xs-8">
-				<h2>Actualmente sonando : </h2>
-				<span id="broadcast" class="glyphicon glyphicon-bullhorn" ng-class="{'broadcastHidden' : intermitent}">
-				</span>
-				<label ng-model="programa">{{programa}}</label>
-				<br/><br/><br/><br/><br/>
+			<div id="currentlyPlaying" class ="panel panel-default col-xs-8">
+				<h2 id="headerCurrPlaying" class="text-center">Actualmente sonando : </h2>
+				<br/>
+				<div class="panel-body">
+				<div class="col-xs-8">
+					<span id="broadcast" class="glyphicon glyphicon-bullhorn" ng-class="{'broadcastHidden' : intermitent}">
+					</span>
+					<label ng-model="programa">{{programa}}</label> <br/> <br/>
+					<span><label>Descripcion: </label> <span ng-model="descripcion">{{descripcion}}</span> <br/> <br/>
+					<span><label>Género: </label> <span ng-model="guid">{{guid}}</span>
+				</div>
+				<div id="imageLogo" class="col-xs-4">
+					<img ng-src="{{image}}" alt="Program" class="img-rounded">
+				</div>
+			</div>
 			</div>
 		</div>
 	</div>

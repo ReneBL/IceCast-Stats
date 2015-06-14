@@ -1,10 +1,22 @@
 module ParserXML
 
+	def self.initialize_parser
+		@config = YAML.load(ERB.new(File.read("#{Rails.root}/config/parser_xml_config.yml")).result)
+	end
+
 	def self.initialize_xml
-		config = YAML.load(ERB.new(File.read("#{Rails.root}/config/parser_xml_config.yml")).result)
-		path = config['xml_path']
+		initialize_parser
+		path = @config['xml_schedule_path']
 		f = File.open(path)
 		@doc = Nokogiri::XML(f)
+		f.close
+	end
+
+	def self.initialize_live_xml
+		initialize_parser
+		path_live = @config['xml_live_path']
+		f = File.open(path_live)
+		@doc_live = Nokogiri::XML(f) { |config| config.noblanks }
 		f.close
 	end
 
@@ -55,5 +67,15 @@ module ParserXML
 		to = DateTime.strptime(@doc.xpath("//schedule/@valid_until").first.content, '%Y-%m-%d')
 		datetime = to.to_time.to_date + 1
 		datetime
+	end
+
+	def self.get_program_meta_info name
+		meta_info = {}
+		meta_info_xml = @doc_live.xpath("//showinfo[title/text()=\'#{name}\']")
+		return meta_info if meta_info_xml.empty?
+		meta_info["description"] = meta_info_xml.at("description").text
+		meta_info["guid"] = meta_info_xml.at("guid").text
+		meta_info["link"] = meta_info_xml.at("link").text
+		meta_info
 	end
 end

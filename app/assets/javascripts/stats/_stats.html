@@ -11,14 +11,9 @@
 		<div ng-show="dates.consistent" class="fadein fadeout invalidDates">
 			Fechas inválidas
 		</div>
-		<!-- <div ng-show="dates.consistent" class="fadein fadeout">
-			<div class="alert alert-danger alert-dismissible">
-				Fechas inválidas
-			</div>
-		</div> -->
 		<div id="filters">
 			<div id="source">
-				<span ng-model="source">Filtrando estadísticas por... <br/> 
+				<span ng-model="source">Filtrando estadísticas por... <br/>
 					{{source}}
 				</span>
 			</div>
@@ -47,12 +42,12 @@
 				</div>
 				<div id="fechas">
 					<span>
-						<label ng-class="{true: 'hint--top hint--error hint--always hint--bounce', false: undefined}[filterForm.inputFechaIni.$error.required || !filterForm.inputFechaIni.$valid]" ng-attr-data-hint="{{(filterForm.inputFechaIni.$error.required || !filterForm.inputFechaIni.$valid) ? 'Fecha inicio no válida' : undefined}}">Fecha Inicio: 
+						<label ng-class="{true: 'hint--top hint--error hint--always hint--bounce', false: undefined}[filterForm.inputFechaIni.$error.required || !filterForm.inputFechaIni.$valid]" ng-attr-data-hint="{{(filterForm.inputFechaIni.$error.required || !filterForm.inputFechaIni.$valid) ? 'Fecha inicio no válida' : undefined}}">Fecha Inicio:
 						</label>
-						<input type="date" id="fechaIni" name="inputFechaIni" min="2010-01-01" ng-model = "fechaInicio" ng-change="	changedDate(filterForm.$valid)" required/>	
+						<input type="date" id="fechaIni" name="inputFechaIni" min="2010-01-01" ng-model = "fechaInicio" ng-change="	changedDate(filterForm.$valid)" required/>
 					</span>
 					<span>
-						<label ng-class="{true: 'hint--top hint--error hint--always hint--bounce', false: undefined}[filterForm.inputFechaFin.	$error.required || !filterForm.inputFechaFin.$valid]" ng-attr-data-hint="{{(filterForm.inputFechaFin.$error.required || !filterForm.inputFechaFin.$valid) ? 'Fecha fin no válida' : undefined}}">Fecha Fin: 
+						<label ng-class="{true: 'hint--top hint--error hint--always hint--bounce', false: undefined}[filterForm.inputFechaFin.	$error.required || !filterForm.inputFechaFin.$valid]" ng-attr-data-hint="{{(filterForm.inputFechaFin.$error.required || !filterForm.inputFechaFin.$valid) ? 'Fecha fin no válida' : undefined}}">Fecha Fin:
 						</label>
 						<input type="date" id="fechaFin" name="inputFechaFin" min="2010-01-01" ng-model = "fechaFin" ng-change="changedDate(filterForm.$valid)" required/>
 					</span>

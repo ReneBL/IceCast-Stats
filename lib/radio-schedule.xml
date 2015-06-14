@@ -39,6 +39,60 @@
 <showtype id="30" name="Alarm Test"/>
 <showtype id="31" name="Alarm"/>
 </showtypes>
+<showinfolist imgbase="http://programacion.cuacfm.org/android/img/">
+<showinfo is_music="0" showtype="1" name="Informativos Fin de Semana" img="democracynow.jpg"/>
+<showinfo is_music="0" showtype="1" name="Informativos Mediodia" img="democracynow.jpg"/>
+<showinfo is_music="0" showtype="1" name="Informativos fin de semana" img="democracynow.jpg"/>
+<showinfo is_music="0" showtype="1" name="Informativos" img="democracynow.jpg"/>
+<showinfo is_music="0" showtype="18" name="A fume de carozo" img="sinprograma.png"/>
+<showinfo is_music="0" showtype="19" name="Radio Prometea - Ondas do Carcere" img=""/>
+<showinfo is_music="0" showtype="19" name="Simplemente gente" img="simplementegente.jpg"/>
+<showinfo is_music="0" showtype="19" name="Tranki-magazine" img="sinprograma.png"/>
+<showinfo is_music="0" showtype="23" name="Benditos Jueves" img="benditosjueves.png"/>
+<showinfo is_music="0" showtype="23" name="Manda Carallo" img="mandacarallo.png"/>
+<showinfo is_music="0" showtype="23" name="Spoiler" img="spoiler.png"/>
+<showinfo is_music="0" showtype="3" name="A Meiga das Palabras" img="meigapalabras.jpg"/>
+<showinfo is_music="0" showtype="3" name="Alegria" img="alegria.png"/>
+<showinfo is_music="0" showtype="3" name="Carne Cruda" img="carnecruda.png"/>
+<showinfo is_music="0" showtype="3" name="Cuac esta a pasar" img="cuacesta.jpg"/>
+<showinfo is_music="0" showtype="3" name="El Desinformativo" img="desinformativo.png"/>
+<showinfo is_music="0" showtype="3" name="Radioactiva" img="sinprograma.png"/>
+<showinfo is_music="0" showtype="4" name="Falso Nueve" img="falso9.png"/>
+<showinfo is_music="0" showtype="5" name="RH+ - Xeracion Bravu" img="rhpositivo.png"/>
+<showinfo is_music="0" showtype="7" name="La biblioteca perdida" img="bibliotecaperdida.png"/>
+<showinfo is_music="0" showtype="7" name="Recendo" img="recendo.jpg"/>
+<showinfo is_music="0" showtype="8" name="Planeta Espuni" img="planetaespuni.jpg"/>
+<showinfo is_music="0" showtype="9" name="Baranda" img="baranda.png"/>
+<showinfo is_music="0" showtype="9" name="Cafe con gotas" img="sinprograma.png"/>
+<showinfo is_music="0" showtype="9" name="Crea nas ondas" img="creanasondas.jpg"/>
+<showinfo is_music="0" showtype="9" name="Dentro de un orden" img="dduo.jpg"/>
+<showinfo is_music="0" showtype="9" name="El Rinconcito" img="rinconcito.png"/>
+<showinfo is_music="0" showtype="9" name="Entre apuntes" img="sinprograma.png"/>
+<showinfo is_music="0" showtype="9" name="La Parada de los Monstruos" img="paradamonstruos.png"/>
+<showinfo is_music="0" showtype="9" name="La enredadera" img="enredadera.png"/>
+<showinfo is_music="0" showtype="9" name="Mar de fueguitos" img="mardefueguitos.png"/>
+<showinfo is_music="0" showtype="9" name="New Age" img="newage.png"/>
+<showinfo is_music="0" showtype="9" name="Proxecto Neo" img="proxectoneo.png"/>
+<showinfo is_music="0" showtype="9" name="R que R" img="rquer.jpg"/>
+<showinfo is_music="0" showtype="9" name="Sin Etiquetas" img="sinetiquetas.jpg"/>
+<showinfo is_music="1" showtype="10" name="Expreso de medianoche" img="expresocuac.jpg"/>
+<showinfo is_music="1" showtype="11" name="Abrete de orellas" img="abretedeorellas.png"/>
+<showinfo is_music="1" showtype="11" name="Ar de Coruña" img="arde.jpg"/>
+<showinfo is_music="1" showtype="11" name="Fantasma accidental" img="fantasma.png"/>
+<showinfo is_music="1" showtype="11" name="Frankly" img="sinprograma.png"/>
+<showinfo is_music="1" showtype="11" name="High Street" img="higherstreet.png"/>
+<showinfo is_music="1" showtype="11" name="Luna hiena" img="lunahiena.jpg"/>
+<showinfo is_music="1" showtype="11" name="Multiplex" img="sinprograma.png"/>
+<showinfo is_music="1" showtype="11" name="Musica Local" img="continuidad.png"/>
+<showinfo is_music="1" showtype="11" name="Musica Nocturna" img="continuidad.png"/>
+<showinfo is_music="1" showtype="11" name="Orion 2.1" img="orion.jpg"/>
+<showinfo is_music="1" showtype="11" name="Radiocassette" img="radiocassete.jpg"/>
+<showinfo is_music="1" showtype="11" name="Reversion" img="sinprograma.png"/>
+<showinfo is_music="1" showtype="11" name="ninputaidea" img="ninputaidea.png"/>
+<showinfo is_music="1" showtype="14" name="Una noche en la opera" img="opera.png"/>
+<showinfo is_music="1" showtype="15" name="Azucar Habanero" img="azucarhabanero.png"/>
+<showinfo is_music="1" showtype="28" name="Folk in trio" img="folkin.jpg"/>
+</showinfolist>
 <schedule valid_from="2015-04-01" valid_until="2015-06-01">
 <day weekday="Mon">
 <show starts_time="00:00:00" ends_time="01:00:00" is_music="0" showtype="9" name="El Rinconcito"/>
@@ -110,7 +164,7 @@
 <show starts_time="14:00:00" ends_time="15:00:00" is_music="0" showtype="1" name="Informativos Mediodia"/>
 <show starts_time="15:00:00" ends_time="16:00:00" is_music="1" showtype="14" name="Una noche en la opera"/>
 <show starts_time="16:00:00" ends_time="17:00:00" is_music="0" showtype="9" name="Cafe con gotas"/>
-<show starts_time="17:00:00" ends_time="18:00:00" is_music="0" showtype="19" name="Radio Prometea - Ondas do carcere"/>
+<show starts_time="17:00:00" ends_time="18:00:00" is_music="0" showtype="19" name="Radio Prometea - Ondas do Carcere"/>
 <show starts_time="18:00:00" ends_time="19:00:00" is_music="0" showtype="9" name="Baranda"/>
 <show starts_time="19:00:00" ends_time="20:00:00" is_music="1" showtype="11" name="Fantasma accidental"/>
 <show starts_time="20:00:00" ends_time="21:00:00" is_music="0" showtype="19" name="Tranki-magazine"/>
@@ -172,7 +226,7 @@
 </day>
 <day weekday="Sat">
 <show starts_time="00:00:00" ends_time="01:00:00" is_music="0" showtype="9" name="La Parada de los Monstruos"/>
-<show starts_time="01:00:00" ends_time="02:00:00" is_music="0" showtype="23" name="Manda carallo"/>
+<show starts_time="01:00:00" ends_time="02:00:00" is_music="0" showtype="23" name="Manda Carallo"/>
 <show starts_time="02:00:00" ends_time="03:00:00" is_music="1" showtype="11" name="Musica Nocturna"/>
 <show starts_time="03:00:00" ends_time="04:00:00" is_music="1" showtype="11" name="Musica Nocturna"/>
 <show starts_time="04:00:00" ends_time="05:00:00" is_music="1" showtype="11" name="Musica Nocturna"/>
@@ -197,7 +251,7 @@
 <show starts_time="23:00:00" ends_time="00:00:00" is_music="0" showtype="7" name="Recendo"/>
 </day>
 <day weekday="Sun">
-<show starts_time="00:00:00" ends_time="01:00:00" is_music="0" showtype="19" name="Radio Prometa-Ondas do Carcere"/>
+<show starts_time="00:00:00" ends_time="01:00:00" is_music="0" showtype="19" name="Radio Prometa - Ondas do Carcere"/>
 <show starts_time="01:00:00" ends_time="02:00:00" is_music="1" showtype="11" name="Multiplex"/>
 <show starts_time="02:00:00" ends_time="03:00:00" is_music="1" showtype="11" name="Musica Nocturna"/>
 <show starts_time="03:00:00" ends_time="04:00:00" is_music="1" showtype="11" name="Musica Nocturna"/>
@@ -224,4 +278,3 @@
 </day>
 </schedule>
 </radioschedule>
-

@@ -1,1 +1,2 @@
-xml_path: <%= "#{Rails.root}/lib/radio-schedule.xml" %>
+xml_schedule_path: <%= "#{Rails.root}/lib/radio-schedule.xml" %>
+xml_live_path: <%= "#{Rails.root}/lib/directo.xml" %>

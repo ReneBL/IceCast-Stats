@@ -67,12 +67,12 @@ class ParserTest < ActiveSupport::TestCase
 				if (!connections[i].programs.empty? && (prog.count == connections[i].programs.size))
 					for j in 0..(prog.count - 1)
 						valid_progs = valid_progs && (prog[j]["name"] == connections[i].programs[j].name) &&
-													(prog[j]["seconds_listened"] == connections[i].programs[j].seconds_listened) 
+													(prog[j]["seconds_listened"] == connections[i].programs[j].seconds_listened)
 					end
 				else
 					valid_progs = false
 				end
-			end  
+			end
 		end
 		valid && valid_progs
 	end
@@ -94,15 +94,15 @@ class ParserTest < ActiveSupport::TestCase
 		writeToFile @@connection, @@connection2
 		Parser.parse 'logTest'
 		collection = Database.getConnectionCollection
-		
+
 		connection = build(:connection_ok)
 		connection2 = build(:connection2)
 		connections = [connection, connection2]
-		
+
 		result = collection.find.to_a
 		assert_equal result.count, 2
 		assert comparator result, connections
-		
+
 		writeToFile @@connection3
 		Parser.parse 'logTest'
 		connection3 = build(:connection3)
@@ -110,7 +110,7 @@ class ParserTest < ActiveSupport::TestCase
 		result = collection.find.to_a
 		assert_equal result.count, 3
 		assert comparator result, connections
-		
+
 		writeToFile @@connection
 		Parser.parse 'logTest'
 		connection4 = build(:connection_ok)
@@ -158,12 +158,12 @@ class ParserTest < ActiveSupport::TestCase
 	end
 
 	test "parse programs info" do
-		writeToFile @@connection_out_of_schedule, @@monday_listening_FolkInTrio_ElRinconcito, @@not_scheduled_source, 
-			@@tuesday_listening_Spoiler, @@friday_listening_Informativos_Radiocassette_Sin_Etiq, @@listening_before, 
+		writeToFile @@connection_out_of_schedule, @@monday_listening_FolkInTrio_ElRinconcito, @@not_scheduled_source,
+			@@tuesday_listening_Spoiler, @@friday_listening_Informativos_Radiocassette_Sin_Etiq, @@listening_before,
 			@@listening_after
 		Parser.parse 'logTest'
-		connections = [build(:connection_out_of_schedule), build(:monday_listening_FolkInTrio_ElRinconcito), 
-			build(:not_scheduled_source), build(:tuesday_listening_Spoiler), 
+		connections = [build(:connection_out_of_schedule), build(:monday_listening_FolkInTrio_ElRinconcito),
+			build(:not_scheduled_source), build(:tuesday_listening_Spoiler),
 			build(:friday_listening_Informativos_Radiocassette_Sin_Etiq), build(:listening_from_before_schedule),
 			build(:listening_until_after)
 		]
@@ -197,9 +197,30 @@ class ParserTest < ActiveSupport::TestCase
 		err = assert_raises(ParserException) {Parser.persist_line nil}
 		assert_equal "Linea nula: []", err.message
 	end
-	
+
 	test "parse non existent file" do
 		err = assert_raises(ParserException) {Parser.parse 'NonExistentFile'}
 		assert_equal "File not found", err.message
+	end
+
+	test "obtain programs meta info" do
+		ParserXML.initialize_live_xml
+		result = ParserXML.get_program_meta_info "Fantasma accidental"
+		assert_not_nil result
+		assert_equal result["description"], "Un programa sobre a música alternativa galega e as súas conexións, nunha viaxe de ida e volta no tempo e no espazo."
+		assert_equal result["guid"], "Musical"
+		assert_equal result["link"], "http://programacion.cuacfm.org/android/img/fantasma.png"
+	end
+
+	test "obtain non existing program meta info" do
+		ParserXML.initialize_live_xml
+		result = ParserXML.get_program_meta_info ""
+		assert true, result.empty?
+		result = ParserXML.get_program_meta_info "Fake Program"
+		assert true, result.empty?
+		result = ParserXML.get_program_meta_info 0
+		assert true, result.empty?
+		result = ParserXML.get_program_meta_info nil
+		assert true, result.empty?
 	end
 end
