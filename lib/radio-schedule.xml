@@ -2,7 +2,7 @@
 <sources>
   <source name="cuacfm.mp3"/>
   <source name="cuacfm-128k.mp3"/>
-  <source name="cuacfm.aac"/>    
+  <source name="cuacfm.aac"/>
   <source name="cuacfm.ogg"/>
 </sources>
 <showtypes>

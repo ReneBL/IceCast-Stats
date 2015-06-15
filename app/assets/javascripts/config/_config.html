@@ -6,7 +6,7 @@
   		</div>
   		<span class="list-group-item">
   			<label>
-				Filtrar en base a 
+				Filtrar en base a
 				<select id="comboSources" ng-model="source" ng-options="source for source in sources">
 				</select>
 			</label>
@@ -15,9 +15,9 @@
   			<form name="refreshForm">
 				<div id="configRefresh">
 					<label ng-class="{true: 'hint--top hint--error hint--always hint--bounce', false: undefined}[refreshForm.inputRefreshSeconds.$error.required || !refreshForm.inputRefreshSeconds.$valid]" ng-attr-data-hint="{{(refreshForm.inputRefreshSeconds.$error.required || !refreshForm.inputRefreshSeconds.$valid) ? 'Tasa de refresco no válida (1..60)' : undefined}}">
-					Tiempo de refresco de estadísticas en tiempo real (en segundos): 
+					Tasa de refresco de estadísticas en tiempo real (en segundos):
 					</label>
-					<input class="form-control" type="number" name="inputRefreshSeconds" ng-model="refreshSeconds" 
+					<input class="form-control" type="number" name="inputRefreshSeconds" ng-model="refreshSeconds"
 					ng-change="setRefreshSeconds(refreshForm.$valid)" min="1" max="60" required>
 				</div>
 			</form>
@@ -26,9 +26,9 @@
   			<form name="refreshListenersForm">
 				<div id="configRefresh">
 					<label ng-class="{true: 'hint--top hint--error hint--always hint--bounce', false: undefined}[refreshListenersForm.inputRefreshMinutes.$error.required || !refreshListenersForm.inputRefreshMinutes.$valid]" ng-attr-data-hint="{{(refreshListenersForm.inputRefreshMinutes.$error.required || !refreshListenersForm.inputRefreshMinutes.$valid) ? 'Tasa de refresco no válida (mínimo 1 minuto)' : undefined}}">
-					Tiempo de refresco de oyentes en las últimas horas (en minutos): 
+					Tasa de refresco de oyentes en las últimas horas (en minutos): 
 					</label>
-					<input class="form-control" type="number" name="inputRefreshMinutes" ng-model="refreshMinutes" 
+					<input class="form-control" type="number" name="inputRefreshMinutes" ng-model="refreshMinutes"
 					ng-change="setRefreshMinutes(refreshListenersForm.$valid)" min="1" required>
 				</div>
 			</form>
@@ -37,7 +37,7 @@
   			<form name="serverForm">
 				<div id="configServer">
 					<label ng-class="{true: 'hint--top hint--error hint--always hint--bounce', false: undefined}[serverForm.inputServer.$error.required || !serverForm.inputServer.$valid]" ng-attr-data-hint="{{(serverForm.inputServer.$error.required || !serverForm.inputServer.$valid) ? 'Dirección URL no válida' : undefined}}">
-					Dirección del servidor IceCast: 
+					Dirección del servidor IceCast:
 					</label>
 					<input class="form-control" type="url" name="inputServer" ng-model="server" ng-change="setServer(serverForm.$valid)" required>
 				</div>
