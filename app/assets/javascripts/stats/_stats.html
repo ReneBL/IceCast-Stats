@@ -9,7 +9,10 @@
 	<br/>
 	<div id="datePickers" ng-controller="FilterController">
 		<div ng-show="dates.consistent" class="fadein fadeout invalidDates">
-			<span id="alertIcon" class="glyphicon glyphicon-alert"></span> <span id="textErrorDates">Fechas inválidas</span>
+			<span id="alertIcon" class="glyphicon glyphicon-alert"></span> <span id="textErrorDates">Fechas no válidas</span>
+		</div>
+		<div ng-show="startNotLesserEnd && showHourRange" class="fadein fadeout invalidDates">
+			<span id="alertIcon" class="glyphicon glyphicon-alert"></span> <span id="textErrorDates">Horas no válidas</span>
 		</div>
 		<div id="filters">
 			<div id="source">

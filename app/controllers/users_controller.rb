@@ -15,9 +15,9 @@ class UsersController < ApplicationController
     user = User.where(login: params[:session][:login].downcase).first
     # Si el usuario es nil, no queremos probar a autenticarlo, puesto que sería un intento de acceso a una clase nula
     if !user
-      abort :wrong_login, "Login no válido"
+      abort :wrong_login, "El usuario introducido no ha sido dado de alta en el sistema"
     elsif !user.authenticate(params[:session][:password])
-      abort :wrong_password, "Password no válida"
+      abort :wrong_password, "La contraseña no es válida"
     else
       log_in(user)
       redirect_to home_path

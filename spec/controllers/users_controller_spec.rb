@@ -43,14 +43,14 @@ RSpec.describe UsersController, type: :controller do
     it "should advertise not valid login name" do
       post :create, session: { login: "adminnnnn", password: "admin" }
       expect(flash).not_to be_empty
-      expect(flash[:wrong_login]).to eq("Login no válido")
+      expect(flash[:wrong_login]).to eq("El usuario introducido no ha sido dado de alta en el sistema")
       expect(response).to redirect_to(login_form_path)
     end
     
     it "should advertise not valid password" do
       post :create, session: { login: "admin", password: "adminfalse" }
       expect(flash).not_to be_empty
-      expect(flash[:wrong_password]).to eq("Password no válida")
+      expect(flash[:wrong_password]).to eq("La contraseña no es válida")
       expect(response).to redirect_to(login_form_path)
     end
     

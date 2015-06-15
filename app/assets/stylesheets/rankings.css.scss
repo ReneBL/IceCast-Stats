@@ -1,0 +1,25 @@
+#botonera {
+	padding-left: 37%;
+}
+
+#templateBotonera {
+	padding-top: 0px;
+	width: 100%;
+	display: inline-flex;
+}
+
+.showButton {
+	visibility: visible;
+}
+
+.hideButton {
+	visibility: hidden;
+}
+
+#rankingPais,
+#rankingRegion,
+#rankingCity,
+#userAgentCity,
+#rankingLinks {
+	clear: both;
+}
