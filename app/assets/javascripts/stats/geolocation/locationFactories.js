@@ -68,7 +68,8 @@ icecast.factory("RegionsCitiesOptionsProvider", function() {
          provide : function(region) {
             var options = {
                 region: region,
-                displayMode : 'markers'
+                displayMode : 'markers',
+                backgroundColor: '#81d4fa'
             };
             return options;
         }

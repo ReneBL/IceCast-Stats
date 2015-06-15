@@ -41,7 +41,7 @@
 			</div>
 		</div>
 	</div>
-	
+
 	<div id="cgcController" ng-controller="ConnectionsGroupedChartController">
 		<span id="template" ng-include="'_botoneraGroup.html'"></span>
 		<div ng-show="dataEmpty">
@@ -59,19 +59,19 @@
 			</div>
 		</div>
 	</div>
-	
+
 	<div id="pieTimeConnections" ng-controller="RangesController">
 		<div>
 			<form name="rangesForm">
 				<label ng-class="{true: 'hint--top hint--error hint--always hint--bounce', false: undefined}[rangesForm.min.$error.required || !rangesForm.min.$valid]" ng-attr-data-hint="{{(rangesForm.min.$error.required || !rangesForm.min.$valid) ? 'Valor mínimo no válido (5..120)' : undefined}}">
 					Min
 				</label>
-				<input type="number" id="min" name="min" ng-model="range.min" min="5" max="120" 
+				<input type="number" id="min" name="min" ng-model="range.min" min="5" max="120"
 					ng-change="validateMaxMin(rangesForm.$valid)" required>
 				<label ng-class="{true: 'hint--bottom hint--error hint--always hint--bounce', false: undefined}[rangesForm.max.$error.required || !rangesForm.max.$valid]" ng-attr-data-hint="{{(rangesForm.max.$error.required || !rangesForm.max.$valid) ? 'Valor máximo no válido (5..120)' : undefined}}">
-					Max 
+					Max
 				</label>
-				<input type="number" id="max" name="max" ng-model="range.max" min="5" max="120" 
+				<input type="number" id="max" name="max" ng-model="range.max" min="5" max="120"
 					ng-change="validateMaxMin(rangesForm.$valid)" required>
 				<span class="minMaxError" ng-show="minGreaterThanMax && !((rangesForm.max.$error.required || !rangesForm.max.$valid) || (rangesForm.min.$error.required || !rangesForm.min.$valid))">
       		Min no puede ser mayor que Max
@@ -93,7 +93,7 @@
   				</span>
   				<span ng-switch-when="false">
 					<div id="programsCombo" chart chart-type="Combo"></div>
-				</span>	
+				</span>
 			</div>
   		</span>
   		<div ng-show="dataEmpty">

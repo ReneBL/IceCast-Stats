@@ -84,7 +84,7 @@ icecast.factory("ConnBetDatesOptionsProvider", function(GROUP_BY) {
 					} else if (groupBy == GROUP_BY.DAY) {
 						var options = {
 							title: "Oyentes por día",
-							height: 350,
+							height: 350
 						};
 						return options;
 					}
@@ -166,7 +166,7 @@ icecast.factory("ProgramsOptionsProvider", function() {
 icecast.factory("GroupedTotalSecondsOptionsProvider", function(GROUP_BY) {
 				 return {
 				 provide : function(groupBy) {
-					if (groupBy == GROUP_BY.DAY) {
+					if (groupBy == GROUP_BY.YEAR) {
 						var options = {
 							title: 'Tiempo total agrupado por año',
 							subtitle: 'en segundos',
@@ -205,7 +205,7 @@ icecast.factory("GroupedTotalSecondsOptionsProvider", function(GROUP_BY) {
 						var options = {
 							title: "Tiempo total agrupado por día",
 							subtitle: 'en segundos',
-							height: 500,
+							height: 350
 						};
 						return options;
 					}
