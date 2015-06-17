@@ -1,8 +1,24 @@
-module ParserXML
+=begin
+IceCast-Stats is system for statistics generation and analysis
+for an IceCast streaming server
+Copyright (C) 2015  René Balay Lorenzo <rene.bl89@gmail.com>
 
-	def self.initialize_parser
-		@config = YAML.load(ERB.new(File.read("#{Rails.root}/config/parser_xml_config.yml")).result)
-	end
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+=end
+
+module ParserXML
 
 	def self.initialize_xml
 		initialize_parser
@@ -77,5 +93,11 @@ module ParserXML
 		meta_info["guid"] = meta_info_xml.at("guid").text
 		meta_info["link"] = meta_info_xml.at("link").text
 		meta_info
+	end
+
+	private
+
+	def self.initialize_parser
+		@config = YAML.load(ERB.new(File.read("#{Rails.root}/config/parser_xml_config.yml")).result)
 	end
 end
