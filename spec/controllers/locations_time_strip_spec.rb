@@ -52,7 +52,7 @@ RSpec.describe LocationsController, type: :controller do
     	]
     	xhrRequestLocations expected_array, '05:27:04', '11:35:58', 'true'
 	
-    	# Ahora descartamos a España mediante la fecha inicio
+    	# Ahora descartamos a Espana mediante la fecha inicio
     	expected_array = [
       	{ :_id => { :country => "France" }, :count => 1 }
     	]
@@ -61,15 +61,15 @@ RSpec.describe LocationsController, type: :controller do
     	# Ahora descartamos a Francia mediante la fecha fin
     	xhrRequestLocations [], '05:27:04', '11:35:58', 'false', '15/11/2014', '30/11/2014'
 
-    	# Añadimos horas incorrectas
+    	# Anadimos horas incorrectas
     	expected_array = { "error" => "One hour is invalid. Correct format: HH:MM:SS"  }
     	xhrRequestLocations expected_array, 'eh:37:09'
 
-    	# Añadimos horas incorrectas
+    	# Anadimos horas incorrectas
     	expected_array = { "error" => "One hour is invalid. Correct format: HH:MM:SS"  }
     	xhrRequestLocations expected_array, '05:27:04', '142:344:23'
 
-    	# Añadimos horas inconsistentes
+    	# Anadimos horas inconsistentes
     	expected_array = { "error" => "Start time is greater than end time"  }
     	xhrRequestLocations expected_array, '12:37:09', '02:00:00'
   	end
@@ -107,7 +107,7 @@ RSpec.describe LocationsController, type: :controller do
     	]
     	xhrRequestLocationsTime expected_array, '05:27:04', '11:35:58'
 	
-    	# Ahora descartamos a España mediante la fecha inicio
+    	# Ahora descartamos a Espana mediante la fecha inicio
     	expected_array = [
       	{ :_id => { :country => "France" }, :count => 10 }
     	]
@@ -116,15 +116,15 @@ RSpec.describe LocationsController, type: :controller do
     	# Ahora descartamos a Francia mediante la fecha fin
     	xhrRequestLocationsTime [], '05:27:04', '11:35:58', '15/11/2014', '30/11/2014'
 
-    	# Añadimos horas incorrectas
+    	# Anadimos horas incorrectas
     	expected_array = { "error" => "One hour is invalid. Correct format: HH:MM:SS"  }
     	xhrRequestLocationsTime expected_array, 'eh:37:09'
 
-    	# Añadimos horas incorrectas
+    	# Anadimos horas incorrectas
     	expected_array = { "error" => "One hour is invalid. Correct format: HH:MM:SS"  }
     	xhrRequestLocationsTime expected_array, '05:27:04', '142:344:23'
 
-    	# Añadimos horas inconsistentes
+    	# Anadimos horas inconsistentes
     	expected_array = { "error" => "Start time is greater than end time"  }
     	xhrRequestLocationsTime expected_array, '12:37:09', '02:00:00'
   	end
@@ -148,7 +148,7 @@ RSpec.describe LocationsController, type: :controller do
       end
 
       3.times do
-        FactoryGirl.create(:connection_from_Cataluña)
+        FactoryGirl.create(:connection_from_Cataluna)
       end
 
       FactoryGirl.create(:connection_from_New_Jersey)
@@ -159,20 +159,20 @@ RSpec.describe LocationsController, type: :controller do
 
     it "should return locations grouped by region" do
       expected_array = [
-        { :_id => { :region => "Cataluña"}, :count => 3 },
+        { :_id => { :region => "Cataluna"}, :count => 3 },
         { :_id => { :region => "Galicia"}, :count => 3 }
       ]
       xhrRequestRegions expected_array, '00:27:04', '03:10:39'
 
       expected_array = [
-        { :_id => { :region => "Cataluña"}, :count => 1 },
+        { :_id => { :region => "Cataluna"}, :count => 1 },
         { :_id => { :region => "Galicia"}, :count => 1 }
       ]
       xhrRequestRegions expected_array, '00:27:04', '03:10:39', 'true'
   
       # Descartamos a Galicia con la fecha de inicio
       expected_array = [
-        { :_id => { :region => "Cataluña"}, :count => 3 },
+        { :_id => { :region => "Cataluna"}, :count => 3 },
         { :_id => { :region => "Extremadura"}, :count => 2 },
         { :_id => { :region => "Madrid"}, :count => 1 }
       ]
@@ -180,7 +180,7 @@ RSpec.describe LocationsController, type: :controller do
 
       # Descartamos a Galicia con la fecha de inicio y agrupamos
       expected_array = [
-        { :_id => { :region => "Cataluña"}, :count => 1 },
+        { :_id => { :region => "Cataluna"}, :count => 1 },
         { :_id => { :region => "Extremadura"}, :count => 1 },
         { :_id => { :region => "Madrid"}, :count => 1 }
       ]
@@ -188,7 +188,7 @@ RSpec.describe LocationsController, type: :controller do
 
       # Descartamos a Madrid con la fecha de fin
       expected_array = [
-        { :_id => { :region => "Cataluña"}, :count => 3 },
+        { :_id => { :region => "Cataluna"}, :count => 3 },
         { :_id => { :region => "Extremadura"}, :count => 2 },
         { :_id => { :region => "Galicia"}, :count => 3 }
       ]
@@ -196,21 +196,21 @@ RSpec.describe LocationsController, type: :controller do
 
       # Descartamos a Madrid con la fecha de inicio y agrupamos
       expected_array = [
-        { :_id => { :region => "Cataluña"}, :count => 1 },
+        { :_id => { :region => "Cataluna"}, :count => 1 },
         { :_id => { :region => "Extremadura"}, :count => 1 },
         { :_id => { :region => "Galicia"}, :count => 1 }
       ]
       xhrRequestRegions expected_array, '00:27:04', '17:55:42', 'true', '17/07/2014', '10/02/2015'
 
-      # Descartamos todo menos Cataluña mediante las horas
+      # Descartamos todo menos Cataluna mediante las horas
       expected_array = [
-        { :_id => { :region => "Cataluña"}, :count => 3 }
+        { :_id => { :region => "Cataluna"}, :count => 3 }
       ]
       xhrRequestRegions expected_array, '03:10:39', '03:10:39'
 
-      # Descartamos todo menos Cataluña mediante las horas
+      # Descartamos todo menos Cataluna mediante las horas
       expected_array = [
-        { :_id => { :region => "Cataluña"}, :count => 1 }
+        { :_id => { :region => "Cataluna"}, :count => 1 }
       ]
       xhrRequestRegions expected_array, '03:10:39', '03:10:39', 'true'
 
@@ -223,15 +223,15 @@ RSpec.describe LocationsController, type: :controller do
 
       xhrRequestRegions [], '03:10:40', '09:40:00'
 
-      # Añadimos horas incorrectas
+      # Anadimos horas incorrectas
       expected_array = { "error" => "One hour is invalid. Correct format: HH:MM:SS" }
       xhrRequestRegions expected_array, 'eh:37:09'
 
-      # Añadimos horas incorrectas
+      # Anadimos horas incorrectas
       expected_array = { "error" => "One hour is invalid. Correct format: HH:MM:SS" }
       xhrRequestRegions expected_array, '05:27:04', '142:344:23'
 
-      # Añadimos horas inconsistentes
+      # Anadimos horas inconsistentes
       expected_array = { "error" => "Start time is greater than end time" }
       xhrRequestRegions expected_array, '12:37:09', '02:00:00'
 
@@ -265,7 +265,7 @@ RSpec.describe LocationsController, type: :controller do
       end
 
       3.times do
-        FactoryGirl.create(:connection_from_Cataluña)
+        FactoryGirl.create(:connection_from_Cataluna)
       end
 
       FactoryGirl.create(:connection_from_New_Jersey)
@@ -276,14 +276,14 @@ RSpec.describe LocationsController, type: :controller do
 
     it "should return locations grouped by region" do
       expected_array = [
-        { :_id => { :region => "Cataluña"}, :count => 60 },
+        { :_id => { :region => "Cataluna"}, :count => 60 },
         { :_id => { :region => "Galicia"}, :count => 30 }
       ]
       xhrRequestRegionsTime expected_array, '00:27:04', '03:10:39'
   
       # Descartamos a Galicia con la fecha de inicio
       expected_array = [
-        { :_id => { :region => "Cataluña"}, :count => 60 },
+        { :_id => { :region => "Cataluna"}, :count => 60 },
         { :_id => { :region => "Extremadura"}, :count => 30 },
         { :_id => { :region => "Madrid"}, :count => 8 }
       ]
@@ -291,15 +291,15 @@ RSpec.describe LocationsController, type: :controller do
 
       # Descartamos a Madrid con la fecha de fin
       expected_array = [
-        { :_id => { :region => "Cataluña"}, :count => 60 },
+        { :_id => { :region => "Cataluna"}, :count => 60 },
         { :_id => { :region => "Extremadura"}, :count => 30 },
         { :_id => { :region => "Galicia"}, :count => 30 }
       ]
       xhrRequestRegionsTime expected_array, '00:27:04', '17:55:42', '17/07/2014', '10/02/2015'
 
-      # Descartamos todo menos Cataluña mediante las horas
+      # Descartamos todo menos Cataluna mediante las horas
       expected_array = [
-        { :_id => { :region => "Cataluña"}, :count => 60 }
+        { :_id => { :region => "Cataluna"}, :count => 60 }
       ]
       xhrRequestRegionsTime expected_array, '03:10:39', '03:10:39'
 
@@ -312,15 +312,15 @@ RSpec.describe LocationsController, type: :controller do
 
       xhrRequestRegionsTime [], '03:10:40', '09:40:00'
 
-      # Añadimos horas incorrectas
+      # Anadimos horas incorrectas
       expected_array = { "error" => "One hour is invalid. Correct format: HH:MM:SS" }
       xhrRequestRegionsTime expected_array, 'eh:37:09'
 
-      # Añadimos horas incorrectas
+      # Anadimos horas incorrectas
       expected_array = { "error" => "One hour is invalid. Correct format: HH:MM:SS" }
       xhrRequestRegionsTime expected_array, '05:27:04', '142:344:23'
 
-      # Añadimos horas inconsistentes
+      # Anadimos horas inconsistentes
       expected_array = { "error" => "Start time is greater than end time" }
       xhrRequestRegionsTime expected_array, '12:37:09', '02:00:00'
 
@@ -343,7 +343,7 @@ RSpec.describe LocationsController, type: :controller do
 
     before(:each) do
       3.times do
-        FactoryGirl.create(:connection_from_Coruña)
+        FactoryGirl.create(:connection_from_Coruna)
       end
       FactoryGirl.create(:connection_from_Laracha)
       FactoryGirl.create(:connection_from_Barcelona)
@@ -366,7 +366,7 @@ RSpec.describe LocationsController, type: :controller do
 
     it "should return total amount of listening time per city" do
       expected_array = [
-        { :_id => { :city => "A Coruña"}, :count => 60 },
+        { :_id => { :city => "A Coruna"}, :count => 60 },
         { :_id => { :city => "Laracha"},  :count => 10 }
       ]
       xhrRequestCitiesTime expected_array, 'Galicia', 'Spain'
@@ -386,13 +386,13 @@ RSpec.describe LocationsController, type: :controller do
       xhrRequestCitiesTime [], 'Galicia', 'BlaBla'
 
       expected_array = { "error" => "Start time is greater than end time"  }
-      xhrRequestCitiesTime expected_array, 'Cataluña', 'Spain', '13:34:10', '10:20:19'
+      xhrRequestCitiesTime expected_array, 'Cataluna', 'Spain', '13:34:10', '10:20:19'
 
       expected_array = { "error" => "One date is invalid. Correct format: d/m/Y"  }
-      xhrRequestCitiesTime expected_array, 'Cataluña', 'Spain', '10:34:10', '12:20:19', '/02/2010'
+      xhrRequestCitiesTime expected_array, 'Cataluna', 'Spain', '10:34:10', '12:20:19', '/02/2010'
 
       expected_array = { "error" => "One date is invalid. Correct format: d/m/Y"  }
-      xhrRequestCitiesTime expected_array, 'Cataluña', 'Spain', '10:34:10', '12:20:19', '10/02/2010', '34/29//10'
+      xhrRequestCitiesTime expected_array, 'Cataluna', 'Spain', '10:34:10', '12:20:19', '10/02/2010', '34/29//10'
     end
 
     def xhrRequestCitiesTime(expected_array, region, country='Spain', st_hour="00:00:00", end_hour="23:59:59", 

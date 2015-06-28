@@ -51,7 +51,7 @@ FactoryGirl.define do
     country_code 'ES'
   end
 
-  factory :connection_from_Cataluña, class: Connection do
+  factory :connection_from_Cataluna, class: Connection do
     ip '194.224.90.19'
     identd '-'
     userid '-'
@@ -63,7 +63,7 @@ FactoryGirl.define do
     user_agent 'iTunes/9.1.1'
     seconds_connected 20
     country 'Spain'
-    region 'Cataluña'
+    region 'Cataluna'
     country_code 'ES'
   end
 

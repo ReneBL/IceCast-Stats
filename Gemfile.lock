@@ -1,9 +1,9 @@
 GIT
   remote: git://github.com/deivid-rodriguez/byebug.git
-  revision: 7565dccea58810558621a23c157175b6e4f92036
+  revision: 919d3feb464459f49ab29d18867e24c74e47dabb
   branch: master
   specs:
-    byebug (4.0.5)
+    byebug (5.0.0)
       columnize (= 0.9.0)
 
 GIT
@@ -267,6 +267,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  addressable (~> 2.3.8)
   angular-rails-templates
   apachelogregex (~> 0.1.0)
   autoprefixer-rails

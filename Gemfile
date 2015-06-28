@@ -51,6 +51,7 @@ gem 'ipaddress'
 gem 'geocoder'
 gem 'bower-rails'
 gem 'angular-rails-templates'
+gem 'addressable', '~> 2.3.8'
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
 gem 'jsonschema'
@@ -64,10 +65,10 @@ gem 'license_finder', :group => :development
 # gem 'capistrano-rails', group: :development
 
 gem 'webmock', :group => :test
+gem 'byebug', github: 'deivid-rodriguez/byebug', branch: 'master', group: :test
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug', github: 'deivid-rodriguez/byebug', branch: 'master'
   gem 'simplecov', :require => false, :group => :test
 
   # Access an IRB console on exception pages or by using <%= console %> in views

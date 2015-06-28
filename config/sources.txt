@@ -1,6 +1,6 @@
 cuacfm-128k.mp3
 cuacfm.mp3
-cuacfm.ogg
+pepito.ogg
 pepito.ogg
 cuacfm.mp3
 cuacfm.mp3

@@ -25,7 +25,7 @@ RSpec.describe RankingController, type: :controller do
 
 	before(:each) do
       3.times do
-        FactoryGirl.create(:connection_from_Coruña)
+        FactoryGirl.create(:connection_from_Coruna)
       end
       FactoryGirl.create(:connection_from_Barcelona)
 
@@ -48,10 +48,10 @@ RSpec.describe RankingController, type: :controller do
   describe "when access to ranking of cities" do
   	it "should return all ranking without pagination" do
   		expected_array = [
-  			{:_id => {:city => "A Coruña", :region => "Galicia", :country => "Spain"}, :time => 60, :bytes => 120, :listeners => 3},
-        {:_id => {:city => "Bilbao", :region => "País Vasco", :country => "Spain"}, :time => 45, :bytes => 90, :listeners => 3},
+  			{:_id => {:city => "A Coruna", :region => "Galicia", :country => "Spain"}, :time => 60, :bytes => 120, :listeners => 3},
+        {:_id => {:city => "Bilbao", :region => "Pais Vasco", :country => "Spain"}, :time => 45, :bytes => 90, :listeners => 3},
   			{:_id => {:city => "Valencia", :region => "Comunidad Valenciana", :country => "Spain"}, :time => 20, :bytes => 40, :listeners => 2},
-        {:_id => {:city => "Barcelona", :region => "Cataluña", :country => "Spain"}, :time => 5, :bytes => 10, :listeners => 1}
+        {:_id => {:city => "Barcelona", :region => "Cataluna", :country => "Spain"}, :time => 5, :bytes => 10, :listeners => 1}
   		]
   		expected = expected_array.to_json
     	xhr :get, :city_ranking, :start_date => '14/11/2014', :end_date => '11/02/2015', :format => :json
@@ -61,21 +61,21 @@ RSpec.describe RankingController, type: :controller do
   	it "should return ranking of cities paginated" do
 
       expected_array = [
-        {:_id => {:city => "A Coruña", :region => "Galicia", :country => "Spain"}, :time => 60, :bytes => 120, :listeners => 3},
-        {:_id => {:city => "Bilbao", :region => "País Vasco", :country => "Spain"}, :time => 45, :bytes => 90, :listeners => 3},
+        {:_id => {:city => "A Coruna", :region => "Galicia", :country => "Spain"}, :time => 60, :bytes => 120, :listeners => 3},
+        {:_id => {:city => "Bilbao", :region => "Pais Vasco", :country => "Spain"}, :time => 45, :bytes => 90, :listeners => 3},
         {:hasMore => true}
       ]
       xhrRequestCityRanking expected_array, '14/11/2014', '11/02/2015', 0, 2
 
       expected_array = [
         {:_id => {:city => "Valencia", :region => "Comunidad Valenciana", :country => "Spain"}, :time => 20, :bytes => 40, :listeners => 2},
-        {:_id => {:city => "Barcelona", :region => "Cataluña", :country => "Spain"}, :time => 5, :bytes => 10, :listeners => 1},
+        {:_id => {:city => "Barcelona", :region => "Cataluna", :country => "Spain"}, :time => 5, :bytes => 10, :listeners => 1},
         {:hasMore => false}
       ]
       xhrRequestCityRanking expected_array, '17/07/2014', '25/02/2015', 2, 2
 
   		expected_array = [
-        {:_id => {:city => "Bilbao", :region => "País Vasco", :country => "Spain"}, :time => 45, :bytes => 90, :listeners => 3},
+        {:_id => {:city => "Bilbao", :region => "Pais Vasco", :country => "Spain"}, :time => 45, :bytes => 90, :listeners => 3},
         {:_id => {:city => "Valencia", :region => "Comunidad Valenciana", :country => "Spain"}, :time => 20, :bytes => 40, :listeners => 2},
         {:hasMore => false}
   		]

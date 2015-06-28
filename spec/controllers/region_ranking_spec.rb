@@ -34,7 +34,7 @@ RSpec.describe RankingController, type: :controller do
       end
 
       3.times do
-        FactoryGirl.create(:connection_from_Cataluña)
+        FactoryGirl.create(:connection_from_Cataluna)
       end
 
       FactoryGirl.create(:connection_from_New_Jersey)
@@ -50,7 +50,7 @@ RSpec.describe RankingController, type: :controller do
   describe "when access to ranking of regions" do
   	it "should return all ranking without pagination" do
   		expected_array = [
-        {:_id => {:region => "Cataluña", :country => "Spain"}, :time => 60, :bytes => 75, :listeners => 3},
+        {:_id => {:region => "Cataluna", :country => "Spain"}, :time => 60, :bytes => 75, :listeners => 3},
         {:_id => {:region => "Galicia", :country => "Spain"}, :time => 30, :bytes => 330, :listeners => 3},
   			{:_id => {:region => "Extremadura", :country => "Spain"}, :time => 30, :bytes => 200, :listeners => 2},
         {:_id => {:region => "Nacional", :country => "Dominican Republic"}, :time => 23, :bytes => 16, :listeners => 1},
@@ -65,7 +65,7 @@ RSpec.describe RankingController, type: :controller do
   	it "should return ranking of regions paginated" do
 
       expected_array = [
-        {:_id => {:region => "Cataluña", :country => "Spain"}, :time => 60, :bytes => 75, :listeners => 3},
+        {:_id => {:region => "Cataluna", :country => "Spain"}, :time => 60, :bytes => 75, :listeners => 3},
         {:_id => {:region => "Galicia", :country => "Spain"}, :time => 30, :bytes => 330, :listeners => 3},
         {:_id => {:region => "Extremadura", :country => "Spain"}, :time => 30, :bytes => 200, :listeners => 2},
         {:_id => {:region => "Nacional", :country => "Dominican Republic"}, :time => 23, :bytes => 16, :listeners => 1},
@@ -81,7 +81,7 @@ RSpec.describe RankingController, type: :controller do
       xhrRequestRegionRanking expected_array, '17/07/2014', '25/02/2015', 5, 5
 
   		expected_array = [
-  			{:_id => {:region => "Cataluña", :country => "Spain"}, :time => 60, :bytes => 75, :listeners => 3},
+  			{:_id => {:region => "Cataluna", :country => "Spain"}, :time => 60, :bytes => 75, :listeners => 3},
         {:_id => {:region => "Extremadura", :country => "Spain"}, :time => 30, :bytes => 200, :listeners => 2},
         {:_id => {:region => "Nacional", :country => "Dominican Republic"}, :time => 23, :bytes => 16, :listeners => 1},
         {:_id => {:region => "New Jersey", :country => "United States"}, :time => 9, :bytes => 23, :listeners => 1},
@@ -96,7 +96,7 @@ RSpec.describe RankingController, type: :controller do
   	it "should return ranking of regions paginated and filtered by date" do
 
   		expected_array = [
-  			{:_id => {:region => "Cataluña", :country => "Spain"}, :time => 60, :bytes => 75, :listeners => 3},
+  			{:_id => {:region => "Cataluna", :country => "Spain"}, :time => 60, :bytes => 75, :listeners => 3},
         {:_id => {:region => "Nacional", :country => "Dominican Republic"}, :time => 23, :bytes => 16, :listeners => 1},
         {:hasMore => true}
       ]

@@ -56,7 +56,7 @@ RSpec.describe LocationsController, type: :controller do
   		]
   		xhrRequestLocations expected_array, 'true'
 
-  		# Descartamos las conexiones de España mediante start date
+  		# Descartamos las conexiones de Espana mediante start date
 			expected_array = [
   			{ :_id => { :country => "France" }, :count => 1 },
       	{ :_id => { :country => "United States" }, :count => 3 }
@@ -70,17 +70,17 @@ RSpec.describe LocationsController, type: :controller do
   		]
   		xhrRequestLocations expected_array, 'true', '15/11/2014'
 
-  		# Obtenemos las conexiones descartando a España y EEUU por las fechas inicio y fin
+  		# Obtenemos las conexiones descartando a Espana y EEUU por las fechas inicio y fin
   		expected_array = [
   			{ :_id => { :country => "France" }, :count => 1 }
   		]
   		xhrRequestLocations expected_array, 'false', '15/11/2014', '31/01/2015'
 
-  		# Añadimos fechas incorrectas
+  		# Anadimos fechas incorrectas
   		expected_array = { "error" => "One date is invalid. Correct format: d/m/Y"  }
   		xhrRequestLocations expected_array, 'true', ''
 
-  		# Añadimos fechas incorrectas
+  		# Anadimos fechas incorrectas
   		expected_array = { "error" => "One date is invalid. Correct format: d/m/Y"  }
   		xhrRequestLocations expected_array, 'false', '15/11/2014', '31/782015'
     end
@@ -117,24 +117,24 @@ RSpec.describe LocationsController, type: :controller do
       ]
       xhrRequestLocationsTime expected_array
 
-      # Descartamos las conexiones de España mediante start date
+      # Descartamos las conexiones de Espana mediante start date
       expected_array = [
         { :_id => { :country => "France" }, :count => 10 },
         { :_id => { :country => "United States" }, :count => 60 }
       ]
       xhrRequestLocationsTime expected_array, '15/11/2014'
 
-      # Obtenemos las conexiones descartando a España y EEUU por las fechas inicio y fin
+      # Obtenemos las conexiones descartando a Espana y EEUU por las fechas inicio y fin
       expected_array = [
         { :_id => { :country => "France" }, :count => 10 }
       ]
       xhrRequestLocationsTime expected_array, '15/11/2014', '31/01/2015'
 
-      # Añadimos fechas incorrectas
+      # Anadimos fechas incorrectas
       expected_array = { "error" => "One date is invalid. Correct format: d/m/Y"  }
       xhrRequestLocationsTime expected_array, ''
 
-      # Añadimos fechas incorrectas
+      # Anadimos fechas incorrectas
       expected_array = { "error" => "One date is invalid. Correct format: d/m/Y"  }
       xhrRequestLocationsTime expected_array, '15/11/2014', '31/782015'
     end
@@ -160,7 +160,7 @@ RSpec.describe LocationsController, type: :controller do
     	end
 
     	3.times do
-      	FactoryGirl.create(:connection_from_Cataluña)
+      	FactoryGirl.create(:connection_from_Cataluna)
     	end
 
     	FactoryGirl.create(:connection_from_New_Jersey)
@@ -172,7 +172,7 @@ RSpec.describe LocationsController, type: :controller do
     it "should return total amount of connections per region" do
       # Testeamos un caso sencillo
       expected_array = [
-        { :_id => { :region => "Cataluña"}, :count => 3 },
+        { :_id => { :region => "Cataluna"}, :count => 3 },
         { :_id => { :region => "Extremadura"},  :count => 2 },
         { :_id => { :region => "Galicia"}, :count => 3 },
         { :_id => { :region => "Madrid"}, :count => 1 }
@@ -181,7 +181,7 @@ RSpec.describe LocationsController, type: :controller do
 
       # Agrupamos por visitantes
       expected_array = [
-        { :_id => { :region => "Cataluña"}, :count => 1 },
+        { :_id => { :region => "Cataluna"}, :count => 1 },
         { :_id => { :region => "Extremadura"}, :count => 1 },
         { :_id => { :region => "Galicia"}, :count => 1 },
         { :_id => { :region => "Madrid"}, :count => 1 }
@@ -190,7 +190,7 @@ RSpec.describe LocationsController, type: :controller do
 
       # Descartamos las conexiones de Galicia mediante fecha inicio
       expected_array = [
-        { :_id => { :region => "Cataluña"}, :count => 3 },
+        { :_id => { :region => "Cataluna"}, :count => 3 },
         { :_id => { :region => "Extremadura"}, :count => 2 },
         { :_id => { :region => "Madrid"}, :count => 1 }
       ]
@@ -198,7 +198,7 @@ RSpec.describe LocationsController, type: :controller do
 
       # Descartamos las conexiones de Galicia mediante fecha inicio y agrupamos
       expected_array = [
-        { :_id => { :region => "Cataluña"}, :count => 1 },
+        { :_id => { :region => "Cataluna"}, :count => 1 },
         { :_id => { :region => "Extremadura"}, :count => 1 },
         { :_id => { :region => "Madrid"}, :count => 1 }
       ]
@@ -206,14 +206,14 @@ RSpec.describe LocationsController, type: :controller do
 
       # Descartamos Galicia y Madrid por fecha inicio y fin
       expected_array = [
-        { :_id => { :region => "Cataluña"}, :count => 3 },
+        { :_id => { :region => "Cataluna"}, :count => 3 },
         { :_id => { :region => "Extremadura"}, :count => 2 }
       ]
       xhrRequestRegions expected_array, '01/12/2014', '10/02/2015'
 
       # Descartamos Galicia y Madrid por fecha inicio y fin y agrupamos
       expected_array = [
-        { :_id => { :region => "Cataluña"}, :count => 1 },
+        { :_id => { :region => "Cataluna"}, :count => 1 },
         { :_id => { :region => "Extremadura"}, :count => 1 }
       ]
       xhrRequestRegions expected_array, '01/12/2014', '10/02/2015', 'true'
@@ -244,15 +244,15 @@ RSpec.describe LocationsController, type: :controller do
 
       xhrRequestRegions [], '12/02/2014', '16/07/2014', 'true'
 
-      xhrRequestRegions [], '12/02/2014', '16/07/2014', 'false', 'España'
+      xhrRequestRegions [], '12/02/2014', '16/07/2014', 'false', 'Espana'
 
       xhrRequestRegions [], '12/02/2014', '16/07/2014', 'true', 'Italy'
 
-      # Añadimos fechas incorrectas
+      # Anadimos fechas incorrectas
       expected_array = { "error" => "One date is invalid. Correct format: d/m/Y"  }
       xhrRequestRegions expected_array, ''
 
-      # Añadimos fechas incorrectas
+      # Anadimos fechas incorrectas
       expected_array = { "error" => "One date is invalid. Correct format: d/m/Y"  }
       xhrRequestRegions expected_array, '15/11/2014', '31/782015'
 
@@ -295,7 +295,7 @@ RSpec.describe LocationsController, type: :controller do
       end
 
       3.times do
-        FactoryGirl.create(:connection_from_Cataluña)
+        FactoryGirl.create(:connection_from_Cataluna)
       end
 
       FactoryGirl.create(:connection_from_New_Jersey)
@@ -307,7 +307,7 @@ RSpec.describe LocationsController, type: :controller do
     it "should return total amount of listening time per region" do
       # Testeamos un caso sencillo
       expected_array = [
-        { :_id => { :region => "Cataluña" }, :count => 60 },
+        { :_id => { :region => "Cataluna" }, :count => 60 },
         { :_id => { :region => "Extremadura" }, :count => 30 },
         { :_id => { :region => "Galicia" }, :count => 30 },
         { :_id => { :region => "Madrid" }, :count => 8 }
@@ -316,7 +316,7 @@ RSpec.describe LocationsController, type: :controller do
 
       # Descartamos las conexiones de Galicia mediante start date
       expected_array = [
-        { :_id => { :region => "Cataluña" }, :count => 60 },
+        { :_id => { :region => "Cataluna" }, :count => 60 },
         { :_id => { :region => "Extremadura" }, :count => 30 },
         { :_id => { :region => "Madrid" }, :count => 8 }
       ]
@@ -324,7 +324,7 @@ RSpec.describe LocationsController, type: :controller do
 
       # Obtenemos las conexiones descartando a Galicia y Madrid por las fechas inicio y fin
       expected_array = [
-        { :_id => { :region => "Cataluña" }, :count => 60 },
+        { :_id => { :region => "Cataluna" }, :count => 60 },
         { :_id => { :region => "Extremadura" }, :count => 30 }
       ]
       xhrRequestRegionsTime expected_array, '01/12/2014', '01/02/2015'
@@ -338,17 +338,17 @@ RSpec.describe LocationsController, type: :controller do
 
       xhrRequestRegionsTime [], '11/02/2015', '11/02/2015', 'United States'
 
-      # Añadimos fechas incorrectas
+      # Anadimos fechas incorrectas
       expected_array = { "error" => "One date is invalid. Correct format: d/m/Y"  }
       xhrRequestRegionsTime expected_array, ''
 
-      # Añadimos fechas incorrectas
+      # Anadimos fechas incorrectas
       expected_array = { "error" => "One date is invalid. Correct format: d/m/Y"  }
       xhrRequestRegionsTime expected_array, '15/11/2014', '31/782015'
     end
 
     it "should return all regions from a country" do
-      expected = ["Cataluña", "Extremadura", "Galicia", "Madrid"]
+      expected = ["Cataluna", "Extremadura", "Galicia", "Madrid"]
       xhrRequestAllRegions expected, 'Spain'
 
       expected = ["New Jersey"]
@@ -381,7 +381,7 @@ RSpec.describe LocationsController, type: :controller do
 
     before(:each) do
       3.times do
-        FactoryGirl.create(:connection_from_Coruña)
+        FactoryGirl.create(:connection_from_Coruna)
       end
       FactoryGirl.create(:connection_from_Laracha)
       FactoryGirl.create(:connection_from_Barcelona)
@@ -405,13 +405,13 @@ RSpec.describe LocationsController, type: :controller do
     it "should return total amount of connections per city" do
       # Testeamos un caso sencillo
       expected_array = [
-        { :_id => { :city => "A Coruña"}, :count => 3 },
+        { :_id => { :city => "A Coruna"}, :count => 3 },
         { :_id => { :city => "Laracha"},  :count => 1 }
       ]
       xhrRequestCities expected_array, 'Galicia'
 
       expected_array = [
-        { :_id => { :city => "A Coruña"}, :count => 1 },
+        { :_id => { :city => "A Coruna"}, :count => 1 },
         { :_id => { :city => "Laracha"},  :count => 1 }
       ]
       xhrRequestCities expected_array, 'Galicia', 'Spain', '14/11/2014', '11/02/2015', 'true'
@@ -421,24 +421,24 @@ RSpec.describe LocationsController, type: :controller do
       ]
       xhrRequestCities expected_array, 'Galicia', 'Spain', '15/11/2014', '16/11/2014'
 
-      xhrRequestCities [], 'Cataluña', 'Spain', '02/12/2014', '11/02/2015'
+      xhrRequestCities [], 'Cataluna', 'Spain', '02/12/2014', '11/02/2015'
 
       expected_array = [
         { :_id => { :city => "Barcelona"}, :count => 1 }
       ]
-      xhrRequestCities expected_array, 'Cataluña', 'Spain', '01/12/2014', '11/02/2015'
+      xhrRequestCities expected_array, 'Cataluna', 'Spain', '01/12/2014', '11/02/2015'
 
       expected_array = [
         { :_id => { :city => "Bilbao"}, :count => 3 }
       ]
-      xhrRequestCities expected_array, 'País Vasco', 'Spain', '11/02/2015', '28/11/2015'
+      xhrRequestCities expected_array, 'Pais Vasco', 'Spain', '11/02/2015', '28/11/2015'
 
       expected_array = [
         { :_id => { :city => "Bilbao"}, :count => 1 }
       ]
-      xhrRequestCities expected_array, 'País Vasco', 'Spain', '11/02/2015', '28/11/2015', 'true'
+      xhrRequestCities expected_array, 'Pais Vasco', 'Spain', '11/02/2015', '28/11/2015', 'true'
 
-      xhrRequestCities [], 'Andalucía', 'Spain', '02/12/2014', '11/02/2015'
+      xhrRequestCities [], 'Andalucia', 'Spain', '02/12/2014', '11/02/2015'
 
       xhrRequestCities [], 'Galicia', 'NonValidCountry', '02/12/2014', '11/02/2015'
 
@@ -448,11 +448,11 @@ RSpec.describe LocationsController, type: :controller do
       expected = {"error" => "Invalid region"}
       xhrRequestCities expected, ' '
 
-      # Añadimos fechas incorrectas
+      # Anadimos fechas incorrectas
       expected_array = { "error" => "One date is invalid. Correct format: d/m/Y"  }
       xhrRequestCities expected_array, 'Galicia', 'Spain', ''
 
-      # Añadimos fechas incorrectas
+      # Anadimos fechas incorrectas
       expected_array = { "error" => "One date is invalid. Correct format: d/m/Y"  }
       xhrRequestCities expected_array, 'Galicia', 'Spain', '', '15/11/2014', '31/782015'
 

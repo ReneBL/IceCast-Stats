@@ -34,7 +34,7 @@ RSpec.describe RankingController, type: :controller do
       end
 
       3.times do
-        FactoryGirl.create(:connection_from_Cataluña)
+        FactoryGirl.create(:connection_from_Cataluna)
       end
 
       FactoryGirl.create(:connection_from_New_Jersey)
@@ -49,7 +49,7 @@ RSpec.describe RankingController, type: :controller do
 
     it "should return ranking of regions filtered by time and paginated" do
     	expected_array = [
-  			{:_id => {:region => "Cataluña", :country => "Spain"}, :time => 60, :bytes => 75, :listeners => 3},
+  			{:_id => {:region => "Cataluna", :country => "Spain"}, :time => 60, :bytes => 75, :listeners => 3},
         {:_id => {:region => "Galicia", :country => "Spain"}, :time => 30, :bytes => 330, :listeners => 3},
         {:_id => {:region => "Extremadura", :country => "Spain"}, :time => 30, :bytes => 200, :listeners => 2},
         {:_id => {:region => "Nacional", :country => "Dominican Republic"}, :time => 23, :bytes => 16, :listeners => 1},
@@ -59,14 +59,14 @@ RSpec.describe RankingController, type: :controller do
   		xhrRequestRegionRanking expected_array
 
   		expected_array = [
-        {:_id => {:region => "Cataluña", :country => "Spain"}, :time => 60, :bytes => 75, :listeners => 3},
+        {:_id => {:region => "Cataluna", :country => "Spain"}, :time => 60, :bytes => 75, :listeners => 3},
         {:_id => {:region => "Galicia", :country => "Spain"}, :time => 30, :bytes => 330, :listeners => 3},
         {:hasMore => false}
   		]
   		xhrRequestRegionRanking expected_array, '00:27:04', '03:10:39'
 
   		expected_array = [
-  			{:_id => {:region => "Cataluña", :country => "Spain"}, :time => 60, :bytes => 75, :listeners => 3},
+  			{:_id => {:region => "Cataluna", :country => "Spain"}, :time => 60, :bytes => 75, :listeners => 3},
         {:_id => {:region => "Extremadura", :country => "Spain"}, :time => 30, :bytes => 200, :listeners => 2},
         {:hasMore => true}
   		]
@@ -82,7 +82,7 @@ RSpec.describe RankingController, type: :controller do
 
     it "should return ranking of regions filtered by time and date and paginated" do
     	expected_array = [
-  			{:_id => {:region => "Cataluña", :country => "Spain"}, :time => 60, :bytes => 75, :listeners => 3},
+  			{:_id => {:region => "Cataluna", :country => "Spain"}, :time => 60, :bytes => 75, :listeners => 3},
         {:_id => {:region => "Galicia", :country => "Spain"}, :time => 30, :bytes => 330, :listeners => 3},
         {:hasMore => true}
   		]

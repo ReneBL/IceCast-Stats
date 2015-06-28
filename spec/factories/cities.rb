@@ -19,7 +19,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 =end
 
 FactoryGirl.define do
-  factory :connection_from_Coruña, class: Connection do
+  factory :connection_from_Coruna, class: Connection do
 	ip '84.20.10.5'
 	identd '-'
 	userid '-'
@@ -32,7 +32,7 @@ FactoryGirl.define do
 	seconds_connected 20
 	country 'Spain'
 	region 'Galicia'
-	city 'A Coruña'
+	city 'A Coruna'
   end
 
   factory :connection_from_Laracha, class: Connection do
@@ -63,7 +63,7 @@ FactoryGirl.define do
 	user_agent 'iTunes/9.1.1'
 	seconds_connected 5
 	country 'Spain'
-	region 'Cataluña'
+	region 'Cataluna'
 	city 'Barcelona'
   end
 
@@ -95,7 +95,7 @@ FactoryGirl.define do
 	user_agent 'iTunes/9.1.1'
 	seconds_connected 15
 	country 'Spain'
-	region 'País Vasco'
+	region 'Pais Vasco'
 	city 'Bilbao'
   end
 

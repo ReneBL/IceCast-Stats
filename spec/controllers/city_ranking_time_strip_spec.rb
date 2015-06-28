@@ -25,7 +25,7 @@ RSpec.describe RankingController, type: :controller do
 	
 	before(:each) do
 			3.times do
-				FactoryGirl.create(:connection_from_Coruña)
+				FactoryGirl.create(:connection_from_Coruna)
 			end
 			FactoryGirl.create(:connection_from_Barcelona)
 
@@ -49,31 +49,31 @@ RSpec.describe RankingController, type: :controller do
 
 		it "should return ranking of cities filtered by time and paginated" do
 			expected_array = [
-				{:_id => {:city => "A Coruña", :region => "Galicia", :country => "Spain"}, :time => 60, :bytes => 120, :listeners => 3},
-				{:_id => {:city => "Bilbao", :region => "País Vasco", :country => "Spain"}, :time => 45,  :bytes => 90, :listeners => 3},
+				{:_id => {:city => "A Coruna", :region => "Galicia", :country => "Spain"}, :time => 60, :bytes => 120, :listeners => 3},
+				{:_id => {:city => "Bilbao", :region => "Pais Vasco", :country => "Spain"}, :time => 45,  :bytes => 90, :listeners => 3},
 				{:_id => {:city => "Valencia", :region => "Comunidad Valenciana", :country => "Spain"}, :time => 20, :bytes => 40, :listeners => 2},
-				{:_id => {:city => "Barcelona", :region => "Cataluña", :country => "Spain"}, :time => 5, :bytes => 10, :listeners => 1},
+				{:_id => {:city => "Barcelona", :region => "Cataluna", :country => "Spain"}, :time => 5, :bytes => 10, :listeners => 1},
 				{:hasMore => false}
 			]
 			xhrRequestCityRanking expected_array
 
 			expected_array = [
-				{:_id => {:city => "A Coruña", :region => "Galicia", :country => "Spain"}, :time => 60, :bytes => 120, :listeners => 3},
-				{:_id => {:city => "Barcelona", :region => "Cataluña", :country => "Spain"}, :time => 5, :bytes => 10, :listeners => 1},
-				{:hasMore => false}
+				{:_id => {:city => "A Coruna", :region => "Galicia", :country => "Spain"}, :time => 60, :bytes => 120, :listeners => 3},
+				{:_id => {:city => "Barcelona", :region => "Cataluna", :country => "Spain"}, :time => 5, :bytes => 10, :listeners => 1},
+				{:hasMore => false}	
 			]
 			xhrRequestCityRanking expected_array, '05:27:04', '10:55:41'
 
 			expected_array = [
-				{:_id => {:city => "A Coruña", :region => "Galicia", :country => "Spain"}, :time => 60, :bytes => 120, :listeners => 3},
-				{:_id => {:city => "Bilbao", :region => "País Vasco", :country => "Spain"}, :time => 45,  :bytes => 90, :listeners => 3},
+				{:_id => {:city => "A Coruna", :region => "Galicia", :country => "Spain"}, :time => 60, :bytes => 120, :listeners => 3},
+				{:_id => {:city => "Bilbao", :region => "Pais Vasco", :country => "Spain"}, :time => 45,  :bytes => 90, :listeners => 3},
 				{:hasMore => true}
 			]
 			xhrRequestCityRanking expected_array, '03:10:39', '10:55:42', 0, 2
 
 			expected_array = [
 				{:_id => {:city => "Valencia", :region => "Comunidad Valenciana", :country => "Spain"}, :time => 20, :bytes => 40, :listeners => 2},
-				{:_id => {:city => "Barcelona", :region => "Cataluña", :country => "Spain"}, :time => 5, :bytes => 10, :listeners => 1},
+				{:_id => {:city => "Barcelona", :region => "Cataluna", :country => "Spain"}, :time => 5, :bytes => 10, :listeners => 1},
 				{:hasMore => false}
 			]
 			xhrRequestCityRanking expected_array, '03:10:39', '10:55:42', 2, 2
@@ -81,7 +81,7 @@ RSpec.describe RankingController, type: :controller do
 
 		it "should return ranking of cities filtered by time and date and paginated" do
 			expected_array = [
-				{:_id => {:city => "Barcelona", :region => "Cataluña", :country => "Spain"}, :time => 5, :bytes => 10, :listeners => 1},
+				{:_id => {:city => "Barcelona", :region => "Cataluna", :country => "Spain"}, :time => 5, :bytes => 10, :listeners => 1},
 				{:hasMore => false}
 			]
 			xhrRequestCityRanking expected_array, '05:27:05', '23:59:59', 0, 2, '14/11/2014', '10/02/2015'
