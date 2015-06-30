@@ -139,22 +139,35 @@ icecast.factory("RangesOptionsProvider", function() {
 		 };
 });
 
-icecast.factory("ProgramsDataProvider", function() {
+icecast.factory("ProgramsDataProvider", function (SecondsConverter) {
+			var formatterSeconds = function(dt, column) {
+				for (var i = 0; i < dt.getNumberOfRows(); i++) {
+					var value = dt.getValue(i, column);
+					var stringFormattedVal = SecondsConverter.toStringSeconds(value);
+					dt.setFormattedValue(i, column, stringFormattedVal);			
+				};
+			}
+
 			return {
 				 provide : function(datos, unique) {
+				 	var data = new google.visualization.DataTable();
 					if (unique) {
-						var array = [['Programa', 'Oyentes']];
+						data.addColumn({ type: 'string', label: 'Programa' });
+						data.addColumn({ type: 'number', label: 'Oyentes' });
 						for(var i=0; i < datos.length; i++) {
-							array.push([datos[i]._id, datos[i].listeners]);
+							data.addRow([datos[i]._id, datos[i].listeners]);
 						}
-						var data = new google.visualization.arrayToDataTable(array);
 						return data;
 					} else {
-						var array = [['Programa', 'Oyentes', 'Tiempo medio de escucha', 'Tiempo total de escucha']];
+						data.addColumn({ type: 'string', label: 'Programa' });
+						data.addColumn({ type: 'number', label: 'Oyentes' });
+						data.addColumn({ type: 'number', label: 'Tiempo medio de escucha' });
+						data.addColumn({ type: 'number', label: 'Tiempo total de escucha' });
 						for(var i=0; i < datos.length; i++) {
-							array.push([datos[i]._id, datos[i].listeners, datos[i].avg / 60, datos[i].time / 3600]);
+							data.addRow([datos[i]._id, datos[i].listeners, datos[i].avg / 60, datos[i].time / 3600]);
 						}
-						var data = new google.visualization.arrayToDataTable(array);
+						formatterSeconds(data, 2);
+						formatterSeconds(data, 3);
 						return data;
 					}
 				}
