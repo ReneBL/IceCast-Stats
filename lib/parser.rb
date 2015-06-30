@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 =begin
 IceCast-Stats is system for statistics generation and analysis
 for an IceCast streaming server

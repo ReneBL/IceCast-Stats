@@ -39,7 +39,7 @@ every 3.minutes do
 	runner "ParserRT.automatic_start"
 end
 
-every :day, :at => '21:50 pm' do
+every :day, :at => '12:30 am' do
 	runner "Parser.parse_without_path"
 end
 

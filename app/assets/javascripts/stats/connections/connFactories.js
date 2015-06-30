@@ -118,7 +118,7 @@ icecast.factory("RangesDataProvider", function() {
 					var array = [['Rango', 'Porcentaje de conexiones por rango']];
 					for(var i=0; i < datos.length; i++) {
 						var str = datos[i]._id;
-						array.push([str.substr(2, str.length).trim(), datos[i].count]);
+						array.push([str.substr(2, str.length).trim() + ' segundos', datos[i].count]);
 					}
 					var data = new google.visualization.arrayToDataTable(array);
 					return data;
@@ -130,7 +130,7 @@ icecast.factory("RangesOptionsProvider", function() {
 		 return {
 				 provide : function() {
 					var options = {
-						title: 'Porcentaje de conexiones por rango',
+						title: 'Porcentaje de conexiones por rango de duración (en segundos)',
 						is3D: true,
 						chartArea: {width: '50%', height:'60%'}
 					};
